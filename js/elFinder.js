@@ -193,8 +193,6 @@ window.elFinder = function(node, opts) {
 		 **/
 		height = 400,
 
-		beeper = $(document.createElement('audio')).hide().appendTo('body')[0],
-
 		syncInterval,
 
 		open = function(data) {
@@ -1548,12 +1546,6 @@ window.elFinder = function(node, opts) {
 		.bind('search', function(e) {
 			cache(e.data.files);
 		})
-		.bind('rm', function(e) {
-			var play  = beeper.canPlayType && beeper.canPlayType('audio/wav; codecs="1"');
-
-			play && play != '' && play != 'no' && $(beeper).html('<source src="./sounds/rm.wav" type="audio/wav">')[0].play()
-		})
-
 		;
 
 	// bind external event handlers

@@ -1,4 +1,4 @@
-"use strict";
+
 /**
  * @class elFinder places/favorites ui
  *
@@ -30,7 +30,7 @@ $.fn.elfinderplaces = function(fm, opts) {
 			 * @return String
 			 **/
 			hash2id   = function(hash) { return 'place-'+hash; },
-			
+
 			/**
 			 * Save current places state
 			 *
@@ -62,13 +62,13 @@ $.fn.elfinderplaces = function(fm, opts) {
 				if (subtree.children().length) {
 					$.each(subtree.children(), function() {
 						var current =  $(this);
-						
+
 						if (dir.name.localeCompare(current.children('.'+navdir).text()) < 0) {
 							return !node.insertBefore(current);
 						}
 					});
-				} 
-				
+				}
+
 				dirs.push(dir.hash);
 				!node.parent().length && subtree.append(node);
 				root.addClass(collapsed);
@@ -77,9 +77,9 @@ $.fn.elfinderplaces = function(fm, opts) {
 					revert   : false,
 					helper   : function() {
 						var dir = $(this);
-							
+
 						dir.children().removeClass('ui-state-hover');
-						
+
 						return $('<div class="elfinder-place-drag elfinder-'+fm.direction+'"/>')
 								.append(dir.clone())
 								.data('hash', id2hash(dir.children(':first').attr('id')));
@@ -93,7 +93,7 @@ $.fn.elfinderplaces = function(fm, opts) {
 							height = places.height(),
 							x      = e.clientX,
 							y      = e.clientY;
-						
+
 						if (x > left && x < left+width && y > top && y < y+height) {
 							$(this).show();
 						} else {
@@ -102,7 +102,7 @@ $.fn.elfinderplaces = function(fm, opts) {
 						}
 					}
 				});
-			}, 
+			},
 			/**
 			 * Remove dir from places
 			 *
@@ -133,7 +133,7 @@ $.fn.elfinderplaces = function(fm, opts) {
 			 * @type jQuery
 			 **/
 			wrapper = create({
-					hash  : 'root-'+fm.namespace, 
+					hash  : 'root-'+fm.namespace,
 					name  : fm.i18n(opts.name, 'places'),
 					read  : true,
 					write : true
@@ -175,9 +175,9 @@ $.fn.elfinderplaces = function(fm, opts) {
 				})
 				.delegate('.'+navdir+':not(.'+clroot+')', 'contextmenu', function(e) {
 					var hash = $(this).attr('id').substr(6);
-					
+
 					e.preventDefault();
-					
+
 					fm.trigger('contextmenu', {
 						raw : [{
 							label    : fm.i18n('rmFromPlaces'),
@@ -187,7 +187,7 @@ $.fn.elfinderplaces = function(fm, opts) {
 						'x'       : e.clientX,
 						'y'       : e.clientY
 					})
-					
+
 				})
 				.droppable({
 					tolerance  : 'pointer',
@@ -195,10 +195,10 @@ $.fn.elfinderplaces = function(fm, opts) {
 					hoverClass : fm.res('class', 'adroppable'),
 					drop       : function(e, ui) {
 						var resolve = true;
-						
+
 						$.each(ui.helper.data('files'), function(i, hash) {
 							var dir = fm.file(hash);
-							
+
 							if (dir && dir.mime == 'directory' && $.inArray(dir.hash, dirs) === -1) {
 								add(dir);
 							} else {
@@ -209,21 +209,21 @@ $.fn.elfinderplaces = function(fm, opts) {
 						resolve && ui.helper.hide();
 					}
 				});
-	
+
 
 		// on fm load - show places and load files from backend
 		fm.one('load', function() {
 			if (fm.oldAPI) {
 				return;
 			}
-			
+
 			places.show().parent().show();
 
 			dirs = $.map(fm.storage('places').split(','), function(hash) { return hash || null});
-			
+
 			if (dirs.length) {
 				root.prepend(spinner);
-				
+
 				fm.request({
 					data : {cmd : 'info', targets : dirs},
 					preventDefault : true
@@ -242,7 +242,7 @@ $.fn.elfinderplaces = function(fm, opts) {
 					spinner.remove();
 				})
 			}
-			
+
 
 			fm.remove(function(e) {
 				$.each(e.data.removed, function(i, hash) {
@@ -280,8 +280,8 @@ $.fn.elfinderplaces = function(fm, opts) {
 					});
 				}
 			})
-			
+
 		})
-		
+
 	});
 }

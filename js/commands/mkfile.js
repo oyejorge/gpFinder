@@ -1,4 +1,4 @@
-"use strict";
+
 /**
  * @class  elFinder command "mkfile"
  * Create new empty file
@@ -11,7 +11,7 @@ elFinder.prototype.commands.mkfile = function() {
 	this.mime            = 'text/plain';
 	this.prefix          = 'untitled file.txt';
 	this.exec            = $.proxy(this.fm.res('mixin', 'make'), this);
-	
+
 	this.getstate = function() {
 		return !this._disabled && this.fm.cwd().write ? 0 : -1;
 	}

@@ -1,4 +1,4 @@
-"use strict";
+
 /**
  * @class  elFinder command "view"
  * Change current directory view (icons/list)
@@ -11,11 +11,11 @@ elFinder.prototype.commands.view = function() {
 	this.updateOnSelect = false;
 
 	this.options = { ui : 'viewbutton'};
-	
+
 	this.getstate = function() {
 		return 0;
 	}
-	
+
 	this.exec = function() {
 		var value = this.fm.storage('view', this.value == 'list' ? 'icons' : 'list');
 		this.fm.viewchange();

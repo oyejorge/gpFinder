@@ -1,4 +1,4 @@
-"use strict";
+
 /**
  * @class elFinder command "upload"
  * Upload files using iframe or XMLHttpRequest & FormData.
@@ -9,15 +9,15 @@
  */
 elFinder.prototype.commands.upload = function() {
 	var hover = this.fm.res('class', 'hover');
-	
+
 	this.disableOnSearch = true;
 	this.updateOnSelect  = false;
-	
+
 	// Shortcut opens dialog
 	this.shortcuts = [{
 		pattern     : 'ctrl+u'
 	}];
-	
+
 	/**
 	 * Return command state
 	 *
@@ -26,8 +26,8 @@ elFinder.prototype.commands.upload = function() {
 	this.getstate = function() {
 		return !this._disabled && this.fm.cwd().write ? 0 : -1;
 	}
-	
-	
+
+
 	this.exec = function(data) {
 		var fm = this.fm,
 			upload = function(data) {
@@ -41,18 +41,18 @@ elFinder.prototype.commands.upload = function() {
 					});
 			},
 			dfrd, dialog, input, button, dropbox;
-		
+
 		if (this.disabled()) {
 			return $.Deferred().reject();
 		}
-		
+
 		if (data && (data.input || data.files)) {
 			return fm.upload(data);
 		}
-		
+
 		dfrd = $.Deferred();
-		
-		
+
+
 		input = $('<input type="file" multiple="true"/>')
 			.change(function() {
 				upload({input : input[0]});
@@ -63,10 +63,10 @@ elFinder.prototype.commands.upload = function() {
 			.hover(function() {
 				button.toggleClass(hover)
 			})
-			
+
 		dialog = $('<div class="elfinder-upload-dialog-wrapper"/>')
 			.append(button);
-		
+
 		if (fm.dragUpload) {
 			dropbox = $('<div class="ui-corner-all elfinder-upload-dropbox">'+fm.i18n('dropFiles')+'</div>')
 				.prependTo(dialog)
@@ -92,19 +92,19 @@ elFinder.prototype.commands.upload = function() {
 			dropbox.addEventListener('drop', function(e) {
 				e.stopPropagation();
 			  	e.preventDefault();
-			
+
 				upload({files : e.dataTransfer.files});
 			}, false);
-			
+
 		}
-		
+
 		fm.dialog(dialog, {
 			title          : this.title,
 			modal          : true,
 			resizable      : false,
 			destroyOnClose : true
 		});
-			
+
 		return dfrd;
 	}
 

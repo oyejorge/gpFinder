@@ -1,4 +1,4 @@
-"use strict";
+
 /**
  * @class elFinder ui
  * Display number of files/selected files and its size in statusbar
@@ -13,7 +13,7 @@ $.fn.elfinderstat = function(fm) {
 			titleitems = fm.i18n('items').toLowerCase(),
 			titlesel   = fm.i18n('selected'),
 			setstat    = function(files, cwd) {
-				var c = 0, 
+				var c = 0,
 					s = 0;
 
 				$.each(files, function(i, file) {
@@ -26,7 +26,7 @@ $.fn.elfinderstat = function(fm) {
 			};
 
 		fm.getUI('statusbar').prepend(size).append(sel).show();
-		
+
 		fm
 		.bind('open reload add remove change searchend', function() {
 			setstat(fm.files(), fm.cwd().hash)
@@ -42,7 +42,7 @@ $.fn.elfinderstat = function(fm) {
 			if (files.length == 1) {
 				s = files[0].size;
 				sel.html(fm.escape(files[0].name)+(s > 0 ? ', '+fm.formatSize(s) : ''));
-				
+
 				return;
 			}
 

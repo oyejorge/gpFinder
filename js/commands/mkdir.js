@@ -1,4 +1,4 @@
-"use strict";
+
 /**
  * @class  elFinder command "mkdir"
  * Create new folder
@@ -11,11 +11,11 @@ elFinder.prototype.commands.mkdir = function() {
 	this.mime            = 'directory';
 	this.prefix          = 'untitled folder';
 	this.exec            = $.proxy(this.fm.res('mixin', 'make'), this);
-	
+
 	this.shortcuts = [{
 		pattern     : 'ctrl+shift+n'
 	}];
-	
+
 	this.getstate = function() {
 		return !this._disabled && this.fm.cwd().write ? 0 : -1;
 	}

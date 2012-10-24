@@ -1,10 +1,10 @@
-"use strict";
+
 /**
  * elFinder transport to support old protocol.
  *
  * @example
  * $('selector').elfinder({
- *   .... 
+ *   ....
  *   transport : new elFinderSupportVer1()
  * })
  *
@@ -12,9 +12,9 @@
  **/
 window.elFinderSupportVer1 = function(upload) {
 	var self = this;
-	
+
 	this.upload = upload || 'auto';
-	
+
 	this.init = function(fm) {
 		this.fm = fm;
 		this.fm.parseUploadData = function(text) {
@@ -29,12 +29,12 @@ window.elFinderSupportVer1 = function(upload) {
 			} catch (e) {
 				return {error : ['errResponse', 'errDataNotJSON']}
 			}
-			
+
 			return self.normalize('upload', data);
 		}
 	}
-	
-	
+
+
 	this.send = function(opts) {
 		var self = this,
 			fm = this.fm,
@@ -44,11 +44,11 @@ window.elFinderSupportVer1 = function(upload) {
 			_opts = {},
 			data,
 			xhr;
-			
+
 		dfrd.abort = function() {
 			!xhr.isRejected() && !xhr.isResolved() && xhr.abort();
 		}
-		
+
 		switch (cmd) {
 			case 'open':
 				opts.data.tree = 1;
@@ -93,7 +93,7 @@ window.elFinderSupportVer1 = function(upload) {
 				});
 				return dfrd.resolve({})
 				break;
-				
+
 			case 'mkdir':
 			case 'mkfile':
 				opts.data.current = opts.data.target;
@@ -101,26 +101,26 @@ window.elFinderSupportVer1 = function(upload) {
 			case 'paste':
 				opts.data.current = opts.data.dst
 				break;
-				
+
 			case 'size':
 				return dfrd.resolve({error : fm.res('error', 'cmdsupport')});
 				break;
 			case 'search':
 				return dfrd.resolve({error : fm.res('error', 'cmdsupport')});
 				break;
-				
+
 		}
 		// cmd = opts.data.cmd
-		
+
 		xhr = $.ajax(opts)
 			.fail(function(error) {
 				dfrd.reject(error)
 			})
 			.done(function(raw) {
 				data = self.normalize(cmd, raw);
-				
+
 				// cmd != 'open' && self.fm.log(data);
-				
+
 				if (cmd == 'paste' && !data.error) {
 					fm.sync();
 					dfrd.resolve({});
@@ -128,12 +128,12 @@ window.elFinderSupportVer1 = function(upload) {
 					dfrd.resolve(data);
 				}
 			})
-			
+
 		return dfrd;
-		
+
 		return $.ajax(opts);
 	}
-	
+
 	// fix old connectors errors messages as possible
 	// this.errors = {
 	// 	'Unknown command'                                  : 'Unknown command.',
@@ -149,17 +149,17 @@ window.elFinderSupportVer1 = function(upload) {
 	// 	'Unable to create archive'                         : 'Unable to create archive.',
 	// 	'Unable to extract files from archive'             : 'Unable to extract files from "$1".'
 	// }
-	
+
 	this.normalize = function(cmd, data) {
 		var self = this,
-			files = {}, 
+			files = {},
 			filter = function(file) { return file && file.hash && file.name && file.mime ? file : null; },
 			phash;
 
 		if ((cmd == 'tmb' || cmd == 'get')) {
 			return data;
 		}
-		
+
 		// if (data.error) {
 		// 	$.each(data.error, function(i, msg) {
 		// 		if (self.errors[msg]) {
@@ -167,31 +167,31 @@ window.elFinderSupportVer1 = function(upload) {
 		// 		}
 		// 	});
 		// }
-		
+
 		if (cmd == 'upload' && data.error && data.cwd) {
 			data.warning = $.extend({}, data.error);
 			data.error = false;
 		}
-		
-		
+
+
 		if (data.error) {
 			return data;
 		}
-		
+
 		if (cmd == 'put') {
 
 			phash = this.fm.file(data.target.hash).phash;
 			return {changed : [this.normalizeFile(data.target, phash)]};
 		}
-		
+
 		phash = data.cwd.hash;
-		
+
 		if (data.tree) {
 			$.each(this.normalizeTree(data.tree), function(i, file) {
 				files[file.hash] = file;
 			});
 		}
-		
+
 		$.each(data.cdc||[], function(i, file) {
 			var hash = file.hash;
 
@@ -202,7 +202,7 @@ window.elFinderSupportVer1 = function(upload) {
 				files[hash] = self.normalizeFile(file, phash, data.tmb);
 			}
 		});
-		
+
 		if (!data.tree) {
 			$.each(this.fm.files(), function(hash, file) {
 				if (!files[hash] && file.phash != phash && file.mime == 'directory') {
@@ -210,7 +210,7 @@ window.elFinderSupportVer1 = function(upload) {
 				}
 			});
 		}
-		
+
 		if (cmd == 'open') {
 			return {
 					cwd     : files[phash] || this.normalizeFile(data.cwd),
@@ -220,18 +220,18 @@ window.elFinderSupportVer1 = function(upload) {
 					debug   : data.debug
 				};
 		}
-		
-		
-		
+
+
+
 		return $.extend({
 			current : data.cwd.hash,
 			error   : data.error,
 			warning : data.warning,
 			options : {tmb : !!data.tmb}
 		}, this.fm.diff($.map(files, filter)));
-		
+
 	}
-	
+
 	/**
 	 * Convert old api tree into plain array of dirs
 	 *
@@ -243,7 +243,7 @@ window.elFinderSupportVer1 = function(upload) {
 			result   = [],
 			traverse = function(dirs, phash) {
 				var i, dir;
-				
+
 				for (i = 0; i < dirs.length; i++) {
 					dir = dirs[i];
 					result.push(self.normalizeFile(dir, phash))
@@ -255,7 +255,7 @@ window.elFinderSupportVer1 = function(upload) {
 
 		return result;
 	}
-	
+
 	/**
 	 * Convert file info from old api format into new one
 	 *
@@ -278,7 +278,7 @@ window.elFinderSupportVer1 = function(upload) {
 				write  : file.write,
 				locked : !phash ? true : file.rm === void(0) ? false : !file.rm
 			};
-		
+
 		if (file.mime == 'application/x-empty') {
 			info.mime = 'text/plain';
 		}
@@ -289,12 +289,12 @@ window.elFinderSupportVer1 = function(upload) {
 		if (file.linkTo) {
 			info.linkTo = file.linkTo;
 		}
-		
+
 		if (file.tmb) {
 			info.tmb = file.tmb;
 		} else if (info.mime.indexOf('image/') === 0 && tmb) {
 			info.tmb = 1;
-			
+
 		}
 
 		if (file.dirs && file.dirs.length) {
@@ -308,7 +308,7 @@ window.elFinderSupportVer1 = function(upload) {
 		}
 		return info;
 	}
-	
+
 	this.normalizeOptions = function(data) {
 		var opts = {
 				path          : data.cwd.rel,
@@ -316,7 +316,7 @@ window.elFinderSupportVer1 = function(upload) {
 				tmb           : !!data.tmb,
 				copyOverwrite : true
 			};
-		
+
 		if (data.params) {
 			opts.api      = 1;
 			opts.url      = data.params.url;
@@ -325,7 +325,7 @@ window.elFinderSupportVer1 = function(upload) {
 				extract : data.params.extract || []
 			}
 		}
-		
+
 		if (opts.path.indexOf('/') !== -1) {
 			opts.separator = '/';
 		} else if (opts.path.indexOf('\\') !== -1) {
@@ -333,6 +333,6 @@ window.elFinderSupportVer1 = function(upload) {
 		}
 		return opts;
 	}
-	
-	
+
+
 }

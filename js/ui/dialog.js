@@ -1,4 +1,4 @@
-"use strict";
+
 /**
  * @class  elFinder dialog
  *
@@ -6,7 +6,7 @@
  **/
 $.fn.elfinderdialog = function(opts) {
 	var dialog;
-	
+
 	if (typeof(opts) == 'string' && (dialog = this.closest('.ui-dialog')).length) {
 		if (opts == 'open') {
 			dialog.css('display') == 'none' && dialog.fadeIn(120, function() {
@@ -20,7 +20,7 @@ $.fn.elfinderdialog = function(opts) {
 			dialog.trigger('totop');
 		}
 	}
-	
+
 	opts = $.extend({}, $.fn.elfinderdialog.defaults, opts);
 
 	this.filter(':not(.ui-dialog-content)').each(function() {
@@ -35,7 +35,7 @@ $.fn.elfinderdialog = function(opts) {
 			buttonset  = $('<div class="ui-dialog-buttonset"/>'),
 			buttonpane = $('<div class=" ui-helper-clearfix ui-dialog-buttonpane ui-widget-content"/>')
 				.append(buttonset),
-			
+
 			dialog = $('<div class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-draggable std42-dialog  '+cldialog+' '+opts.cssClass+'"/>')
 				.hide()
 				.append(self)
@@ -48,7 +48,7 @@ $.fn.elfinderdialog = function(opts) {
 				})
 				.mousedown(function(e) {
 					e.stopPropagation();
-					
+
 					$(document).mousedown();
 
 					if (!dialog.is('.'+clactive)) {
@@ -62,7 +62,7 @@ $.fn.elfinderdialog = function(opts) {
 					typeof(opts.open) == 'function' && $.proxy(opts.open, self[0])();
 
 					if (!dialog.is('.'+clnotify)) {
-						
+
 						parent.find('.'+cldialog+':visible').not('.'+clnotify).each(function() {
 							var d     = $(this),
 								top   = parseInt(d.css('top')),
@@ -78,14 +78,14 @@ $.fn.elfinderdialog = function(opts) {
 								});
 							}
 						});
-					} 
+					}
 				})
 				.bind('close', function() {
 					var dialogs = parent.find('.elfinder-dialog:visible'),
 						z = maxZIndex();
-					
+
 					opts.modal && overlay.elfinderoverlay('hide');
-					
+
 					// get focus to next dialog
 					if (dialogs.length) {
 						dialogs.each(function() {
@@ -100,9 +100,9 @@ $.fn.elfinderdialog = function(opts) {
 						setTimeout(function() {
 							parent.mousedown().click();
 						}, 10);
-						
+
 					}
-					
+
 					if (typeof(opts.close) == 'function') {
 						$.proxy(opts.close, self[0])();
 					} else if (opts.destroyOnClose) {
@@ -127,15 +127,15 @@ $.fn.elfinderdialog = function(opts) {
 				},
 				top
 			;
-		
+
 		if (!opts.position) {
 			top = parseInt((parent.height() - dialog.outerHeight())/2 - 42);
 			opts.position = {
 				top  : (top > 0 ? top : 0)+'px',
 				left : parseInt((parent.width() - dialog.outerWidth())/2)+'px'
 			}
-		} 
-			
+		}
+
 		dialog.css(opts.position);
 
 		if (opts.closeOnEscape) {
@@ -155,18 +155,18 @@ $.fn.elfinderdialog = function(opts) {
 					}))
 
 		);
-			
-		
-			
+
+
+
 		$.each(opts.buttons, function(name, cb) {
 			var button = $('<button type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="ui-button-text">'+name+'</span></button>')
 				.click($.proxy(cb, self[0]))
 				.hover(function(e) { $(this)[e.type == 'mouseenter' ? 'focus' : 'blur']() })
 				.focus(function() { $(this).addClass(clhover) })
 				.blur(function() { $(this).removeClass(clhover) })
-				.keydown(function(e) { 
+				.keydown(function(e) {
 					var next;
-					
+
 					if (e.keyCode == $.ui.keyCode.ENTER) {
 						$(this).click();
 					}  else if (e.keyCode == $.ui.keyCode.TAB) {
@@ -176,7 +176,7 @@ $.fn.elfinderdialog = function(opts) {
 				})
 			buttonset.append(button);
 		})
-			
+
 		buttonset.children().length && dialog.append(buttonpane);
 		if (opts.resizable && $.fn.resizable) {
 			dialog.resizable({
@@ -184,14 +184,14 @@ $.fn.elfinderdialog = function(opts) {
 					minHeight  : opts.minHeight,
 					alsoResize : this
 				});
-		} 
-			
+		}
+
 		typeof(opts.create) == 'function' && $.proxy(opts.create, this)();
-			
+
 		opts.autoOpen && self.elfinderdialog('open');
 
 	});
-	
+
 	return this;
 }
 

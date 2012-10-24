@@ -1,4 +1,4 @@
-"use strict";
+
 /**
  * @class  elFinder command "back"
  * Open last visited folder
@@ -11,11 +11,11 @@ elFinder.prototype.commands.back = function() {
 	this.shortcuts      = [{
 		pattern     : 'ctrl+left backspace'
 	}];
-	
+
 	this.getstate = function() {
 		return this.fm.history.canBack() ? 0 : -1;
 	}
-	
+
 	this.exec = function() {
 		return this.fm.history.back();
 	}

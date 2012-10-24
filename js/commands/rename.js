@@ -1,22 +1,22 @@
-"use strict";
+
 /**
- * @class elFinder command "rename". 
+ * @class elFinder command "rename".
  * Rename selected file.
  *
  * @author Dmitry (dio) Levashov, dio@std42.ru
  **/
 elFinder.prototype.commands.rename = function() {
-	
+
 	this.shortcuts = [{
 		pattern     : 'f2'+(this.fm.OS == 'mac' ? ' enter' : '')
 	}];
-	
+
 	this.getstate = function() {
 		var sel = this.fm.selectedFiles();
 
 		return !this._disabled && sel.length == 1 && sel[0].phash && !sel[0].locked  ? 0 : -1;
 	}
-	
+
 	this.exec = function() {
 		var fm       = this.fm,
 			cwd      = fm.getUI('cwd'),
@@ -29,7 +29,7 @@ elFinder.prototype.commands.rename = function() {
 					var parent = input.parent(),
 						name   = fm.escape(file.name);
 
-					
+
 					if (parent.length) {
 						input.remove();
 						parent.html(name);
@@ -39,7 +39,7 @@ elFinder.prototype.commands.rename = function() {
 							cwd.find('#'+file.hash).click();
 						}, 50);
 					}
-					
+
 					error && fm.error(error);
 				})
 				.always(function() {
@@ -79,7 +79,7 @@ elFinder.prototype.commands.rename = function() {
 						if (fm.fileByName(name, file.phash)) {
 							return dfrd.reject(['errExists', name]);
 						}
-						
+
 						parent.html(fm.escape(name));
 						fm.lockfiles({files : [file.hash]});
 						fm.request({
@@ -96,33 +96,33 @@ elFinder.prototype.commands.rename = function() {
 							.always(function() {
 								fm.unlockfiles({files : [file.hash]})
 							});
-						
+
 					}
 				}),
 			node = cwd.find('#'+file.hash).find(filename).empty().append(input.val(file.name)),
 			name = input.val().replace(/\.((tar\.(gz|bz|bz2|z|lzo))|cpio\.gz|ps\.gz|xcf\.(gz|bz2)|[a-z0-9]{1,4})$/ig, '')
 			;
-		
+
 		if (this.disabled()) {
 			return dfrd.reject();
 		}
-		
+
 		if (!file || cnt > 1 || !node.length) {
 			return dfrd.reject('errCmdParams', this.title);
 		}
-		
+
 		if (file.locked) {
 			return dfrd.reject(['errLocked', file.name]);
 		}
-		
+
 		fm.one('select', function() {
 			input.parent().length && file && $.inArray(file.hash, fm.selected()) === -1 && input.blur();
 		})
-		
+
 		input.select().focus();
-		
+
 		input[0].setSelectionRange && input[0].setSelectionRange(0, name.length);
-		
+
 		return dfrd;
 	}
 

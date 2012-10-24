@@ -46,7 +46,7 @@ elFinder.prototype.commands.rm = function() {
 			}
 		});
 
-		if (!dfrd.isRejected()) {
+		if( dfrd.state() != 'rejected' ){
 			files = this.hashes(hashes);
 
 			fm.confirm({

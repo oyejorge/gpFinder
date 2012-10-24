@@ -42,7 +42,8 @@ elFinder.prototype.commands.netmount = function() {
 						destroyOnClose : true,
 						close          : function() {
 							delete self.dialog;
-							!dfrd.isResolved() && !dfrd.isRejected() && dfrd.reject();
+
+							(dfrd.state() != 'resolved') && (dfrd.state() != 'rejected') && dfrd.reject();
 						},
 						buttons        : {}
 					},

@@ -32,7 +32,8 @@ elFinder.prototype.commands.copy = function() {
 			}
 		});
 
-		return dfrd.isRejected() ? dfrd : dfrd.resolve(fm.clipboard(this.hashes(hashes)));
+
+		return (dfrd.state() == 'rejected') ? dfrd : dfrd.resolve(fm.clipboard(this.hashes(hashes)));
 	}
 
 }

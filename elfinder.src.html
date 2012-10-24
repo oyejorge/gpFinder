@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<title>elFinder 2.x source version with PHP connector</title>
-	<!-- 
+	<!--
 	<script type="text/javascript" src="https://getfirebug.com/firebug-lite.js"></script>
 	-->
 	<script src="jquery/jquery-1.7.2.min.js"></script>
@@ -79,8 +79,8 @@
 	<script src="js/commands/search.js"></script>
 	<script src="js/commands/view.js"></script>
 	<script src="js/commands/resize.js"></script>
-	<script src="js/commands/sort.js"></script>	
-	<script src="js/commands/netmount.js"></script>	
+	<script src="js/commands/sort.js"></script>
+	<script src="js/commands/netmount.js"></script>
 
 	<!-- elfinder languages -->
 	<script src="js/i18n/elfinder.ar.js"></script>
@@ -130,8 +130,8 @@
 			background-color:#eee;
 			margin:1em .5em;
 			padding:.3em .7em;
-			border-radius:5px; 
-			-moz-border-radius:5px; 
+			border-radius:5px;
+			-moz-border-radius:5px;
 			-webkit-border-radius:5px;
 			cursor:pointer;
 		}
@@ -155,14 +155,15 @@
 				// getFileCallback : function(files, fm) {
 				// 	console.log(files);
 				// },
+				//debug : ['error', 'warning', 'event-destroy'],
 				handlers : {
                     select : function(event, elfinderInstance) {
                         var selected = event.data.selected;
-						
+
 						if (selected.length) {
 							// console.log(elfinderInstance.file(selected[0]))
 						}
-						
+
                     }
                 },
 				// handlers : {
@@ -172,7 +173,7 @@
 				// },
 				// onlyMimes : ['image', 'text/plain']
 				// sync : 20000,
-				lang : 'ru',
+				lang : 'en',
 				customData : {answer : 42},
 				// requestType : 'POST',
 				// rememberLastDir : false,
@@ -195,7 +196,7 @@
 				// 					textarea.value = tinyMCE.get(textarea.id).selection.getContent({format : 'html'});
 				// 					tinyMCE.execCommand('mceRemoveControl', false, textarea.id);
 				// 				}
-				// 
+				//
 				// 			}
 				// 		]
 				// 	}
@@ -212,7 +213,7 @@
 			// })
 
 			// console.log(f1)
-			// 
+			//
 			// setTimeout(function() {
 			// 	console.log($('#finder').elfinder('instance'))
 			// }, 2000)
@@ -223,7 +224,7 @@
 			// 	url : 'connectors/php/connector.php',
 			// 	lang : 'ru'
 			// }).elfinder('instance')
-			
+
 			$('#back').click(function(e) {
 				f1.exec('back')
 			})
@@ -263,7 +264,7 @@
 		<div id="finder">finder <span>here</span></div>
 	<!-- </div> -->
 	<!-- <div style="width:670px; float:left">
-		<div id="finder2">finder</div> 
+		<div id="finder2">finder</div>
 	</div> -->
 	<br clear="all"/>
 	<input type="text" value="123" />

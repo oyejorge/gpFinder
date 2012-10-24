@@ -22,20 +22,20 @@ elFinder.prototype.commands.cut = function() {
 	this.exec = function(hashes) {
 		var fm     = this.fm,
 			dfrd   = $.Deferred()
-				.fail(function(error) {
-					fm.error(error);
-				});
+						.fail(function(error) {
+							fm.error(error);
+						});
 
 		$.each(this.files(hashes), function(i, file) {
-			if (!(file.read && file.phash) ) {
+			if( !(file.read && file.phash) ){
 				return !dfrd.reject(['errCopy', file.name, 'errPerm']);
 			}
-			if (file.locked) {
+			if( file.locked ){
 				return !dfrd.reject(['errLocked', file.name]);
 			}
 		});
 
-		return dfrd.isRejected() ? dfrd : dfrd.resolve(fm.clipboard(this.hashes(hashes), true));
+		return (dfrd.state() == 'rejected') ? dfrd : dfrd.resolve(fm.clipboard(this.hashes(hashes), true));
 	}
 
 }

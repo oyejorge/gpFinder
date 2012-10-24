@@ -1,4 +1,4 @@
-"use strict"
+
 /**
  * @class  elFinder command "sort"
  * Change sort files rule
@@ -12,11 +12,11 @@ elFinder.prototype.commands.sort = function() {
 	 * @type  Object
 	 */
 	this.options = {ui : 'sortbutton'};
-	
+
 	this.getstate = function() {
 		return 0;
 	}
-	
+
 	this.exec = function(hashes, sort) {
 		var fm = this.fm,
 			sort = $.extend({

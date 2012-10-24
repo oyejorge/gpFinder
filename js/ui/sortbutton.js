@@ -1,11 +1,11 @@
-"use strict"
+
 /**
  * @class  elFinder toolbar button menu with sort variants.
  *
  * @author Dmitry (dio) Levashov
  **/
 $.fn.elfindersortbutton = function(cmd) {
-	
+
 	return this.each(function() {
 		var fm       = cmd.fm,
 			name     = cmd.name,
@@ -45,45 +45,45 @@ $.fn.elfindersortbutton = function(cmd) {
 				menu.children(':last').toggleClass(selected, fm.sortStickFolders);
 			},
 			hide = function() { menu.hide(); };
-			
-			
+
+
 		$.each(fm.sortRules, function(name, value) {
 			menu.append($('<div class="'+item+'" rel="'+name+'"><span class="ui-icon ui-icon-arrowthick-1-n"/><span class="ui-icon ui-icon-arrowthick-1-s"/>'+fm.i18n('sort'+name)+'</div>').data('type', name));
 		});
-		
+
 		menu.children().click(function(e) {
 			var type = $(this).attr('rel');
-			
+
 			cmd.exec([], {
-				type  : type, 
-				order : type == fm.sortType ? fm.sortOrder == 'asc' ? 'desc' : 'asc' : fm.sortOrder, 
+				type  : type,
+				order : type == fm.sortType ? fm.sortOrder == 'asc' ? 'desc' : 'asc' : fm.sortOrder,
 				stick : fm.sortStickFolders
 			});
 		})
-		
+
 		$('<div class="'+item+' '+item+'-separated"><span class="ui-icon ui-icon-check"/>'+fm.i18n('sortFoldersFirst')+'</div>')
 			.appendTo(menu)
 			.click(function() {
 				cmd.exec([], {type : fm.sortType, order : fm.sortOrder, stick : !fm.sortStickFolders});
-			});		
-		
+			});
+
 		fm.bind('disable select', hide).getUI().click(hide);
-			
+
 		fm.bind('sortchange', update)
-		
+
 		if (menu.children().length > 1) {
 			cmd.change(function() {
 					button.toggleClass(disabled, cmd.disabled());
 					update();
 				})
 				.change();
-			
+
 		} else {
 			button.addClass(disabled);
 		}
 
 	});
-	
+
 }
 
 

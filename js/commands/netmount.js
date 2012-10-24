@@ -1,4 +1,4 @@
-"use strict"
+
 /**
  * @class  elFinder command "netmount"
  * Mount network volume with user credentials.
@@ -12,7 +12,7 @@ elFinder.prototype.commands.netmount = function() {
 	this.updateOnSelect = false;
 
 	this.drivers = [];
-	
+
 	this.handlers = {
 		load : function() {
 			this.drivers = this.fm.netDrivers;
@@ -22,7 +22,7 @@ elFinder.prototype.commands.netmount = function() {
 	this.getstate = function() {
 		return this.drivers.length ? 0 : -1;
 	}
-	
+
 	this.exec = function() {
 		var fm = self.fm,
 			dfrd = $.Deferred(),
@@ -40,8 +40,8 @@ elFinder.prototype.commands.netmount = function() {
 						resizable      : false,
 						modal          : true,
 						destroyOnClose : true,
-						close          : function() { 
-							delete self.dialog; 
+						close          : function() {
+							delete self.dialog;
 							!dfrd.isResolved() && !dfrd.isRejected() && dfrd.reject();
 						},
 						buttons        : {}
@@ -77,7 +77,7 @@ elFinder.prototype.commands.netmount = function() {
 						.done(function() { dfrd.resolve(); })
 						.fail(function(error) { dfrd.reject(error); });
 
-					self.dialog.elfinderdialog('close');	
+					self.dialog.elfinderdialog('close');
 				}
 
 				opts.buttons[fm.i18n('btnCancel')] = function() {

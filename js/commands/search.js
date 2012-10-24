@@ -1,4 +1,4 @@
-"use strict"
+
 /**
  * @class  elFinder command "search"
  * Find files
@@ -10,7 +10,7 @@ elFinder.prototype.commands.search = function() {
 	this.options        = {ui : 'searchbutton'}
 	this.alwaysEnabled  = true;
 	this.updateOnSelect = false;
-	
+
 	/**
 	 * Return command status.
 	 * Search does not support old api.
@@ -20,7 +20,7 @@ elFinder.prototype.commands.search = function() {
 	this.getstate = function() {
 		return 0;
 	}
-	
+
 	/**
 	 * Send search request to backend.
 	 *
@@ -29,10 +29,10 @@ elFinder.prototype.commands.search = function() {
 	 **/
 	this.exec = function(q) {
 		var fm = this.fm;
-		
+
 		if (typeof(q) == 'string' && q) {
 			fm.trigger('searchstart', {query : q});
-			
+
 			return fm.request({
 				data   : {cmd : 'search', q : q},
 				notify : {type : 'search', cnt : 1, hideCnt : true}

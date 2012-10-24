@@ -1,4 +1,4 @@
-"use strict"
+
 /**
  * @class  elFinder toolbar search button widget.
  *
@@ -29,23 +29,23 @@ $.fn.elfindersearchbutton = function(cmd) {
 				})
 				.keydown(function(e) {
 					e.stopPropagation();
-					
+
 					e.keyCode == 13 &&  search();
-					
+
 					if (e.keyCode== 27) {
 						e.preventDefault();
 						abort();
 					}
 				});
-		
+
 		$('<span class="ui-icon ui-icon-search" title="'+cmd.title+'"/>')
 			.appendTo(button)
 			.click(search);
-		
+
 		$('<span class="ui-icon ui-icon-close"/>')
 			.appendTo(button)
 			.click(abort)
-		
+
 		// wait when button will be added to DOM
 		setTimeout(function() {
 			button.parent().detach();
@@ -59,7 +59,7 @@ $.fn.elfindersearchbutton = function(cmd) {
 				});
 			}
 		}, 200);
-		
+
 		cmd.fm
 			.error(function() {
 				input.unbind('keydown');

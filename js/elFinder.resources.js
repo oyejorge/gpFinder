@@ -1,4 +1,4 @@
-"use strict"
+
 /**
  * elFinder resources registry.
  * Store shared data
@@ -34,15 +34,15 @@ elFinder.prototype.resources = {
 		navicon    : '<span class="elfinder-nav-icon"/>',
 		navspinner : '<span class="elfinder-navbar-spinner"/>',
 		navdir     : '<div class="elfinder-navbar-wrapper"><span id="{id}" class="ui-corner-all elfinder-navbar-dir {cssclass}"><span class="elfinder-navbar-arrow"/><span class="elfinder-navbar-icon"/>{symlink}{permissions}{name}</span><div class="elfinder-navbar-subtree"/></div>'
-		
+
 	},
-	
+
 	mimes : {
 		text : [
 			'application/x-empty',
-			'application/javascript', 
-			'application/xhtml+xml', 
-			'audio/x-mp3-playlist', 
+			'application/javascript',
+			'application/xhtml+xml',
+			'audio/x-mp3-playlist',
 			'application/x-web-config',
 			'application/docbook+xml',
 			'application/x-php',
@@ -53,7 +53,7 @@ elFinder.prototype.resources = {
 			'application/xml'
 		]
 	},
-	
+
 	mixin : {
 		make : function() {
 			var fm   = this.fm,
@@ -112,7 +112,7 @@ elFinder.prototype.resources = {
 							fm.lockfiles({files : [id]});
 
 							fm.request({
-									data        : {cmd : cmd, name : name, target : phash}, 
+									data        : {cmd : cmd, name : name, target : phash},
 									notify      : {type : cmd, cnt : 1},
 									preventFail : true,
 									syncOnFail  : true
@@ -140,7 +140,7 @@ elFinder.prototype.resources = {
 
 
 		}
-		
+
 	}
 }
 

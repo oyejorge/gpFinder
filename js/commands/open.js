@@ -1,18 +1,18 @@
-"use strict"
+
 /**
  * @class  elFinder command "open"
  * Enter folder or open files in new windows
  *
  * @author Dmitry (dio) Levashov
- **/  
+ **/
 elFinder.prototype.commands.open = function() {
 	this.alwaysEnabled = true;
-	
+
 	this._handlers = {
 		dblclick : function(e) { e.preventDefault(); this.exec() },
 		'select enable disable reload' : function(e) { this.update(e.type == 'disable' ? -1 : void(0));  }
 	}
-	
+
 	this.shortcuts = [{
 		pattern     : 'ctrl+down numpad_enter'+(this.fm.OS != 'mac' && ' enter')
 	}];
@@ -20,14 +20,14 @@ elFinder.prototype.commands.open = function() {
 	this.getstate = function(sel) {
 		var sel = this.files(sel),
 			cnt = sel.length;
-		
-		return cnt == 1 
-			? 0 
+
+		return cnt == 1
+			? 0
 			: cnt ? ($.map(sel, function(file) { return file.mime == 'directory' ? null : file}).length == cnt ? 0 : -1) : -1
 	}
-	
+
 	this.exec = function(hashes) {
-		var fm    = this.fm, 
+		var fm    = this.fm,
 			dfrd  = $.Deferred().fail(function(error) { error && fm.error(error); }),
 			files = this.files(hashes),
 			cnt   = files.length,
@@ -47,30 +47,30 @@ elFinder.prototype.commands.open = function() {
 						syncOnFail : true
 					});
 		}
-		
+
 		files = $.map(files, function(file) { return file.mime != 'directory' ? file : null });
-		
+
 		// nothing to open or files and folders selected - do nothing
 		if (cnt != files.length) {
 			return dfrd.reject();
 		}
-		
+
 		// open files
 		cnt = files.length;
 		while (cnt--) {
 			file = files[cnt];
-			
+
 			if (!file.read) {
 				return dfrd.reject(['errOpen', file.name, 'errPerm']);
 			}
-			
+
 			if (!(url = fm.url(/*file.thash || */file.hash))) {
 				url = fm.options.url;
 				url = url + (url.indexOf('?') === -1 ? '?' : '&')
 					+ (fm.oldAPI ? 'cmd=open&current='+file.phash : 'cmd=file')
 					+ '&target=' + file.hash;
 			}
-			
+
 			w = '';
 			// set window size for image
 			if (file.dim) {

@@ -1,0 +1,13 @@
+$(function(){
+./elFinder.js
+./elFinder.version.js
+./jquery.elfinder.js
+./elFinder.options.js
+./elFinder.history.js
+./elFinder.command.js
+./elFinder.resources.js
+./jquery.dialogelfinder.js
+./i18n/elfinder.en.js
+./ui
+./commands
+});

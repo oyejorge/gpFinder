@@ -865,9 +865,7 @@ window.elFinder = function(node, opts) {
 			error = function(xhr, status) {
 				var error;
 
-				$('<div>').appendTo('body').text(xhr.responseText);
-
-				switch (status) {
+				switch( status ){
 					case 'abort':
 						error = xhr.quiet ? '' : ['errConnect', 'errAbort'];
 					break;
@@ -877,11 +875,15 @@ window.elFinder = function(node, opts) {
 					break;
 
 					case 'parsererror':
-						error = ['errResponse', 'errDataNotJSON'];
+						var str = '';
+						if( typeof(xhr.responseText) == 'string' ){
+							str = 'Response: '+xhr.responseText.substr(0,300);
+						}
+						error = ['errResponse', 'errDataNotJSON','',str];
 					break;
 
 					default:
-						if (xhr.status == 403) {
+						if( xhr.status == 403 ){
 							error = ['errConnect', 'errAccess'];
 						} else if (xhr.status == 404) {
 							error = ['errConnect', 'errNotFound'];
@@ -938,9 +940,12 @@ window.elFinder = function(node, opts) {
 			;
 
 		defdone && dfrd.done(done);
-		dfrd.fail(function(error) {
-			if (error) {
-				deffail ? self.error(error) : self.debug('error', self.i18n(error));
+		dfrd.fail(function(error){
+			if( !error ) return;
+			if( deffail ){
+				self.error(error);
+			}else{
+				self.debug('error', self.i18n(error));
 			}
 		})
 

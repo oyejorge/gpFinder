@@ -10,11 +10,11 @@
 	border-left:0 solid transparent;
 	border-top:0 solid transparent;
 	border-right:0 solid transparent;
-	-moz-border-radius-bottomleft: 0; 
-	-webkit-border-bottom-left-radius: 0; 
-	border-bottom-left-radius: 0; 
-	-moz-border-radius-bottomright: 0; 
-	-webkit-border-bottom-right-radius: 0; 
+	-moz-border-radius-bottomleft: 0;
+	-webkit-border-bottom-left-radius: 0;
+	border-bottom-left-radius: 0;
+	-moz-border-radius-bottomright: 0;
+	-webkit-border-bottom-right-radius: 0;
 	border-bottom-right-radius: 0;
 	font-weight:normal;
 	padding:.2em 1em;
@@ -41,7 +41,7 @@
 .std42-dialog .ui-dialog-buttonpane button { margin:0 0 0 .4em;	padding:0; outline:0px solid; }
 .std42-dialog .ui-dialog-buttonpane button span { padding:2px 9px; }
 
-.elfinder-dialog .ui-resizable-e, 
+.elfinder-dialog .ui-resizable-e,
 .elfinder-dialog .ui-resizable-s { width:0; height:0;}
 
 .std42-dialog .ui-button input { cursor: pointer;}
@@ -52,8 +52,7 @@
 	width:32px;
 	height:32px;
 	left:12px;
-	top:50%;
-	margin-top:-15px;
+	top:7px;
 	background:url("../img/dialogs.png") 0 0 no-repeat;
 }
 
@@ -79,7 +78,7 @@
 	border-bottom:1px solid #ccc;
 	position:relative;
 	padding:.5em;
-	
+
 	text-align:center;
 	overflow:hidden;
 }
@@ -106,13 +105,13 @@
 }
 
 .elfinder-notify-progressbar, .elfinder-notify-progress {
-	-moz-border-radius: 2px; 
-	-webkit-border-radius: 2px; 
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
 	border-radius: 2px;
 }
 
 /* icons */
-.elfinder-dialog-icon-open, 
+.elfinder-dialog-icon-open,
 .elfinder-dialog-icon-file        { background-position: 0 -225px; }
 .elfinder-dialog-icon-reload      { background-position: 0 -225px; }
 .elfinder-dialog-icon-mkdir       { background-position: 0 -64px; }
@@ -162,12 +161,12 @@
 .elfinder-info-tb span { float:left;}
 .elfinder-info-tb a { outline: none; text-decoration:underline; }
 .elfinder-info-tb a:hover { text-decoration:none; }
-.elfinder-info-spinner { 
+.elfinder-info-spinner {
 	width:14px;
 	height:14px;
 	float:left;
 	background: url("../img/spinner-mini.gif") center center no-repeat;
-	margin:0 5px; 
+	margin:0 5px;
 }
 
 .elfinder-netmount-tb { margin:0 auto; }

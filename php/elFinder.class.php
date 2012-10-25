@@ -70,7 +70,7 @@ class elFinder {
 		'info'      => array('targets' => true),
 		'dim'       => array('target' => true),
 		'resize'    => array('target' => true, 'width' => true, 'height' => true, 'mode' => false, 'x' => false, 'y' => false, 'degree' => false),
-		'netmount'  => array('protocol' => true, 'host' => true, 'path' => false, 'port' => false, 'user' => true, 'pass' => true, 'alias' => false, 'options' => false)
+		//'netmount'  => array('protocol' => true, 'host' => true, 'path' => false, 'port' => false, 'user' => true, 'pass' => true, 'alias' => false, 'options' => false)
 	);
 
 	/**
@@ -172,9 +172,9 @@ class elFinder {
 	 * @author Dmitry (dio) Levashov
 	 **/
 	public function __construct($opts) {
-		if (session_id() == '') {
-			session_start();
-		}
+		//if (session_id() == '') {
+		//	session_start();
+		//}
 
 		$this->time  = $this->utime();
 		$this->debug = (isset($opts['debug']) && $opts['debug'] ? true : false);
@@ -193,9 +193,11 @@ class elFinder {
 		}
 
 		// check for net volumes stored in session
+		/*
 		foreach ($this->getNetVolumes() as $root) {
 			$opts['roots'][] = $root;
 		}
+		*/
 
 		// "mount" volumes
 		foreach ($opts['roots'] as $i => $o) {

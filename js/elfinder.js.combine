@@ -1,4 +1,4 @@
-$(function(){
+
 ./elFinder.js
 ./elFinder.version.js
 ./jquery.elfinder.js
@@ -10,4 +10,3 @@ $(function(){
 ./i18n/elfinder.en.js
 ./ui
 ./commands
-});

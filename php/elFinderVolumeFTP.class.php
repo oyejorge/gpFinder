@@ -82,8 +82,6 @@ class elFinderVolumeFTP extends elFinderVolumeDriver {
 			'owner'         => true,
 			'tmbPath'       => '',
 			'tmpPath'       => '',
-			'dirMode'       => 0755,
-			'fileMode'      => 0644
 		);
 		$this->options = array_merge($this->options, $opts);
 		$this->options['mimeDetect'] = 'internal';
@@ -732,7 +730,7 @@ class elFinderVolumeFTP extends elFinderVolumeDriver {
 			return false;
 		}
 
-		$this->options['dirMode'] && @ftp_chmod($this->connect, $this->options['dirMode'], $path);
+		@ftp_chmod($this->connect, finder_chmod_dir, $path);
 		return $path;
 	}
 

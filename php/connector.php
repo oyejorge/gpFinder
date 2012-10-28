@@ -14,7 +14,6 @@ if( function_exists('date_default_timezone_set') ){
 	date_default_timezone_set('Europe/Moscow');
 }
 
-include_once dirname(__FILE__).DIRECTORY_SEPARATOR.'elFinderConnector.class.php';
 include_once dirname(__FILE__).DIRECTORY_SEPARATOR.'elFinder.class.php';
 include_once dirname(__FILE__).DIRECTORY_SEPARATOR.'elFinderVolumeDriver.class.php';
 include_once dirname(__FILE__).DIRECTORY_SEPARATOR.'elFinderVolumeLocalFileSystem.class.php';
@@ -402,8 +401,8 @@ $opts = array(
 
 // sleep(3);
 header('Access-Control-Allow-Origin: *');
-$connector = new elFinderConnector(new elFinder($opts), true);
-$connector->run();
+$finder = new elFinder($opts);
+$finder->run();
 
 // echo '<pre>';
 // print_r($connector);

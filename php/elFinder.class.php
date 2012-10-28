@@ -221,26 +221,19 @@ class elFinder {
 		*/
 
 		// "mount" volumes
-		foreach ($opts['roots'] as $i => $o) {
-			$class = 'elFinderVolume'.(isset($o['driver']) ? $o['driver'] : '');
+		foreach( $opts['roots'] as $i => $o ){
+			$driver = isset($o['driver']) ? $o['driver'] : '';
+			if( $this->MountVolume( $volume, $driver, $o ) ){
 
-			if (class_exists($class)) {
-				$volume = new $class();
+				// unique volume id (ends on "_") - used as prefix to files hash
+				$id = $volume->id();
 
-				if ($volume->mount($o)) {
-					// unique volume id (ends on "_") - used as prefix to files hash
-					$id = $volume->id();
-
-					$this->volumes[$id] = $volume;
-					if (!$this->default && $volume->isReadable()) {
-						$this->default = $this->volumes[$id];
-					}
-				} else {
-					$this->mountErrors[] = 'Driver "'.$class.'" : '.implode(' ', $volume->error());
+				$this->volumes[$id] = $volume;
+				if( !$this->default && $volume->isReadable() ){
+					$this->default = $this->volumes[$id];
 				}
-			} else {
-				$this->mountErrors[] = 'Driver "'.$class.'" does not exists';
 			}
+
 		}
 
 		// if at least one redable volume - ii desu >_<
@@ -573,31 +566,30 @@ class elFinder {
 		$options  = array();
 		$protocol = $args['protocol'];
 		$driver   = isset(self::$netDrivers[$protocol]) ? $protocol : '';
-		$class    = 'elfindervolume'.$protocol;
 
-		if (!$driver) {
+		if( !$driver ){
 			return array('error' => $this->error(self::ERROR_NETMOUNT, $args['host'], self::ERROR_NETMOUNT_NO_DRIVER));
 		}
 
-		if (!$args['path']) {
+		if( !$args['path'] ){
 			$args['path'] = '/';
 		}
 
-		foreach ($args as $k => $v) {
+		foreach($args as $k => $v){
 			if ($k != 'options' && $k != 'protocol' && $v) {
 				$options[$k] = $v;
 			}
 		}
 
-		if (is_array($args['options'])) {
-			foreach ($args['options'] as $key => $value) {
+		if( is_array($args['options']) ){
+			foreach($args['options'] as $key => $value){
 				$options[$key] = $value;
 			}
 		}
 
-		$volume = new $class();
+		$this->MountVolume( $volume, $protocol, $options );
 
-		if ($volume->mount($options)) {
+		if( $volume->mount($options) ){
 			$netVolumes        = $this->getNetVolumes();
 			$options['driver'] = $driver;
 			$netVolumes[]      = $options;
@@ -607,7 +599,34 @@ class elFinder {
 		} else {
 			return array('error' => $this->error(self::ERROR_NETMOUNT, $args['host'], implode(' ', $volume->error())));
 		}
+	}
 
+	/**
+	 * Create a new volume object for the specified driver
+	 * Include the file if the class doesn't exist
+	 *
+	 */
+	function MountVolume( &$volume, $driver, $options ){
+		$class = 'elFinderVolume'.$driver;
+		if( !class_exists($class) ){
+			$file = 'elFinderVolume'.$driver.'.class.php';
+			if( !file_exists($file) ){
+				$this->mountErrors[] = 'Driver file for "'.$driver.'" does not exists';
+				return false;
+			}
+			include_once($file);
+		}
+		if( !class_exists($class) ){
+			$this->mountErrors[] = 'Driver "'.$driver.'" does not exists';
+		}
+		$volume = new $class();
+
+		if( !$volume->mount($options) ){
+			$this->mountErrors[] = 'Driver "'.$driver.'" : '.implode(' ', $volume->error());
+			return false;
+		}
+
+		return true;
 	}
 
 	/**

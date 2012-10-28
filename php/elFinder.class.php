@@ -1,6 +1,9 @@
 <?php
 
 
+require('elFinderVolumeDriver.class.php');
+
+
 /**
  * File Permissions
  *

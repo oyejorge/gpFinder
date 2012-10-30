@@ -39,7 +39,7 @@ class elFinder {
 	 **/
 	protected $volumes = array();
 
-	public static $netDrivers = array();
+	public static $netDrivers = array('ftp'=>'FTP');
 
 	/**
 	 * Mounted volumes count

@@ -7,8 +7,6 @@ function chmodnum($chmod) {
     return array_sum(str_split($array[0])) . array_sum(str_split($array[1])) . array_sum(str_split($array[2]));
 }
 
-elFinder::$netDrivers['ftp'] = 'FTP';
-
 /**
  * Simple elFinder driver for FTP
  *

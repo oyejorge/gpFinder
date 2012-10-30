@@ -612,11 +612,6 @@ class elFinder {
 	function MountVolume( &$volume, $driver, $options ){
 		$class = 'elFinderVolume'.$driver;
 		if( !class_exists($class) ){
-			$file = 'elFinderVolume'.$driver.'.class.php';
-			if( !file_exists($file) ){
-				$this->mountErrors[] = 'Driver file for "'.$driver.'" does not exists';
-				return false;
-			}
 			include_once($file);
 		}
 		if( !class_exists($class) ){

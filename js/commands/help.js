@@ -26,29 +26,32 @@ elFinder.prototype.commands.help = function() {
 
 
 		about = function() {
-			html.push('<div id="about" class="ui-tabs-panel ui-widget-content ui-corner-bottom"><div class="elfinder-help-logo"/>')
-			html.push('<h3>elFinder</h3>');
+			html.push('<div id="about" class="ui-tabs-panel ui-widget-content ui-corner-bottom">')
+			html.push('<h3>gpFinder</h3>');
+			html.push('<div class="'+prim+'">An adaptation of <a href="http://elfinder.org/">elFinder</a></div>');
 			html.push('<div class="'+prim+'">'+fm.i18n('webfm')+'</div>');
 			html.push('<div class="'+sec+'">'+fm.i18n('ver')+': '+fm.version+', '+fm.i18n('protocolver')+': <span id="apiver"></span></div>');
 			html.push('<div class="'+sec+'">jQuery/jQuery UI: '+$().jquery+'/'+$.ui.version+'</div>');
 
 			html.push(sep);
 
-			html.push(linktpl[r](url, 'http://elfinder.org/')[r](link, fm.i18n('homepage')));
-			html.push(linktpl[r](url, 'https://github.com/Studio-42/elFinder/wiki')[r](link, fm.i18n('docs')));
-			html.push(linktpl[r](url, 'https://github.com/Studio-42/elFinder')[r](link, fm.i18n('github')));
-			html.push(linktpl[r](url, 'http://twitter.com/elrte_elfinder')[r](link, fm.i18n('twitter')));
+			//html.push(linktpl[r](url, 'http://elfinder.org/')[r](link, fm.i18n('homepage')));
+			html.push(linktpl[r](url, 'https://github.com/oyejorge/gpFinder/wiki')[r](link, fm.i18n('docs')));
+			html.push(linktpl[r](url, 'https://github.com/oyejorge/gpFinder/issues')[r](link, 'Issues'));
+			html.push(linktpl[r](url, 'https://github.com/oyejorge/gpFinder')[r](link, fm.i18n('github')));
+			//html.push(linktpl[r](url, 'http://twitter.com/elrte_elfinder')[r](link, fm.i18n('twitter')));
 
 			html.push(sep);
 
+			/*
 			html.push('<div class="'+prim+'">'+fm.i18n('team')+'</div>');
-
 			html.push(atpl[r](author, 'Dmitry "dio" Levashov &lt;dio@std42.ru&gt;')[r](work, fm.i18n('chiefdev')));
 			html.push(atpl[r](author, 'Troex Nevelin &lt;troex@fury.scancode.ru&gt;')[r](work, fm.i18n('maintainer')));
 			html.push(atpl[r](author, 'Alexey Sukhotin &lt;strogg@yandex.ru&gt;')[r](work, fm.i18n('contributor')));
 			html.push(atpl[r](author, 'Naoki Sawada &lt;hypweb@gmail.com&gt;')[r](work, fm.i18n('contributor')));
-
 			fm.i18[fm.lang].translator && html.push(atpl[r](author, fm.i18[fm.lang].translator)[r](work, fm.i18n('translator')+' ('+fm.i18[fm.lang].language+')'));
+			*/
+
 
 			html.push(sep);
 			html.push('<div class="'+lic+'">'+fm.i18n('icons')+': <a href="http://pixelmixer.ru/" target="_blank">Pixelmixer</a>, <a href="http://p.yusukekamiyamane.com" target="_blank">Fugue</a></div>');

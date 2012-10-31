@@ -3,7 +3,7 @@
 error_reporting(0); // Set E_ALL for debuging
 @ini_set('display_errors',0);
 
-include_once dirname(__FILE__).DIRECTORY_SEPARATOR.'elFinder.class.php';
+include_once dirname(__FILE__).DIRECTORY_SEPARATOR.'Finder.class.php';
 
 
 /**

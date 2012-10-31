@@ -11,7 +11,7 @@
  * @author Troex Nevelin
  * @author Alexey Sukhotin
  **/
-abstract class elFinderVolumeDriver {
+abstract class FinderVolumeDriver {
 
 	/**
 	 * Driver id
@@ -1368,7 +1368,7 @@ abstract class elFinderVolumeDriver {
 
 		$mime = $this->mimetype($this->mimeDetect == 'internal' ? $name : $tmpname, $name);
 		if ($mime == 'unknown' && $this->mimeDetect == 'internal') {
-			$mime = elFinderVolumeDriver::mimetypeInternalDetect($name);
+			$mime = FinderVolumeDriver::mimetypeInternalDetect($name);
 		}
 
 		// logic based on http://httpd.apache.org/docs/2.2/mod/mod_authz_host.html#order
@@ -2170,13 +2170,13 @@ abstract class elFinderVolumeDriver {
 				}
 				$ext = (false === $pos = strrpos($name, '.')) ? '' : substr($name, $pos + 1);
 				if ($ext && preg_match('~^application/(?:octet-stream|(?:x-)?zip)~', $type)) {
-					if (isset(elFinderVolumeDriver::$mimetypes[$ext])) $type = elFinderVolumeDriver::$mimetypes[$ext];
+					if (isset(FinderVolumeDriver::$mimetypes[$ext])) $type = FinderVolumeDriver::$mimetypes[$ext];
 				}
 			}
 		} elseif ($type == 'mime_content_type') {
 			$type = mime_content_type($path);
 		} else {
-			$type = elFinderVolumeDriver::mimetypeInternalDetect($path);
+			$type = FinderVolumeDriver::mimetypeInternalDetect($path);
 		}
 
 		$type = explode(';', $type);
@@ -2191,7 +2191,7 @@ abstract class elFinderVolumeDriver {
 		}
 
 		return $type == 'unknown' && $this->mimeDetect != 'internal'
-			? elFinderVolumeDriver::mimetypeInternalDetect($path)
+			? FinderVolumeDriver::mimetypeInternalDetect($path)
 			: $type;
 
 	}
@@ -2206,7 +2206,7 @@ abstract class elFinderVolumeDriver {
 	static protected function mimetypeInternalDetect($path) {
 		$pinfo = pathinfo($path);
 		$ext   = isset($pinfo['extension']) ? strtolower($pinfo['extension']) : '';
-		return isset(elFinderVolumeDriver::$mimetypes[$ext]) ? elFinderVolumeDriver::$mimetypes[$ext] : 'unknown';
+		return isset(FinderVolumeDriver::$mimetypes[$ext]) ? FinderVolumeDriver::$mimetypes[$ext] : 'unknown';
 
 	}
 

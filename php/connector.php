@@ -14,7 +14,7 @@ if( function_exists('date_default_timezone_set') ){
 	date_default_timezone_set('Europe/Moscow');
 }
 
-include_once dirname(__FILE__).DIRECTORY_SEPARATOR.'elFinder.class.php';
+include_once dirname(__FILE__).DIRECTORY_SEPARATOR.'Finder.class.php';
 
 function debug($o) {
 	echo '<pre>';

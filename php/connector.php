@@ -26,16 +26,16 @@ function debug($o) {
 
 /**
  * Smart logger function
- * Demonstrate how to work with elFinder event api
+ * Demonstrate how to work with Finder event api
  *
  * @param  string   $cmd       command name
  * @param  array    $result    command result
  * @param  array    $args      command arguments from client
- * @param  elFinder $elfinder  elFinder instance
+ * @param  object $finder  Finder instance
  * @return void|true
  * @author Troex Nevelin
  **/
-function logger($cmd, $result, $args, $elfinder) {
+function logger($cmd, $result, $args, $finder) {
 
 
 	$log = sprintf("[%s] %s: %s \n", date('r'), strtoupper($cmd), var_export($result, true));
@@ -60,7 +60,7 @@ function logger($cmd, $result, $args, $elfinder) {
 		} else {
 			if (is_array($value)) { // changes made to files
 				foreach ($value as $file) {
-					$filepath = (isset($file['realpath']) ? $file['realpath'] : $elfinder->realpath($file['hash']));
+					$filepath = (isset($file['realpath']) ? $file['realpath'] : $finder->realpath($file['hash']));
 					array_push($data, $filepath);
 				}
 			} else { // other value (ex. header)
@@ -85,12 +85,12 @@ function logger($cmd, $result, $args, $elfinder) {
 
 /**
  * Simple logger function.
- * Demonstrate how to work with elFinder event api.
+ * Demonstrate how to work with Finder event api.
  *
- * @package elFinder
+ * @package Finder
  * @author Dmitry (dio) Levashov
  **/
-class elFinderSimpleLogger {
+class FinderSimpleLogger {
 
 	/**
 	 * Log file path
@@ -119,11 +119,11 @@ class elFinderSimpleLogger {
 	 * @param  string   $cmd       command name
 	 * @param  array    $result    command result
 	 * @param  array    $args      command arguments from client
-	 * @param  elFinder $elfinder  elFinder instance
+	 * @param  object $finder  Finder instance
 	 * @return void|true
 	 * @author Dmitry (dio) Levashov
 	 **/
-	public function log($cmd, $result, $args, $elfinder) {
+	public function log($cmd, $result, $args, $finder) {
 		$log = $cmd.' ['.date('d.m H:s')."]\n";
 
 		if (!empty($result['error'])) {
@@ -143,13 +143,13 @@ class elFinderSimpleLogger {
 
 		if (!empty($result['added'])) {
 			foreach ($result['added'] as $file) {
-				$log .= "\tADDED: ".$elfinder->realpath($file['hash'])."\n";
+				$log .= "\tADDED: ".$finder->realpath($file['hash'])."\n";
 			}
 		}
 
 		if (!empty($result['changed'])) {
 			foreach ($result['changed'] as $file) {
-				$log .= "\tCHANGED: ".$elfinder->realpath($file['hash'])."\n";
+				$log .= "\tCHANGED: ".$finder->realpath($file['hash'])."\n";
 			}
 		}
 
@@ -186,7 +186,7 @@ class elFinderSimpleLogger {
 function access($attr, $path, $data, $volume) {
 	return strpos(basename($path), '.') === 0       // if file/folder begins with '.' (dot)
 		? !($attr == 'read' || $attr == 'write')    // set read+write to false, other (locked+hidden) set to true
-		:  null;                                    // else elFinder decide it itself
+		:  null;                                    // else Finder decide it itself
 }
 
 /**
@@ -194,15 +194,15 @@ function access($attr, $path, $data, $volume) {
  *
  * @author Dmitry (dio) Levashov
  **/
-class elFinderTestACL {
+class FinderTestACL {
 
 	/**
 	 * make dotfiles not readable, not writable, hidden and locked
 	 *
 	 * @param  string  $attr  attribute name (read|write|locked|hidden)
 	 * @param  string  $path  file path. Attention! This is path relative to volume root directory started with directory separator.
-	 * @param  mixed   $data  data which seted in 'accessControlData' elFinder option
-	 * @param  elFinderVolumeDriver  $volume  volume driver
+	 * @param  mixed   $data  data which seted in 'accessControlData' Finder option
+	 * @param  object  $volume  finder volume driver
 	 * @return bool
 	 * @author Dmitry (dio) Levashov
 	 **/
@@ -219,14 +219,14 @@ class elFinderTestACL {
 
 } // END class
 
-$acl = new elFinderTestACL();
+$acl = new FinderTestACL();
 
 function validName($name) {
 	return strpos($name, '.') !== 0;
 }
 
 
-$logger = new elFinderSimpleLogger('../files/temp/log.txt');
+$logger = new FinderSimpleLogger('../files/temp/log.txt');
 
 
 

@@ -17,12 +17,12 @@ include_once dirname(__FILE__).DIRECTORY_SEPARATOR.'Finder.class.php';
 function access($attr, $path, $data, $volume) {
 	return strpos(basename($path), '.') === 0       // if file/folder begins with '.' (dot)
 		? !($attr == 'read' || $attr == 'write')    // set read+write to false, other (locked+hidden) set to true
-		:  null;                                    // else elFinder decide it itself
+		:  null;                                    // else Finder decide it itself
 }
 
 
 // Documentation for connector options:
-// https://github.com/Studio-42/elFinder/wiki/Connector-configuration-options
+// https://github.com/oyejorge/gpFinder/wiki/Connector-configuration-options
 $opts = array(
 	// 'debug' => true,
 	'roots' => array(

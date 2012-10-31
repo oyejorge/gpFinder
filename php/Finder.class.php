@@ -8,8 +8,8 @@ require('FinderVolumeDriver.class.php');
  * File Permissions
  *
  */
-elFinder::defined('finder_chmod_file',0666);
-elFinder::defined('finder_chmod_dir',0755);
+Finder::defined('finder_chmod_file',0666);
+Finder::defined('finder_chmod_dir',0755);
 
 
 
@@ -17,12 +17,12 @@ elFinder::defined('finder_chmod_dir',0755);
 /**
  * Core class.
  *
- * @package elfinder
+ * @package Finder
  * @author Dmitry (dio) Levashov
  * @author Troex Nevelin
  * @author Alexey Sukhotin
  **/
-class elFinder {
+class Finder {
 
 	/**
 	 * API version number
@@ -51,7 +51,7 @@ class elFinder {
 	/**
 	 * Default root (storage)
 	 *
-	 * @var elFinderStorageDriver
+	 * @var FinderStorageDriver
 	 **/
 	protected $default = null;
 
@@ -100,7 +100,7 @@ class elFinder {
 	 **/
 	protected $time = 0;
 	/**
-	 * Is elFinder init correctly?
+	 * Is the Finder init correctly?
 	 *
 	 * @var bool
 	 **/
@@ -188,7 +188,7 @@ class elFinder {
 	/**
 	 * Constructor
 	 *
-	 * @param  array  elFinder and roots configurations
+	 * @param  array  Finder and roots configurations
 	 * @return void
 	 * @author Dmitry (dio) Levashov
 	 **/
@@ -244,7 +244,7 @@ class elFinder {
 
 
 	/**
-	 * Execute elFinder command and output result
+	 * Execute Finder command and output result
 	 *
 	 * @return void
 	 * @author Dmitry (dio) Levashov
@@ -256,22 +256,22 @@ class elFinder {
 		$args   = array();
 
 		if (!function_exists('json_encode')) {
-			$error = $this->error(elFinder::ERROR_CONF, elFinder::ERROR_CONF_NO_JSON);
+			$error = $this->error(Finder::ERROR_CONF, Finder::ERROR_CONF_NO_JSON);
 			$this->output(array('error' => '{"error":["'.implode('","', $error).'"]}', 'raw' => true));
 		}
 
 		if (!$this->loaded()) {
-			$this->output(array('error' => $this->error(elFinder::ERROR_CONF, elFinder::ERROR_CONF_NO_VOL), 'debug' => $this->mountErrors));
+			$this->output(array('error' => $this->error(Finder::ERROR_CONF, Finder::ERROR_CONF_NO_VOL), 'debug' => $this->mountErrors));
 		}
 
 		// telepat_mode: on
 		if (!$cmd && $isPost) {
-			$this->output(array('error' => $this->error(elFinder::ERROR_UPLOAD, elFinder::ERROR_UPLOAD_TOTAL_SIZE), 'header' => 'Content-Type: text/html'));
+			$this->output(array('error' => $this->error(Finder::ERROR_UPLOAD, Finder::ERROR_UPLOAD_TOTAL_SIZE), 'header' => 'Content-Type: text/html'));
 		}
 		// telepat_mode: off
 
 		if (!$this->commandExists($cmd)) {
-			$this->output(array('error' => $this->error(elFinder::ERROR_UNKNOWN_CMD)));
+			$this->output(array('error' => $this->error(Finder::ERROR_UNKNOWN_CMD)));
 		}
 
 		// collect required arguments to exec command
@@ -284,7 +284,7 @@ class elFinder {
 				$arg = trim($arg);
 			}
 			if ($req && (!isset($arg) || $arg === '')) {
-				$this->output(array('error' => $this->error(elFinder::ERROR_INV_PARAMS, $cmd)));
+				$this->output(array('error' => $this->error(Finder::ERROR_INV_PARAMS, $cmd)));
 			}
 			$args[$name] = $arg;
 		}
@@ -353,11 +353,11 @@ class elFinder {
 	}
 
 	/**
-	 * Add handler to elFinder command
+	 * Add handler to Finder command
 	 *
 	 * @param  string  command name
 	 * @param  string|array  callback name or array(object, method)
-	 * @return elFinder
+	 * @return Finder
 	 * @author Dmitry (dio) Levashov
 	 **/
 	public function bind($cmd, $handler) {
@@ -385,7 +385,7 @@ class elFinder {
 	 *
 	 * @param  string  command name
 	 * @param  string|array  callback name or array(object, method)
-	 * @return elFinder
+	 * @return Finder
 	 * @author Dmitry (dio) Levashov
 	 **/
 	public function unbind($cmd, $handler) {
@@ -1251,7 +1251,7 @@ class elFinder {
 	 * Return root - file's owner
 	 *
 	 * @param  string  file hash
-	 * @return elFinderStorageDriver
+	 * @return FinderStorageDriver
 	 * @author Dmitry (dio) Levashov
 	 **/
 	protected function volume($hash) {

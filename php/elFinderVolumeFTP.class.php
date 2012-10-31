@@ -8,12 +8,12 @@ function chmodnum($chmod) {
 }
 
 /**
- * Simple elFinder driver for FTP
+ * Simple FTP driver
  *
  * @author Dmitry (dio) Levashov
  * @author Cem (discofever)
  **/
-class elFinderVolumeFTP extends elFinderVolumeDriver {
+class elFinderVolumeFTP extends FinderVolumeDriver {
 
 	/**
 	 * Driver id
@@ -121,8 +121,6 @@ class elFinderVolumeFTP extends elFinderVolumeDriver {
 
 		if (empty($this->options['alias'])) {
 			$this->options['alias'] = $this->options['user'].'@'.$this->options['host'];
-			// $num = elFinder::$volumesCnt-1;
-			// $this->options['alias'] = $this->root == '/' || $this->root == '.' ? 'FTP folder '.$num : basename($this->root);
 		}
 
 		$this->rootName = $this->options['alias'];

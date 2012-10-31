@@ -5,7 +5,7 @@
  *
  * @author Dmitry (dio) Levashov
  **/
-class elFinderVolumeMySQL extends elFinderVolumeDriver {
+class elFinderVolumeMySQL extends FinderVolumeDriver {
 
 	/**
 	 * Driver id

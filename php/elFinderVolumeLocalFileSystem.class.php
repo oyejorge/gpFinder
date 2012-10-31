@@ -6,7 +6,7 @@
  * @author Dmitry (dio) Levashov
  * @author Troex Nevelin
  **/
-class elFinderVolumeLocalFileSystem extends elFinderVolumeDriver {
+class elFinderVolumeLocalFileSystem extends FinderVolumeDriver {
 
 	/**
 	 * Driver id

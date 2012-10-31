@@ -1,7 +1,7 @@
 <?php
 
 
-require('elFinderVolumeDriver.class.php');
+require('FinderVolumeDriver.class.php');
 
 
 /**
@@ -15,7 +15,6 @@ elFinder::defined('finder_chmod_dir',0755);
 
 
 /**
- * elFinder - file manager for web.
  * Core class.
  *
  * @package elfinder

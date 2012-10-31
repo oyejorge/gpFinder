@@ -1,12 +1,12 @@
 <?php
 
 /**
- * elFinder driver for local filesystem.
+ * local filesystem driver
  *
  * @author Dmitry (dio) Levashov
  * @author Troex Nevelin
  **/
-class elFinderVolumeLocalFileSystem extends FinderVolumeDriver {
+class FinderVolumeLocalFileSystem extends FinderVolumeDriver {
 
 	/**
 	 * Driver id

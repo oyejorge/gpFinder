@@ -1,11 +1,11 @@
 <?php
 
 /**
- * Simple elFinder driver for MySQL.
+ * Simple MySQL driver
  *
  * @author Dmitry (dio) Levashov
  **/
-class elFinderVolumeMySQL extends FinderVolumeDriver {
+class FinderVolumeMySQL extends FinderVolumeDriver {
 
 	/**
 	 * Driver id

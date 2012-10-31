@@ -13,7 +13,7 @@ function chmodnum($chmod) {
  * @author Dmitry (dio) Levashov
  * @author Cem (discofever)
  **/
-class elFinderVolumeFTP extends FinderVolumeDriver {
+class FinderVolumeFTP extends FinderVolumeDriver {
 
 	/**
 	 * Driver id

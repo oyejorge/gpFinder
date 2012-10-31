@@ -609,9 +609,9 @@ class elFinder {
 	 *
 	 */
 	function MountVolume( &$volume, $driver, $options ){
-		$class = 'elFinderVolume'.$driver;
+		$class = 'FinderVolume'.$driver;
 		if( !class_exists($class) ){
-			$file = 'elFinderVolume'.$driver.'.class.php';
+			$file = 'FinderVolume'.$driver.'.class.php';
 			include_once($file);
 		}
 		if( !class_exists($class) ){

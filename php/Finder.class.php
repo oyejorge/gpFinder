@@ -526,7 +526,7 @@ class Finder {
 	 * @author Dmitry (dio) Levashov
 	 */
 	protected function getNetVolumes() {
-		return isset($_SESSION['elFinderNetVolumes']) && is_array($_SESSION['elFinderNetVolumes']) ? $_SESSION['elFinderNetVolumes'] : array();
+		return isset($_SESSION['FinderNetVolumes']) && is_array($_SESSION['FinderNetVolumes']) ? $_SESSION['FinderNetVolumes'] : array();
 	}
 
 	/**
@@ -537,7 +537,7 @@ class Finder {
 	 * @author Dmitry (dio) Levashov
 	 */
 	protected function saveNetVolumes($volumes) {
-		$_SESSION['elFinderNetVolumes'] = $volumes;
+		$_SESSION['FinderNetVolumes'] = $volumes;
 	}
 
 	/***************************************************************************/

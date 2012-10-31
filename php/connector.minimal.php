@@ -36,6 +36,6 @@ $opts = array(
 );
 
 // run
-$finder = new elFinder($opts);
+$finder = new Finder($opts);
 $finder->run();
 

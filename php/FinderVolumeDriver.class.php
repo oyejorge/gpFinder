@@ -1,6 +1,6 @@
 <?php
 /**
- * Base class for elFinder volume.
+ * Base class for Finder volume.
  * Provide 2 layers:
  *  1. Public API (commands)
  *  2. abstract fs API

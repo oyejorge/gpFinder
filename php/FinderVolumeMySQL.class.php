@@ -67,7 +67,7 @@ class FinderVolumeMySQL extends FinderVolumeDriver {
 			'db'            => '',
 			'port'          => null,
 			'socket'        => null,
-			'files_table'   => 'elfinder_file',
+			'files_table'   => 'finder_file',
 			'tmbPath'       => '',
 			'tmpPath'       => ''
 		);

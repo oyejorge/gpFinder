@@ -397,7 +397,7 @@ $opts = array(
 
 // sleep(3);
 header('Access-Control-Allow-Origin: *');
-$finder = new elFinder($opts);
+$finder = new Finder($opts);
 $finder->run();
 
 // echo '<pre>';

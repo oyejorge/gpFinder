@@ -1,12 +1,12 @@
 
-./elFinder.js
-./elFinder.version.js
-./jquery.elfinder.js
-./elFinder.options.js
-./elFinder.history.js
-./elFinder.command.js
-./elFinder.resources.js
-./jquery.dialogelfinder.js
+./Finder.js
+./Finder.version.js
+./jquery.finder.js
+./Finder.options.js
+./Finder.history.js
+./Finder.command.js
+./Finder.resources.js
+./jquery.dialogfinder.js
 ./i18n/en.js
 ./ui
 ./commands

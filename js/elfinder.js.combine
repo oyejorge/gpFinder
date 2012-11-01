@@ -7,6 +7,6 @@
 ./elFinder.command.js
 ./elFinder.resources.js
 ./jquery.dialogelfinder.js
-./i18n/elfinder.en.js
+./i18n/en.js
 ./ui
 ./commands

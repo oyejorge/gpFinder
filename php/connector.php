@@ -167,6 +167,7 @@ $opts = array(
 		// 'mkdir mkfile rename duplicate upload rm paste' => 'logger'
 	),
 	'debug' => true,
+	'savedata'
 	'roots' => array(
 		array(
 			'driver'     => 'LocalFileSystem',
@@ -323,6 +324,17 @@ $opts = array(
 
 );
 
+
+/**
+ * Functions for saving and returning data used by the finder
+ *
+ */
+function SaveFinderData($data){
+
+}
+function ReturnFinderData(){
+
+}
 
 
 header('Access-Control-Allow-Origin: *');

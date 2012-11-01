@@ -1,5 +1,5 @@
-DROP TABLE IF EXISTS `elfinder_file`;
-CREATE TABLE IF NOT EXISTS `elfinder_file` (
+DROP TABLE IF EXISTS `finder_file`;
+CREATE TABLE IF NOT EXISTS `finder_file` (
   `id`        int(7) unsigned NOT NULL auto_increment,
   `parent_id` int(7) unsigned NOT NULL,
   `name`      varchar(256) NOT NULL,
@@ -18,6 +18,6 @@ CREATE TABLE IF NOT EXISTS `elfinder_file` (
   KEY         `parent_id`   (`parent_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
-INSERT INTO `elfinder_file`
-(`id`, `parent_id`, `name`,     `content`, `size`, `mtime`, `mime`,      `read`, `write`, `locked`, `hidden`, `width`, `height`) VALUES 
+INSERT INTO `finder_file`
+(`id`, `parent_id`, `name`,     `content`, `size`, `mtime`, `mime`,      `read`, `write`, `locked`, `hidden`, `width`, `height`) VALUES
 ('1',  '0',         'DATABASE', '',        '0',    '0',     'directory', '1',    '1',     '0',      '0',      '0',     '0');

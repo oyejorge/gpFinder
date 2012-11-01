@@ -167,7 +167,9 @@ $opts = array(
 		// 'mkdir mkfile rename duplicate upload rm paste' => 'logger'
 	),
 	'debug' => true,
-	'savedata'
+	'savedata' => 'SaveFinderData',
+	'returndata' => 'ReturnFinderData',
+
 	'roots' => array(
 		array(
 			'driver'     => 'LocalFileSystem',

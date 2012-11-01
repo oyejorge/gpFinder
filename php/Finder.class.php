@@ -83,7 +83,7 @@ class Finder {
 		'info'      => array('targets' => true),
 		'dim'       => array('target' => true),
 		'resize'    => array('target' => true, 'width' => true, 'height' => true, 'mode' => false, 'x' => false, 'y' => false, 'degree' => false),
-		//'netmount'  => array('protocol' => true, 'host' => true, 'path' => false, 'port' => false, 'user' => true, 'pass' => true, 'alias' => false, 'options' => false)
+		'netmount'  => array('protocol' => true, 'host' => true, 'path' => false, 'port' => false, 'user' => true, 'pass' => true, 'alias' => false, 'options' => false)
 	);
 
 	/**
@@ -131,8 +131,23 @@ class Finder {
 	 * Errors from not mounted volumes
 	 *
 	 * @var array
-	 **/
+	 */
 	public $mountErrors = array();
+
+	/**
+	 * Array of user data
+	 *
+	 * @var array
+	 */
+	public $userData = array();
+
+	/**
+	 * Callback for saving user data
+	 *
+	 * @var callback
+	 */
+	public $saveDataMethod = false;
+
 
 	// Errors messages
 	const ERROR_UNKNOWN           = 'errUnknown';
@@ -208,16 +223,23 @@ class Finder {
 			}
 		}
 
+		// get data
+		if( !empty($opts['returnData']) && !empty($opts['saveData'])
+			&& is_callable($opts['returnData']) && is_callable($opts['saveData']) ){
+			$this->userData = call_user_func( $opts['returnData'] );
+			$this->saveDataMethod = $opts['saveData'];
+		}
+
+
+		// roots
 		if( !isset($opts['roots']) || !is_array($opts['roots']) ){
 			$opts['roots'] = array();
 		}
 
-		// check for net volumes stored in session
-		/*
+		// check for net volumes stored in userData
 		foreach ($this->getNetVolumes() as $root) {
 			$opts['roots'][] = $root;
 		}
-		*/
 
 		// "mount" volumes
 		foreach( $opts['roots'] as $i => $o ){
@@ -522,8 +544,11 @@ class Finder {
 	 * @return array
 	 * @author Dmitry (dio) Levashov
 	 */
-	protected function getNetVolumes() {
-		return isset($_SESSION['FinderNetVolumes']) && is_array($_SESSION['FinderNetVolumes']) ? $_SESSION['FinderNetVolumes'] : array();
+	protected function getNetVolumes(){
+		if( isset($this->userData['FinderNetVolumes']) && is_array($this->userData['FinderNetVolumes']) ){
+			return $this->userData['FinderNetVolumes'];
+		}
+		return array();
 	}
 
 	/**
@@ -533,8 +558,12 @@ class Finder {
 	 * @return void
 	 * @author Dmitry (dio) Levashov
 	 */
-	protected function saveNetVolumes($volumes) {
-		$_SESSION['FinderNetVolumes'] = $volumes;
+	protected function saveNetVolumes($volumes){
+		if( !$this->saveDataMethod ){
+			return false;
+		}
+		$this->userData['FinderNetVolumes'] = $volumes;
+		return call_user_func( $this->saveDataMethod, $this->userData);
 	}
 
 	/***************************************************************************/
@@ -564,7 +593,7 @@ class Finder {
 	protected function netmount($args) {
 		$options  = array();
 		$protocol = $args['protocol'];
-		$driver   = isset(self::$netDrivers[$protocol]) ? $protocol : '';
+		$driver   = isset(self::$netDrivers[$protocol]) ? self::$netDrivers[$protocol] : '';
 
 		if( !$driver ){
 			return array('error' => $this->error(self::ERROR_NETMOUNT, $args['host'], self::ERROR_NETMOUNT_NO_DRIVER));
@@ -586,7 +615,7 @@ class Finder {
 			}
 		}
 
-		$this->MountVolume( $volume, $protocol, $options );
+		$this->MountVolume( $volume, $driver, $options );
 
 		if( $volume->mount($options) ){
 			$netVolumes        = $this->getNetVolumes();

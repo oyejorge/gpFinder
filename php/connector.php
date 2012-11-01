@@ -167,8 +167,8 @@ $opts = array(
 		// 'mkdir mkfile rename duplicate upload rm paste' => 'logger'
 	),
 	'debug' => true,
-	'savedata' => 'SaveFinderData',
-	'returndata' => 'ReturnFinderData',
+	'saveData' => 'SaveFinderData',
+	'returnData' => 'ReturnFinderData',
 
 	'roots' => array(
 		array(
@@ -331,12 +331,17 @@ $opts = array(
  * Functions for saving and returning data used by the finder
  *
  */
+session_start();
 function SaveFinderData($data){
-
+	$_SESSION['finder_data'] = $data;
 }
 function ReturnFinderData(){
-
+	if( isset($_SESSION['finder_data']) ){
+		return $_SESSION['finder_data'];
+	}
+	return false;
 }
+
 
 
 header('Access-Control-Allow-Origin: *');

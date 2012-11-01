@@ -7,8 +7,8 @@
  **/
 $.fn.elfinderstat = function(fm) {
 	return this.each(function() {
-		var size       = $(this).addClass('elfinder-stat-size'),
-			sel        = $('<div class="elfinder-stat-selected"/>'),
+		var size       = $(this).addClass('finder-stat-size'),
+			sel        = $('<div class="finder-stat-selected"/>'),
 			titlesize  = fm.i18n('size').toLowerCase(),
 			titleitems = fm.i18n('items').toLowerCase(),
 			titlesel   = fm.i18n('selected'),

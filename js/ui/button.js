@@ -13,12 +13,12 @@ $.fn.elfinderbutton = function(cmd) {
 			disabled = fm.res(c, 'disabled'),
 			active   = fm.res(c, 'active'),
 			hover    = fm.res(c, 'hover'),
-			item     = 'elfinder-button-menu-item',
-			selected = 'elfinder-button-menu-item-selected',
+			item     = 'finder-button-menu-item',
+			selected = 'finder-button-menu-item-selected',
 			menu,
-			button   = $(this).addClass('ui-state-default elfinder-button')
+			button   = $(this).addClass('ui-state-default finder-button')
 				.attr('title', cmd.title)
-				.append('<span class="elfinder-button-icon elfinder-button-icon-'+cmd.name+'"/>')
+				.append('<span class="finder-button-icon finder-button-icon-'+cmd.name+'"/>')
 				.hover(function(e) { !button.is('.'+disabled) && button[e.type == 'mouseleave' ? 'removeClass' : 'addClass'](hover) /**button.toggleClass(hover);*/ })
 				.click(function(e) {
 					if (!button.is('.'+disabled)) {
@@ -39,9 +39,9 @@ $.fn.elfinderbutton = function(cmd) {
 
 		// if command has variants create menu
 		if ($.isArray(cmd.variants)) {
-			button.addClass('elfinder-menubutton');
+			button.addClass('finder-menubutton');
 
-			menu = $('<div class="ui-widget ui-widget-content elfinder-button-menu ui-corner-all"/>')
+			menu = $('<div class="ui-widget ui-widget-content finder-button-menu ui-corner-all"/>')
 				.hide()
 				.appendTo(button)
 				.zIndex(12+button.zIndex())

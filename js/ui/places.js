@@ -80,7 +80,7 @@ $.fn.elfinderplaces = function(fm, opts) {
 
 						dir.children().removeClass('ui-state-hover');
 
-						return $('<div class="elfinder-place-drag elfinder-'+fm.direction+'"/>')
+						return $('<div class="finder-place-drag finder-'+fm.direction+'"/>')
 								.append(dir.clone())
 								.data('hash', id2hash(dir.children(':first').attr('id')));
 
@@ -163,7 +163,7 @@ $.fn.elfinderplaces = function(fm, opts) {
 			 *
 			 * @type jQuery
 			 **/
-			places = $(this).addClass(fm.res(c, 'tree')+' elfinder-places ui-corner-all')
+			places = $(this).addClass(fm.res(c, 'tree')+' finder-places ui-corner-all')
 				.hide()
 				.append(wrapper)
 				.appendTo(fm.getUI('navbar'))
@@ -191,7 +191,7 @@ $.fn.elfinderplaces = function(fm, opts) {
 				})
 				.droppable({
 					tolerance  : 'pointer',
-					accept     : '.elfinder-cwd-file-wrapper,.elfinder-tree-dir,.elfinder-cwd-file',
+					accept     : '.finder-cwd-file-wrapper,.finder-tree-dir,.finder-cwd-file',
 					hoverClass : fm.res('class', 'adroppable'),
 					drop       : function(e, ui) {
 						var resolve = true;

@@ -23,7 +23,7 @@ elFinder.prototype.commands.rename = function() {
 			sel      = fm.selected(),
 			cnt      = sel.length,
 			file     = fm.file(sel.shift()),
-			filename = '.elfinder-cwd-filename',
+			filename = '.finder-cwd-filename',
 			dfrd     = $.Deferred()
 				.fail(function(error) {
 					var parent = input.parent(),

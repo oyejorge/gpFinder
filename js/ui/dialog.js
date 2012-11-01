@@ -26,12 +26,12 @@ $.fn.elfinderdialog = function(opts) {
 	this.filter(':not(.ui-dialog-content)').each(function() {
 		var self       = $(this).addClass('ui-dialog-content ui-widget-content'),
 			parent     = self.parent(),
-			clactive   = 'elfinder-dialog-active',
-			cldialog   = 'elfinder-dialog',
-			clnotify   = 'elfinder-dialog-notify',
+			clactive   = 'finder-dialog-active',
+			cldialog   = 'finder-dialog',
+			clnotify   = 'finder-dialog-notify',
 			clhover    = 'ui-state-hover',
 			id         = parseInt(Math.random()*1000000),
-			overlay    = parent.children('.elfinder-overlay'),
+			overlay    = parent.children('.finder-overlay'),
 			buttonset  = $('<div class="ui-dialog-buttonset"/>'),
 			buttonpane = $('<div class=" ui-helper-clearfix ui-dialog-buttonpane ui-widget-content"/>')
 				.append(buttonset),
@@ -81,7 +81,7 @@ $.fn.elfinderdialog = function(opts) {
 					}
 				})
 				.bind('close', function() {
-					var dialogs = parent.find('.elfinder-dialog:visible'),
+					var dialogs = parent.find('.finder-dialog:visible'),
 						z = maxZIndex();
 
 					opts.modal && overlay.elfinderoverlay('hide');

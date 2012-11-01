@@ -1,6 +1,6 @@
 
 /**
- * elFinder resources registry.
+ * Finder resources registry.
  * Store shared data
  *
  * @type Object
@@ -13,27 +13,27 @@ elFinder.prototype.resources = {
 		disabled    : 'ui-state-disabled',
 		draggable   : 'ui-draggable',
 		droppable   : 'ui-droppable',
-		adroppable  : 'elfinder-droppable-active',
-		cwdfile     : 'elfinder-cwd-file',
-		cwd         : 'elfinder-cwd',
-		tree        : 'elfinder-tree',
-		treeroot    : 'elfinder-navbar-root',
-		navdir      : 'elfinder-navbar-dir',
-		navdirwrap  : 'elfinder-navbar-dir-wrapper',
-		navarrow    : 'elfinder-navbar-arrow',
-		navsubtree  : 'elfinder-navbar-subtree',
-		navcollapse : 'elfinder-navbar-collapsed',
-		navexpand   : 'elfinder-navbar-expanded',
-		treedir     : 'elfinder-tree-dir',
-		placedir    : 'elfinder-place-dir',
-		searchbtn   : 'elfinder-button-search'
+		adroppable  : 'finder-droppable-active',
+		cwdfile     : 'finder-cwd-file',
+		cwd         : 'finder-cwd',
+		tree        : 'finder-tree',
+		treeroot    : 'finder-navbar-root',
+		navdir      : 'finder-navbar-dir',
+		navdirwrap  : 'finder-navbar-dir-wrapper',
+		navarrow    : 'finder-navbar-arrow',
+		navsubtree  : 'finder-navbar-subtree',
+		navcollapse : 'finder-navbar-collapsed',
+		navexpand   : 'finder-navbar-expanded',
+		treedir     : 'finder-tree-dir',
+		placedir    : 'finder-place-dir',
+		searchbtn   : 'finder-button-search'
 	},
 	tpl : {
-		perms      : '<span class="elfinder-perms"/>',
-		symlink    : '<span class="elfinder-symlink"/>',
-		navicon    : '<span class="elfinder-nav-icon"/>',
-		navspinner : '<span class="elfinder-navbar-spinner"/>',
-		navdir     : '<div class="elfinder-navbar-wrapper"><span id="{id}" class="ui-corner-all elfinder-navbar-dir {cssclass}"><span class="elfinder-navbar-arrow"/><span class="elfinder-navbar-icon"/>{symlink}{permissions}{name}</span><div class="elfinder-navbar-subtree"/></div>'
+		perms      : '<span class="finder-perms"/>',
+		symlink    : '<span class="finder-symlink"/>',
+		navicon    : '<span class="finder-nav-icon"/>',
+		navspinner : '<span class="finder-navbar-spinner"/>',
+		navdir     : '<div class="finder-navbar-wrapper"><span id="{id}" class="ui-corner-all finder-navbar-dir {cssclass}"><span class="finder-navbar-arrow"/><span class="finder-navbar-icon"/>{symlink}{permissions}{name}</span><div class="finder-navbar-subtree"/></div>'
 
 	},
 
@@ -132,7 +132,7 @@ elFinder.prototype.resources = {
 			}
 
 			fm.disable();
-			node.find('.elfinder-cwd-filename').empty('').append(input.val(file.name));
+			node.find('.finder-cwd-filename').empty('').append(input.val(file.name));
 			input.select().focus();
 
 			return dfrd;

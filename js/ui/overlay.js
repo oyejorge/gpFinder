@@ -1,9 +1,9 @@
 
 $.fn.elfinderoverlay = function(opts) {
-	
-	this.filter(':not(.elfinder-overlay)').each(function() {
+
+	this.filter(':not(.finder-overlay)').each(function() {
 		opts = $.extend({}, opts);
-		$(this).addClass('ui-widget-overlay elfinder-overlay')
+		$(this).addClass('ui-widget-overlay finder-overlay')
 			.hide()
 			.mousedown(function(e) {
 				e.preventDefault();
@@ -15,7 +15,7 @@ $.fn.elfinderoverlay = function(opts) {
 				hide : typeof(opts.hide) == 'function' ? opts.hide : function() { }
 			});
 	});
-	
+
 	if (opts == 'show') {
 		var o    = this.eq(0),
 			cnt  = o.data('cnt') + 1,
@@ -28,20 +28,20 @@ $.fn.elfinderoverlay = function(opts) {
 			o.show();
 			show();
 		}
-	} 
-	
+	}
+
 	if (opts == 'hide') {
 		var o    = this.eq(0),
 			cnt  = o.data('cnt') - 1,
 			hide = o.data('hide');
-		
+
 		o.data('cnt', cnt);
-			
+
 		if (cnt == 0 && o.is(':visible')) {
 			o.hide();
-			hide();        
+			hide();
 		}
 	}
-	
+
 	return this;
 }

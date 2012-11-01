@@ -8,7 +8,7 @@
 elFinder.prototype.commands.info = function() {
 	var m   = 'msg',
 		fm  = this.fm,
-		spclass = 'elfinder-info-spinner',
+		spclass = 'finder-info-spinner',
 		msg = {
 			calc     : fm.i18n('calc'),
 			size     : fm.i18n('size'),
@@ -29,8 +29,8 @@ elFinder.prototype.commands.info = function() {
 		};
 
 	this.tpl = {
-		main       : '<div class="ui-helper-clearfix elfinder-info-title"><span class="elfinder-cwd-icon {class} ui-corner-all"/>{title}</div><table class="elfinder-info-tb">{content}</table>',
-		itemTitle  : '<strong>{name}</strong><span class="elfinder-info-kind">{kind}</span>',
+		main       : '<div class="ui-helper-clearfix finder-info-title"><span class="finder-cwd-icon {class} ui-corner-all"/>{title}</div><table class="finder-info-tb">{content}</table>',
+		itemTitle  : '<strong>{name}</strong><span class="finder-info-kind">{kind}</span>',
 		groupTitle : '<strong>{items}: {num}</strong>',
 		row        : '<tr><td>{label} : </td><td>{value}</td></tr>',
 		spinner    : '<span>{text}</span> <span class="'+spclass+'"/>'
@@ -132,7 +132,7 @@ elFinder.prototype.commands.info = function() {
 			content.push(row.replace(l, msg.perms).replace(v, fm.formatPermissions(file)));
 			content.push(row.replace(l, msg.locked).replace(v, file.locked ? msg.yes : msg.no));
 		} else {
-			view  = view.replace('{class}', 'elfinder-cwd-icon-group');
+			view  = view.replace('{class}', 'finder-cwd-icon-group');
 			title = tpl.groupTitle.replace('{items}', msg.items).replace('{num}', cnt);
 			dcnt  = $.map(files, function(f) { return f.mime == 'directory' ? 1 : null }).length;
 			if (!dcnt) {
@@ -164,7 +164,7 @@ elFinder.prototype.commands.info = function() {
 		// load thumbnail
 		if (tmb) {
 			$('<img/>')
-				.load(function() { dialog.find('.elfinder-cwd-icon').css('background', 'url("'+tmb+'") center center no-repeat'); })
+				.load(function() { dialog.find('.finder-cwd-icon').css('background', 'url("'+tmb+'") center center no-repeat'); })
 				.attr('src', tmb);
 		}
 

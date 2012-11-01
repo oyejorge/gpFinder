@@ -12,33 +12,33 @@ elFinder.prototype.command = function(fm) {
 	 * @type  elFinder
 	 */
 	this.fm = fm;
-	
+
 	/**
 	 * Command name, same as class name
 	 *
 	 * @type  String
 	 */
 	this.name = '';
-	
+
 	/**
 	 * Short command description
 	 *
 	 * @type  String
 	 */
 	this.title = '';
-	
+
 	/**
 	 * Current command state
 	 *
 	 * @example
 	 * this.state = -1; // command disabled
 	 * this.state = 0;  // command enabled
-	 * this.state = 1;  // command active (for example "fullscreen" command while elfinder in fullscreen mode)
+	 * this.state = 1;  // command active (for example "fullscreen" command while finder in fullscreen mode)
 	 * @default -1
 	 * @type  Number
 	 */
 	this.state = -1;
-	
+
 	/**
 	 * If true, command can not be disabled by connector.
 	 * @see this.update()
@@ -46,7 +46,7 @@ elFinder.prototype.command = function(fm) {
 	 * @type  Boolen
 	 */
 	this.alwaysEnabled = false;
-	
+
 	/**
 	 * If true, this means command was disabled by connector.
 	 * @see this.update()
@@ -54,11 +54,11 @@ elFinder.prototype.command = function(fm) {
 	 * @type  Boolen
 	 */
 	this._disabled = false;
-	
+
 	this.disableOnSearch = false;
-	
+
 	this.updateOnSelect = true;
-	
+
 	/**
 	 * elFinder events defaults handlers.
 	 * Inside handlers "this" is current command object
@@ -68,13 +68,13 @@ elFinder.prototype.command = function(fm) {
 	this._handlers = {
 		enable  : function() { this.update(void(0), this.value); },
 		disable : function() { this.update(-1, this.value); },
-		'open reload load'    : function(e) { 
+		'open reload load'    : function(e) {
 			this._disabled = !(this.alwaysEnabled || this.fm.isCommandEnabled(this.name));
 			this.update(void(0), this.value)
-			this.change(); 
+			this.change();
 		}
 	};
-	
+
 	/**
 	 * elFinder events handlers.
 	 * Inside handlers "this" is current command object
@@ -82,21 +82,21 @@ elFinder.prototype.command = function(fm) {
 	 * @type  Object
 	 */
 	this.handlers = {}
-	
+
 	/**
 	 * Shortcuts
 	 *
 	 * @type  Array
 	 */
 	this.shortcuts = [];
-	
+
 	/**
 	 * Command options
 	 *
 	 * @type  Object
 	 */
 	this.options = {ui : 'button'};
-	
+
 	/**
 	 * Prepare object -
 	 * bind events and shortcuts
@@ -108,7 +108,7 @@ elFinder.prototype.command = function(fm) {
 			fm   = this.fm, i, s;
 
 		this.name      = name;
-		this.title     = fm.messages['cmd'+name] ? fm.i18n('cmd'+name) : name, 
+		this.title     = fm.messages['cmd'+name] ? fm.i18n('cmd'+name) : name,
 		this.options   = $.extend({}, this.options, opts);
 		this.listeners = [];
 
@@ -151,10 +151,10 @@ elFinder.prototype.command = function(fm) {
 	 * @param  Array|Object  command value
 	 * @return $.Deferred
 	 */
-	this.exec = function(files, opts) { 
-		return $.Deferred().reject(); 
+	this.exec = function(files, opts) {
+		return $.Deferred().reject();
 	}
-	
+
 	/**
 	 * Return true if command disabled.
 	 *
@@ -163,7 +163,7 @@ elFinder.prototype.command = function(fm) {
 	this.disabled = function() {
 		return this.state < 0;
 	}
-	
+
 	/**
 	 * Return true if command enabled.
 	 *
@@ -172,7 +172,7 @@ elFinder.prototype.command = function(fm) {
 	this.enabled = function() {
 		return this.state > -1;
 	}
-	
+
 	/**
 	 * Return true if command active.
 	 *
@@ -181,7 +181,7 @@ elFinder.prototype.command = function(fm) {
 	this.active = function() {
 		return this.state > 0;
 	}
-	
+
 	/**
 	 * Return current command state.
 	 * Must be overloaded in most commands
@@ -191,7 +191,7 @@ elFinder.prototype.command = function(fm) {
 	this.getstate = function() {
 		return -1;
 	}
-	
+
 	/**
 	 * Update command state/value
 	 * and rize 'change' event if smth changed
@@ -211,12 +211,12 @@ elFinder.prototype.command = function(fm) {
 		}
 
 		this.value = v;
-		
+
 		if (state != this.state || value != this.value) {
 			this.change();
 		}
 	}
-	
+
 	/**
 	 * Bind handler / fire 'change' event.
 	 *
@@ -225,9 +225,9 @@ elFinder.prototype.command = function(fm) {
 	 */
 	this.change = function(c) {
 		var cmd, i;
-		
+
 		if (typeof(c) === 'function') {
-			this.listeners.push(c);			
+			this.listeners.push(c);
 		} else {
 			for (i = 0; i < this.listeners.length; i++) {
 				cmd = this.listeners[i];
@@ -240,7 +240,7 @@ elFinder.prototype.command = function(fm) {
 		}
 		return this;
 	}
-	
+
 
 	/**
 	 * With argument check given files hashes and return list of existed files hashes.
@@ -254,7 +254,7 @@ elFinder.prototype.command = function(fm) {
 			? $.map($.isArray(hashes) ? hashes : [hashes], function(hash) { return fm.file(hash) ? hash : null; })
 			: fm.selected();
 	}
-	
+
 	/**
 	 * Return only existed files from given fils hashes | selected files
 	 *
@@ -263,7 +263,7 @@ elFinder.prototype.command = function(fm) {
 	 */
 	this.files = function(hashes) {
 		var fm = this.fm;
-		
+
 		return hashes
 			? $.map($.isArray(hashes) ? hashes : [hashes], function(hash) { return fm.file(hash) || null })
 			: fm.selectedFiles();

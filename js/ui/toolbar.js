@@ -5,9 +5,9 @@
  * @author Dmitry (dio) Levashov
  **/
 $.fn.elfindertoolbar = function(fm, opts) {
-	this.not('.elfinder-toolbar').each(function() {
+	this.not('.finder-toolbar').each(function() {
 		var commands = fm._commands,
-			self     = $(this).addClass('ui-helper-clearfix ui-widget-header ui-corner-top elfinder-toolbar'),
+			self     = $(this).addClass('ui-helper-clearfix ui-widget-header ui-corner-top finder-toolbar'),
 			panels   = opts || [],
 			l        = panels.length,
 			i, cmd, panel, button;
@@ -16,7 +16,7 @@ $.fn.elfindertoolbar = function(fm, opts) {
 
 		while (l--) {
 			if (panels[l]) {
-				panel = $('<div class="ui-widget-content ui-corner-all elfinder-buttonset"/>');
+				panel = $('<div class="ui-widget-content ui-corner-all finder-buttonset"/>');
 				i = panels[l].length;
 				while (i--) {
 					if ((cmd = commands[panels[l][i]])) {
@@ -26,7 +26,7 @@ $.fn.elfindertoolbar = function(fm, opts) {
 				}
 
 				panel.children().length && self.prepend(panel);
-				panel.children(':not(:last),:not(:first):not(:last)').after('<span class="ui-widget-content elfinder-toolbar-button-separator"/>');
+				panel.children(':not(:last),:not(:first):not(:last)').after('<span class="ui-widget-content finder-toolbar-button-separator"/>');
 
 			}
 		}

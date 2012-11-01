@@ -23,35 +23,35 @@ elFinder.prototype.commands.resize = function() {
 			dfrd  = $.Deferred(),
 
 			open = function(file, id) {
-				var dialog   = $('<div class="elfinder-dialog-resize"/>'),
+				var dialog   = $('<div class="finder-dialog-resize"/>'),
 					input    = '<input type="text" size="5"/>',
-					row      = '<div class="elfinder-resize-row"/>',
-					label    = '<div class="elfinder-resize-label"/>',
-					control  = $('<div class="elfinder-resize-control"/>'),
-					preview  = $('<div class="elfinder-resize-preview"/>'),
-					spinner  = $('<div class="elfinder-resize-spinner">'+fm.i18n('ntfloadimg')+'</div>'),
-					rhandle  = $('<div class="elfinder-resize-handle"/>'),
-					rhandlec = $('<div class="elfinder-resize-handle"/>'),
-					uiresize = $('<div class="elfinder-resize-uiresize"/>'),
-					uicrop   = $('<div class="elfinder-resize-uicrop"/>'),
-					uibuttonset = '<div class="ui-widget-content ui-corner-all elfinder-buttonset"/>',
-					uibutton    = '<div class="ui-state-default elfinder-button"/>',
-					uiseparator = '<span class="ui-widget-content elfinder-toolbar-button-separator"/>',
-					uirotate    = $('<div class="elfinder-resize-rotate"/>'),
-					uideg270    = $(uibutton).attr('title',fm.i18n('rotate-cw')).append($('<span class="elfinder-button-icon elfinder-button-icon-rotate-l"/>')
+					row      = '<div class="finder-resize-row"/>',
+					label    = '<div class="finder-resize-label"/>',
+					control  = $('<div class="finder-resize-control"/>'),
+					preview  = $('<div class="finder-resize-preview"/>'),
+					spinner  = $('<div class="finder-resize-spinner">'+fm.i18n('ntfloadimg')+'</div>'),
+					rhandle  = $('<div class="finder-resize-handle"/>'),
+					rhandlec = $('<div class="finder-resize-handle"/>'),
+					uiresize = $('<div class="finder-resize-uiresize"/>'),
+					uicrop   = $('<div class="finder-resize-uicrop"/>'),
+					uibuttonset = '<div class="ui-widget-content ui-corner-all finder-buttonset"/>',
+					uibutton    = '<div class="ui-state-default finder-button"/>',
+					uiseparator = '<span class="ui-widget-content finder-toolbar-button-separator"/>',
+					uirotate    = $('<div class="finder-resize-rotate"/>'),
+					uideg270    = $(uibutton).attr('title',fm.i18n('rotate-cw')).append($('<span class="finder-button-icon finder-button-icon-rotate-l"/>')
 						.click(function(){
 							rdegree = rdegree - 90;
 							rotate.update(rdegree);
 						})),
-					uideg90     = $(uibutton).attr('title',fm.i18n('rotate-ccw')).append($('<span class="elfinder-button-icon elfinder-button-icon-rotate-r"/>')
+					uideg90     = $(uibutton).attr('title',fm.i18n('rotate-ccw')).append($('<span class="finder-button-icon finder-button-icon-rotate-r"/>')
 						.click(function(){
 							rdegree = rdegree + 90;
 							rotate.update(rdegree);
 						})),
 					uiprop   = $('<span />'),
-					reset    = $('<div class="ui-state-default ui-corner-all elfinder-resize-reset"><span class="ui-icon ui-icon-arrowreturnthick-1-w"/></div>'),
-					//uitype   = $('<div class="elfinder-resize-type"><div class="elfinder-resize-label">'+fm.i18n('mode')+'</div></div>')
-					uitype   = $('<div class="elfinder-resize-type"/>')
+					reset    = $('<div class="ui-state-default ui-corner-all finder-resize-reset"><span class="ui-icon ui-icon-arrowreturnthick-1-w"/></div>'),
+					//uitype   = $('<div class="finder-resize-type"><div class="finder-resize-label">'+fm.i18n('mode')+'</div></div>')
+					uitype   = $('<div class="finder-resize-type"/>')
 						.append('<input type="radio" name="type" id="type-resize" value="resize" checked="checked" /><label for="type-resize">'+fm.i18n('resize')+'</label>')
 						.append('<input type="radio" name="type" id="type-crop"   value="crop"/><label for="type-crop">'+fm.i18n('crop')+'</label>')
 						.append('<input type="radio" name="type" id="type-rotate" value="rotate"/><label for="type-rotate">'+fm.i18n('rotate')+'</label>'),
@@ -117,7 +117,7 @@ elFinder.prototype.commands.resize = function() {
 						.change(function() {
 							rotate.update();
 						}),
-					uidegslider = $('<div class="elfinder-resize-rotate-slider"/>')
+					uidegslider = $('<div class="finder-resize-rotate-slider"/>')
 						.slider({
 							min: 0,
 							max: 359,
@@ -174,7 +174,7 @@ elFinder.prototype.commands.resize = function() {
 									}
 
 									if (c == 9) {
-										i = $(this).parent()[e.shiftKey ? 'prev' : 'next']('.elfinder-resize-row').children(':text');
+										i = $(this).parent()[e.shiftKey ? 'prev' : 'next']('.finder-resize-row').children(':text');
 
 										if (i.length) {
 											i.focus()
@@ -494,9 +494,9 @@ elFinder.prototype.commands.resize = function() {
 
 					},
 					buttons = {},
-					hline   = 'elfinder-resize-handle-hline',
-					vline   = 'elfinder-resize-handle-vline',
-					rpoint  = 'elfinder-resize-handle-point',
+					hline   = 'finder-resize-handle-hline',
+					vline   = 'finder-resize-handle-vline',
+					rpoint  = 'finder-resize-handle-point',
 					src     = fm.url(file.hash)
 					;
 
@@ -580,14 +580,14 @@ elFinder.prototype.commands.resize = function() {
 
 				// for IE < 9 dialog mising at open second+ time.
 				if ($.browser.msie && parseInt($.browser.version) < 9) {
-					$('.elfinder-dialog').css('filter', '');
+					$('.finder-dialog').css('filter', '');
 				}
 
 				reset.css('left', width.position().left + width.width() + 12);
 
 				coverc.css({ 'opacity': 0.2, 'background-color': '#fff', 'position': 'absolute'}),
 				rhandlec.css('cursor', 'move');
-				rhandlec.find('.elfinder-resize-handle-point').css({
+				rhandlec.find('.finder-resize-handle-point').css({
 					'background-color' : '#fff',
 					'opacity': 0.5,
 					'border-color':'#000'

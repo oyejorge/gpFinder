@@ -6,18 +6,18 @@
 .elfinder { padding:0; position:relative; display:block; }
 
 /* right to left enviroment */
-.elfinder-rtl { text-align:right; direction:rtl; }
+.finder-rtl { text-align:right; direction:rtl; }
 
 /* nav and cwd container */
-.elfinder-workzone {
+.finder-workzone {
 	padding: 0;
 	position:relative;
 	overflow:hidden;
 }
 
 /* dir/file permissions and symlink markers */
-.elfinder-perms,
-.elfinder-symlink {
+.finder-perms,
+.finder-symlink {
 	position:absolute;
 	width:16px;
 	height:16px;
@@ -26,19 +26,19 @@
 	background-position:0 -528px;
 }
 
-.elfinder-symlink { }
+.finder-symlink { }
 
 /* noaccess */
-.elfinder-na .elfinder-perms { background-position:0 -96px; }
+.finder-na .finder-perms { background-position:0 -96px; }
 
 /* read only */
-.elfinder-ro .elfinder-perms { background-position:0 -64px;}
+.finder-ro .finder-perms { background-position:0 -64px;}
 
 /* write only */
-.elfinder-wo .elfinder-perms { background-position:0 -80px;}
+.finder-wo .finder-perms { background-position:0 -80px;}
 
 /* drag helper */
-.elfinder-drag-helper {
+.finder-drag-helper {
 	width:60px;
 	height:50px;
 	padding:0 0 0 25px;
@@ -46,7 +46,7 @@
 }
 
 /* drag helper "plus" icon */
-.elfinder-drag-helper-icon-plus {
+.finder-drag-helper-icon-plus {
 	position:absolute;
 	width:16px;
 	height:16px;
@@ -57,10 +57,10 @@
 }
 
 /* show "plus" icon when ctrl/shift pressed */
-.elfinder-drag-helper-plus .elfinder-drag-helper-icon-plus { display:block; }
+.finder-drag-helper-plus .finder-drag-helper-icon-plus { display:block; }
 
 /* files num in drag helper */
-.elfinder-drag-num {
+.finder-drag-num {
 	position:absolute;
 	top:0;
 	left:0;
@@ -68,23 +68,23 @@
 	height:14px;
 	text-align:center;
 	padding-top:2px;
-	
+
 	font-weight:bold;
 	color:#fff;
 	background-color:red;
-	-moz-border-radius: 8px; 
-	-webkit-border-radius: 8px; 
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
 	border-radius: 8px;
 }
 
 /* icon in drag helper */
-.elfinder-drag-helper .elfinder-cwd-icon { margin:0 0 0 -24px; float:left; }
+.finder-drag-helper .finder-cwd-icon { margin:0 0 0 -24px; float:left; }
 
 /* transparent overlay >_< */
-.elfinder-overlay { opacity: 0; filter:Alpha(Opacity=0); }
+.finder-overlay { opacity: 0; filter:Alpha(Opacity=0); }
 
 /* panels under/below cwd (for search field etc) */
-.elfinder .elfinder-panel {
+.elfinder .finder-panel {
 	position:relative;
 	background-image:none;
 	padding:7px 12px;

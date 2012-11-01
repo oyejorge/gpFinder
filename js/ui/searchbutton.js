@@ -7,7 +7,7 @@
 $.fn.elfindersearchbutton = function(cmd) {
 	return this.each(function() {
 		var result = false,
-			button = $(this).hide().addClass('ui-widget-content elfinder-button '+cmd.fm.res('class', 'searchbtn')+''),
+			button = $(this).hide().addClass('ui-widget-content finder-button '+cmd.fm.res('class', 'searchbtn')+''),
 			search = function() {
 				cmd.exec($.trim(input.val())).done(function() {
 					result = true;

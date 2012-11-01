@@ -12,13 +12,13 @@ $.fn.elfindersortbutton = function(cmd) {
 			c        = 'class',
 			disabled = fm.res(c, 'disabled'),
 			hover    = fm.res(c, 'hover'),
-			item     = 'elfinder-button-menu-item',
+			item     = 'finder-button-menu-item',
 			selected = item+'-selected',
 			asc      = selected+'-asc',
 			desc     = selected+'-desc',
-			button   = $(this).addClass('ui-state-default elfinder-button elfinder-menubutton elfiner-button-'+name)
+			button   = $(this).addClass('ui-state-default finder-button finder-menubutton elfiner-button-'+name)
 				.attr('title', cmd.title)
-				.append('<span class="elfinder-button-icon elfinder-button-icon-'+name+'"/>')
+				.append('<span class="finder-button-icon finder-button-icon-'+name+'"/>')
 				.hover(function(e) { !button.is('.'+disabled) && button.toggleClass(hover); })
 				.click(function(e) {
 					if (!button.is('.'+disabled)) {
@@ -27,7 +27,7 @@ $.fn.elfindersortbutton = function(cmd) {
 						menu.slideToggle(100);
 					}
 				}),
-			menu = $('<div class="ui-widget ui-widget-content elfinder-button-menu ui-corner-all"/>')
+			menu = $('<div class="ui-widget ui-widget-content finder-button-menu ui-corner-all"/>')
 				.hide()
 				.appendTo(button)
 				.zIndex(12+button.zIndex())

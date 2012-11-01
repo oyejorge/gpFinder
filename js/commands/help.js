@@ -8,8 +8,8 @@
 elFinder.prototype.commands.help = function() {
 	var fm   = this.fm,
 		self = this,
-		linktpl = '<div class="elfinder-help-link"> <a href="{url}">{link}</a></div>',
-		atpl    = '<div class="elfinder-help-team"><div>{author}</div>{work}</div>',
+		linktpl = '<div class="finder-help-link"> <a href="{url}">{link}</a></div>',
+		atpl    = '<div class="finder-help-team"><div>{author}</div>{work}</div>',
 		url     = /\{url\}/,
 		link    = /\{link\}/,
 		author  = /\{author\}/,
@@ -17,12 +17,12 @@ elFinder.prototype.commands.help = function() {
 		r       = 'replace',
 		prim    = 'ui-priority-primary',
 		sec     = 'ui-priority-secondary',
-		lic     = 'elfinder-help-license',
+		lic     = 'finder-help-license',
 		tab     = '<li class="ui-state-default ui-corner-top"><a href="#{id}">{title}</a></li>',
-		html    = ['<div class="ui-tabs ui-widget ui-widget-content ui-corner-all elfinder-help">',
+		html    = ['<div class="ui-tabs ui-widget ui-widget-content ui-corner-all finder-help">',
 				'<ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">'],
-		stpl    = '<div class="elfinder-help-shortcut"><div class="elfinder-help-shortcut-pattern">{pattern}</div> {descrip}</div>',
-		sep     = '<div class="elfinder-help-separator"/>',
+		stpl    = '<div class="finder-help-shortcut"><div class="finder-help-shortcut-pattern">{pattern}</div> {descrip}</div>',
+		sep     = '<div class="finder-help-separator"/>',
 
 
 		about = function() {
@@ -68,14 +68,14 @@ elFinder.prototype.commands.help = function() {
 			html.push('<div id="shortcuts" class="ui-tabs-panel ui-widget-content ui-corner-bottom">');
 
 			if (sh.length) {
-				html.push('<div class="ui-widget-content elfinder-help-shortcuts">');
+				html.push('<div class="ui-widget-content finder-help-shortcuts">');
 				$.each(sh, function(i, s) {
 					html.push(stpl.replace(/\{pattern\}/, s[0]).replace(/\{descrip\}/, s[1]));
 				});
 
 				html.push('</div>');
 			} else {
-				html.push('<div class="elfinder-help-disabled">'+fm.i18n('shortcutsof')+'</div>')
+				html.push('<div class="finder-help-disabled">'+fm.i18n('shortcutsof')+'</div>')
 			}
 
 
@@ -85,7 +85,7 @@ elFinder.prototype.commands.help = function() {
 		help = function() {
 			// help tab
 			html.push('<div id="help" class="ui-tabs-panel ui-widget-content ui-corner-bottom">');
-			html.push('<a href="http://elfinder.org/forum/" target="_blank" class="elfinder-dont-panic"><span>DON\'T PANIC</span></a>');
+			html.push('<a href="http://elfinder.org/forum/" target="_blank" class="finder-dont-panic"><span>DON\'T PANIC</span></a>');
 			html.push('</div>');
 			// end help
 		},

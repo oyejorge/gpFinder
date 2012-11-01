@@ -7,17 +7,17 @@
 $.fn.elfindercontextmenu = function(fm) {
 
 	return this.each(function() {
-		var menu = $(this).addClass('ui-helper-reset ui-widget ui-state-default ui-corner-all elfinder-contextmenu elfinder-contextmenu-'+fm.direction)
+		var menu = $(this).addClass('ui-helper-reset ui-widget ui-state-default ui-corner-all finder-contextmenu finder-contextmenu-'+fm.direction)
 				.hide()
 				.appendTo('body')
-				.delegate('.elfinder-contextmenu-item', 'hover', function() {
+				.delegate('.finder-contextmenu-item', 'hover', function() {
 					$(this).toggleClass('ui-state-hover')
 				}),
 			subpos  = fm.direction == 'ltr' ? 'left' : 'right',
 			types = $.extend({}, fm.options.contextmenu),
-			tpl     = '<div class="elfinder-contextmenu-item"><span class="elfinder-button-icon {icon} elfinder-contextmenu-icon"/><span>{label}</span></div>',
+			tpl     = '<div class="finder-contextmenu-item"><span class="finder-button-icon {icon} finder-contextmenu-icon"/><span>{label}</span></div>',
 			item = function(label, icon, callback) {
-				return $(tpl.replace('{icon}', icon ? 'elfinder-button-icon-'+icon : '').replace('{label}', label))
+				return $(tpl.replace('{icon}', icon ? 'finder-button-icon-'+icon : '').replace('{label}', label))
 					.click(function(e) {
 						e.stopPropagation();
 						e.stopPropagation();
@@ -44,7 +44,7 @@ $.fn.elfindercontextmenu = function(fm) {
 
 				css = {'z-index' : css['z-index']+10};
 				css[subpos] = parseInt(menu.width());
-				menu.find('.elfinder-contextmenu-sub').css(css);
+				menu.find('.finder-contextmenu-sub').css(css);
 			},
 
 			close = function() {
@@ -60,7 +60,7 @@ $.fn.elfindercontextmenu = function(fm) {
 					var cmd, node, submenu;
 
 					if (name == '|' && sep) {
-						menu.append('<div class="elfinder-contextmenu-separator"/>');
+						menu.append('<div class="finder-contextmenu-separator"/>');
 						sep = false;
 						return;
 					}
@@ -74,17 +74,17 @@ $.fn.elfindercontextmenu = function(fm) {
 							}
 							node = item(cmd.title, cmd.name, function() {});
 
-							submenu = $('<div class="ui-corner-all elfinder-contextmenu-sub"/>')
-								.appendTo(node.append('<span class="elfinder-contextmenu-arrow"/>'));
+							submenu = $('<div class="ui-corner-all finder-contextmenu-sub"/>')
+								.appendTo(node.append('<span class="finder-contextmenu-arrow"/>'));
 
-							node.addClass('elfinder-contextmenu-group')
+							node.addClass('finder-contextmenu-group')
 								.hover(function() {
 									submenu.toggle()
 								})
 
 							$.each(cmd.variants, function(i, variant) {
 								submenu.append(
-									$('<div class="elfinder-contextmenu-item"><span>'+variant[1]+'</span></div>')
+									$('<div class="finder-contextmenu-item"><span>'+variant[1]+'</span></div>')
 										.click(function(e) {
 											e.stopPropagation();
 											close();

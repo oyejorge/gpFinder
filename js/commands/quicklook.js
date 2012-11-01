@@ -43,13 +43,13 @@ elFinder.prototype.commands.quicklook = function() {
 		 *
 		 * @type Number
 		 **/
-		navicon    = 'elfinder-quicklook-navbar-icon',
+		navicon    = 'finder-quicklook-navbar-icon',
 		/**
 		 * navbar "fullscreen" icon class
 		 *
 		 * @type Number
 		 **/
-		fullscreen  = 'elfinder-quicklook-fullscreen',
+		fullscreen  = 'finder-quicklook-fullscreen',
 		/**
 		 * Triger keydown/keypress event with left/right arrow key code
 		 *
@@ -127,9 +127,9 @@ elFinder.prototype.commands.quicklook = function() {
 		 * @type jQuery
 		 **/
 		cwd,
-		title   = $('<div class="elfinder-quicklook-title"/>'),
+		title   = $('<div class="finder-quicklook-title"/>'),
 		icon    = $('<div/>'),
-		info    = $('<div class="elfinder-quicklook-info"/>'),//.hide(),
+		info    = $('<div class="finder-quicklook-info"/>'),//.hide(),
 		fsicon  = $('<div class="'+navicon+' '+navicon+'-fullscreen"/>')
 			.mousedown(function(e) {
 				var win     = self.window,
@@ -185,20 +185,20 @@ elFinder.prototype.commands.quicklook = function() {
 				$.fn.resizable && parent.add(win).resizable(full ? 'enable' : 'disable').removeClass('ui-state-disabled');
 			}),
 
-		navbar  = $('<div class="elfinder-quicklook-navbar"/>')
+		navbar  = $('<div class="finder-quicklook-navbar"/>')
 			.append($('<div class="'+navicon+' '+navicon+'-prev"/>').mousedown(function() { navtrigger(37); }))
 			.append(fsicon)
 			.append($('<div class="'+navicon+' '+navicon+'-next"/>').mousedown(function() { navtrigger(39); }))
-			.append('<div class="elfinder-quicklook-navbar-separator"/>')
+			.append('<div class="finder-quicklook-navbar-separator"/>')
 			.append($('<div class="'+navicon+' '+navicon+'-close"/>').mousedown(function() { self.window.trigger('close'); }))
 		;
 
 	this.resize = 'resize.'+fm.namespace;
-	this.info = $('<div class="elfinder-quicklook-info-wrapper"/>')
+	this.info = $('<div class="finder-quicklook-info-wrapper"/>')
 		.append(icon)
 		.append(info);
 
-	this.preview = $('<div class="elfinder-quicklook-preview ui-helper-clearfix"/>')
+	this.preview = $('<div class="finder-quicklook-preview ui-helper-clearfix"/>')
 		// clean info/icon
 		.bind('change', function(e) {
 			self.info.attr('style', '').hide();
@@ -211,7 +211,7 @@ elFinder.prototype.commands.quicklook = function() {
 			var fm      = self.fm,
 				preview = self.preview,
 				file    = e.file,
-				tpl     = '<div class="elfinder-quicklook-info-data">{value}</div>',
+				tpl     = '<div class="finder-quicklook-info-data">{value}</div>',
 				tmb;
 
 			if (file) {
@@ -226,7 +226,7 @@ elFinder.prototype.commands.quicklook = function() {
 						+ (file.mime == 'directory' ? '' : tpl.replace(/\{value\}/, fm.formatSize(file.size)))
 						+ tpl.replace(/\{value\}/, fm.i18n('modify')+': '+ fm.formatDate(file))
 					)
-				icon.addClass('elfinder-cwd-icon ui-corner-all '+fm.mime2class(file.mime));
+				icon.addClass('finder-cwd-icon ui-corner-all '+fm.mime2class(file.mime));
 
 				if (file.tmb) {
 					$('<img/>')
@@ -247,10 +247,10 @@ elFinder.prototype.commands.quicklook = function() {
 
 
 
-	this.window = $('<div class="ui-helper-reset ui-widget elfinder-quicklook" style="position:absolute"/>')
+	this.window = $('<div class="ui-helper-reset ui-widget finder-quicklook" style="position:absolute"/>')
 		.click(function(e) { e.stopPropagation(); })
 		.append(
-			$('<div class="elfinder-quicklook-titlebar"/>')
+			$('<div class="finder-quicklook-titlebar"/>')
 				.append(title)
 				.append($('<span class="ui-icon ui-icon-circle-close"/>').mousedown(function(e) {
 					e.stopPropagation();
@@ -259,7 +259,7 @@ elFinder.prototype.commands.quicklook = function() {
 		)
 		.append(this.preview.add(navbar))
 		.append(self.info.hide())
-		.draggable({handle : 'div.elfinder-quicklook-titlebar'})
+		.draggable({handle : 'div.finder-quicklook-titlebar'})
 		.bind('open', function(e) {
 			var win  = self.window,
 				file = self.value,

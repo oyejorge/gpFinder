@@ -58,7 +58,7 @@ $.fn.elfindertree = function(fm, opts) {
 			 *
 			 * @type String
 			 */
-			loaded    = 'elfinder-subtree-loaded',
+			loaded    = 'finder-subtree-loaded',
 
 			/**
 			 * Arraw class name
@@ -331,7 +331,7 @@ $.fn.elfindertree = function(fm, opts) {
 			 * @return void
 			 */
 			updateDroppable = function() {
-				tree.find('.'+navdir+':not(.'+droppable+',.elfinder-ro,.elfinder-na)').droppable(droppableopts);
+				tree.find('.'+navdir+':not(.'+droppable+',.finder-ro,.finder-na)').droppable(droppableopts);
 			},
 
 			/**
@@ -370,7 +370,7 @@ $.fn.elfindertree = function(fm, opts) {
 						enter = e.type == 'mouseenter';
 
 					if (!link.is('.'+dropover+' ,.'+disabled)) {
-						enter && !link.is('.'+root+',.'+draggable+',.elfinder-na,.elfinder-wo') && link.draggable(fm.draggable);
+						enter && !link.is('.'+root+',.'+draggable+',.finder-na,.finder-wo') && link.draggable(fm.draggable);
 						link.toggleClass(hover, enter);
 					}
 				})

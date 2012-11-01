@@ -3,11 +3,11 @@
 /******************************************************************/
 
 /********************** COMMAND "RESIZE" ****************************/
-.elfinder-dialog-resize  { margin-top:.3em; }
-.elfinder-resize-type    { float:left; margin-bottom: .4em; }
-.elfinder-resize-control { padding-top:3em; }
-.elfinder-resize-control input[type=text] { border:1px solid #aaa; text-align: right; }
-.elfinder-resize-preview {
+.finder-dialog-resize  { margin-top:.3em; }
+.finder-resize-type    { float:left; margin-bottom: .4em; }
+.finder-resize-control { padding-top:3em; }
+.finder-resize-control input[type=text] { border:1px solid #aaa; text-align: right; }
+.finder-resize-preview {
 	width:400px;
 	height:400px;
 	padding:10px;
@@ -19,31 +19,31 @@
 /*	z-index:100;*/
 }
 
-.elfinder-resize-handle { position:relative;}
+.finder-resize-handle { position:relative;}
 
-.elfinder-resize-handle-hline,
-.elfinder-resize-handle-vline {
+.finder-resize-handle-hline,
+.finder-resize-handle-vline {
 	position:absolute;
 	background-image:url("../img/crop.gif");
 }
 
-.elfinder-resize-handle-hline {
+.finder-resize-handle-hline {
 	width:100%;
 	height:1px !important;
 	background-repeat:repeat-x;
 }
-.elfinder-resize-handle-vline {
+.finder-resize-handle-vline {
 	width:1px !important;
 	height:100%;
 	background-repeat:repeat-y;
 }
 
-.elfinder-resize-handle-hline-top    { top:0; left:0; }
-.elfinder-resize-handle-hline-bottom { bottom:0; left:0; }
-.elfinder-resize-handle-vline-left   { top:0; left:0; }
-.elfinder-resize-handle-vline-right  { top:0; right:0; }
+.finder-resize-handle-hline-top    { top:0; left:0; }
+.finder-resize-handle-hline-bottom { bottom:0; left:0; }
+.finder-resize-handle-vline-left   { top:0; left:0; }
+.finder-resize-handle-vline-right  { top:0; right:0; }
 
-.elfinder-resize-handle-point {
+.finder-resize-handle-point {
 	position:absolute;
 	width:8px;
 	height:8px;
@@ -51,56 +51,56 @@
 	background:transparent;
 }
 
-.elfinder-resize-handle-point-n  {
+.finder-resize-handle-point-n  {
 	top:0;
 	left:50%;
 	margin-top:-5px;
 	margin-left:-5px;
 }
-.elfinder-resize-handle-point-ne {
+.finder-resize-handle-point-ne {
 	top:0;
 	right:0;
 	margin-top:-5px;
 	margin-right:-5px;
 }
-.elfinder-resize-handle-point-e  {
+.finder-resize-handle-point-e  {
 	top:50%;
 	right:0;
 	margin-top:-5px;
 	margin-right:-5px;
 }
-.elfinder-resize-handle-point-se  {
+.finder-resize-handle-point-se  {
 	bottom:0;
 	right:0;
 	margin-bottom:-5px;
 	margin-right:-5px;
 }
-.elfinder-resize-handle-point-s  {
+.finder-resize-handle-point-s  {
 	bottom:0;
 	left:50%;
 	margin-bottom:-5px;
 	margin-left:-5px;
 }
-.elfinder-resize-handle-point-sw {
+.finder-resize-handle-point-sw {
 	bottom:0;
 	left:0;
 	margin-bottom:-5px;
 	margin-left:-5px;
 }
-.elfinder-resize-handle-point-w  {
+.finder-resize-handle-point-w  {
 	top:50%;
 	left:0;
 	margin-top:-5px;
 	margin-left:-5px;
 }
-.elfinder-resize-handle-point-nw {
+.finder-resize-handle-point-nw {
 	top:0;
 	left:0;
 	margin-top:-5px;
 	margin-left:-5px;
 }
 
-.elfinder-resize-spinner {
+.finder-resize-spinner {
 	position:absolute;
 	width:200px;
 	height:30px;
@@ -112,11 +112,11 @@
 	background:url(../img/progress.gif) center bottom repeat-x;
 }
 
-.elfinder-resize-row { margin-bottom:7px; position:relative;}
+.finder-resize-row { margin-bottom:7px; position:relative;}
 
-.elfinder-resize-label { float:left; width:80px; padding-top: 3px; }
+.finder-resize-label { float:left; width:80px; padding-top: 3px; }
 
-.elfinder-resize-reset {
+.finder-resize-reset {
 	width:16px;
 	height:16px;
 /*	border:1px solid #111;*/
@@ -124,24 +124,24 @@
 	margin-top:-8px;
 }
 
-.elfinder-dialog .elfinder-dialog-resize .ui-resizable-e { height:100%; width:10px; }
-.elfinder-dialog .elfinder-dialog-resize .ui-resizable-s { width:100%; height:10px; }
-.elfinder-dialog .elfinder-dialog-resize .ui-resizable-se { 
-	background:transparent; 
-	bottom:0; 
-	right:0; 
+.finder-dialog .finder-dialog-resize .ui-resizable-e { height:100%; width:10px; }
+.finder-dialog .finder-dialog-resize .ui-resizable-s { width:100%; height:10px; }
+.finder-dialog .finder-dialog-resize .ui-resizable-se {
+	background:transparent;
+	bottom:0;
+	right:0;
 	margin-right:-7px;
 	margin-bottom:-7px;
 }
 
-.elfinder-dialog-resize  .ui-icon-grip-solid-vertical {
+.finder-dialog-resize  .ui-icon-grip-solid-vertical {
 	position:absolute;
 	top:50%;
 	right:0;
 	margin-top:-8px;
 	margin-right:-11px;
 }
-.elfinder-dialog-resize .ui-icon-grip-solid-horizontal {
+.finder-dialog-resize .ui-icon-grip-solid-horizontal {
 	position:absolute;
 	left:50%;
 	bottom:0;
@@ -149,9 +149,9 @@
 	margin-bottom:-11px;;
 }
 
-.elfinder-resize-row .elfinder-buttonset { float:right; }
+.finder-resize-row .finder-buttonset { float:right; }
 
-.elfinder-resize-rotate-slider {
+.finder-resize-rotate-slider {
 	float: left;
 	width: 195px;
 	margin: 7px 7px 0;
@@ -159,7 +159,7 @@
 
 /********************** COMMAND "EDIT" ****************************/
 /* edit text file textarea */
-.elfinder-file-edit {
+.finder-file-edit {
 	width:99%;
 	height:99%;
 	margin:0;
@@ -170,23 +170,23 @@
 
 /********************** COMMAND "HELP" ****************************/
 /* help dialog */
-.elfinder-help { margin-bottom:.5em; }
+.finder-help { margin-bottom:.5em; }
 
 /* fix tabs */
-.elfinder-help .ui-tabs-panel { padding:.5em; }
-.elfinder-dialog .ui-tabs .ui-tabs-nav li a { padding:.2em 1em;}
+.finder-help .ui-tabs-panel { padding:.5em; }
+.finder-dialog .ui-tabs .ui-tabs-nav li a { padding:.2em 1em;}
 
-.elfinder-help-shortcuts {
+.finder-help-shortcuts {
 	height:300px;
 	padding:1em;
 	margin:.5em 0;
 	overflow:auto;
 }
-.elfinder-help-shortcut { white-space:nowrap; clear:both;}
+.finder-help-shortcut { white-space:nowrap; clear:both;}
 
-.elfinder-help-shortcut-pattern { float:left; width:160px;}
+.finder-help-shortcut-pattern { float:left; width:160px;}
 
-.elfinder-help-logo {
+.finder-help-logo {
 	width:100px;
 	height:96px;
 	float:left;
@@ -194,34 +194,34 @@
 	background:url('../img/logo.png') center center no-repeat;
 }
 
-.elfinder-help h3 { font-size:1.5em; margin:.2em 0 .3em 0; }
+.finder-help h3 { font-size:1.5em; margin:.2em 0 .3em 0; }
 
-.elfinder-help-separator { clear:both; padding:.5em;  }
+.finder-help-separator { clear:both; padding:.5em;  }
 
-.elfinder-help-link { padding:2px; }
+.finder-help-link { padding:2px; }
 
-.elfinder-help .ui-priority-secondary { font-size:.9em;}
+.finder-help .ui-priority-secondary { font-size:.9em;}
 
-.elfinder-help .ui-priority-primary { margin-bottom:7px;}
+.finder-help .ui-priority-primary { margin-bottom:7px;}
 
-.elfinder-help-team { 
-	clear: both; 
-	text-align:right; 
+.finder-help-team {
+	clear: both;
+	text-align:right;
 	border-bottom:1px solid #ccc;
 	margin:.5em 0;
 	font-size:.9em;
 }
 
-.elfinder-help-team div { float:left; }
-.elfinder-help-license { font-size:.9em;}
+.finder-help-team div { float:left; }
+.finder-help-license { font-size:.9em;}
 
-.elfinder-help-disabled {
+.finder-help-disabled {
 	font-weight:bold;
 	text-align:center;
 	margin:90px 0;
 }
 
-.elfinder-help .elfinder-dont-panic {
+.finder-help .finder-dont-panic {
 	display:block;
 	border:1px solid transparent;
 	width:200px;
@@ -242,7 +242,7 @@
 	outline:none;
 }
 
-.elfinder-help .elfinder-dont-panic span {
+.finder-help .finder-dont-panic span {
 	font-size:3em;
 	font-weight:bold;
 	text-align:center;

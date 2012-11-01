@@ -1,5 +1,5 @@
 /* quicklook window */
-.elfinder-quicklook {
+.finder-quicklook {
 	position:absolute;
 	background:url("../img/quicklook-bg.png");
 	display:none;
@@ -10,7 +10,7 @@
 	padding:20px 0 40px 0;
 }
 
-.elfinder-quicklook .ui-resizable-se { 
+.finder-quicklook .ui-resizable-se {
 	width:14px;
 	height:14px;
 	right:5px;
@@ -18,7 +18,7 @@
 	background:url("../img/toolbar.png") 0 -496px no-repeat;}
 
 /* quicklook fullscreen window */
-.elfinder-quicklook-fullscreen {
+.finder-quicklook-fullscreen {
 	border-radius:0;
 	-moz-border-radius:0;
 	-webkit-border-radius:0;
@@ -30,13 +30,13 @@
 	display:block;
 }
 /* hide titlebar in fullscreen mode */
-.elfinder-quicklook-fullscreen .elfinder-quicklook-titlebar { display:none; }
+.finder-quicklook-fullscreen .finder-quicklook-titlebar { display:none; }
 
 /* hide preview border in fullscreen mode */
-.elfinder-quicklook-fullscreen .elfinder-quicklook-preview { border:0 solid ;}
+.finder-quicklook-fullscreen .finder-quicklook-preview { border:0 solid ;}
 
 /* quicklook titlebar */
-.elfinder-quicklook-titlebar {
+.finder-quicklook-titlebar {
 	text-align:center;
 	background:#777;
 	position:absolute;
@@ -44,25 +44,25 @@
 	top:0;
 	width:100%;
 	height:20px;
-	-moz-border-radius-topleft: 7px; 
-	-webkit-border-top-left-radius: 7px; 
+	-moz-border-radius-topleft: 7px;
+	-webkit-border-top-left-radius: 7px;
 	border-top-left-radius: 7px;
-	-moz-border-radius-topright: 7px; 
-	-webkit-border-top-right-radius: 7px; 
+	-moz-border-radius-topright: 7px;
+	-webkit-border-top-right-radius: 7px;
 	border-top-right-radius: 7px;
 	cursor:move;
 }
 
 /* window title */
-.elfinder-quicklook-title { 
-	color:#fff; 
-	white-space:nowrap; 
+.finder-quicklook-title {
+	color:#fff;
+	white-space:nowrap;
 	overflow:hidden;
 	padding:2px 0;
 }
 
 /* icon "close" in titlebar */
-.elfinder-quicklook-titlebar .ui-icon { 
+.finder-quicklook-titlebar .ui-icon {
 	position:absolute;
 	left : 4px;
 	top:50%;
@@ -73,7 +73,7 @@
 }
 
 /* main part of quicklook window */
-.elfinder-quicklook-preview {
+.finder-quicklook-preview {
 	overflow:hidden;
 	position:relative;
 	border:0 solid;
@@ -83,7 +83,7 @@
 }
 
 /* wrapper for file info/icon */
-.elfinder-quicklook-info-wrapper {
+.finder-quicklook-info-wrapper {
 	position:absolute;
 	width:100%;
 	left:0;
@@ -92,26 +92,26 @@
 }
 
 /* file info */
-.elfinder-quicklook-info {
+.finder-quicklook-info {
 	padding: 0 12px 0 112px;
 }
 
 /* file name in info */
-.elfinder-quicklook-info .elfinder-quicklook-info-data:first-child { 
-	color:#fff; 
-	font-weight:bold; 
-	padding-bottom:.5em; 
+.finder-quicklook-info .finder-quicklook-info-data:first-child {
+	color:#fff;
+	font-weight:bold;
+	padding-bottom:.5em;
 }
 
 /* other data in info */
-.elfinder-quicklook-info-data {
+.finder-quicklook-info-data {
 	padding-bottom:.2em;
 	color:#fff;
 }
 
 
 /* file icon */
-.elfinder-quicklook .elfinder-cwd-icon {
+.finder-quicklook .finder-cwd-icon {
 	position:absolute;
 	left:32px;
 	top:50%;
@@ -119,13 +119,13 @@
 }
 
 /* image in preview */
-.elfinder-quicklook-preview img {
+.finder-quicklook-preview img {
 	display:block;
 	margin:0 auto;
 }
 
 /* navigation bar on quicklook window bottom */
-.elfinder-quicklook-navbar {
+.finder-quicklook-navbar {
 	position:absolute;
 	left:50%;
 	bottom:4px;
@@ -140,7 +140,7 @@
 }
 
 /* navigation bar in fullscreen mode */
-.elfinder-quicklook-fullscreen .elfinder-quicklook-navbar {
+.finder-quicklook-fullscreen .finder-quicklook-navbar {
 	width:188px;
 	margin-left:-94px;
 	padding:5px;
@@ -149,49 +149,49 @@
 }
 
 /* show close icon in fullscreen mode */
-.elfinder-quicklook-fullscreen .elfinder-quicklook-navbar-icon-close,
-.elfinder-quicklook-fullscreen .elfinder-quicklook-navbar-separator {
+.finder-quicklook-fullscreen .finder-quicklook-navbar-icon-close,
+.finder-quicklook-fullscreen .finder-quicklook-navbar-separator {
 	display:inline;
 }
 
 /* icons in navbar */
-.elfinder-quicklook-navbar-icon {
+.finder-quicklook-navbar-icon {
 	width:32px;
 	height:32px;
 	margin:0 7px;
 	float:left;
 	background:url("../img/quicklook-icons.png") 0 0 no-repeat;
-	
+
 }
 
 /* fullscreen icon */
-.elfinder-quicklook-navbar-icon-fullscreen {
+.finder-quicklook-navbar-icon-fullscreen {
 	background-position:0 -64px;
 }
 
 /* exit fullscreen icon */
-.elfinder-quicklook-navbar-icon-fullscreen-off {
+.finder-quicklook-navbar-icon-fullscreen-off {
 	background-position:0 -96px;
 }
 
 /* prev file icon */
-.elfinder-quicklook-navbar-icon-prev {
+.finder-quicklook-navbar-icon-prev {
 	background-position:0 0;
 }
 
 /* next file icon */
-.elfinder-quicklook-navbar-icon-next {
+.finder-quicklook-navbar-icon-next {
 	background-position:0 -32px;
 }
 
 /* close icon */
-.elfinder-quicklook-navbar-icon-close {
+.finder-quicklook-navbar-icon-close {
 	background-position:0 -128px;
 	display:none;
 }
 
 /* icons separator */
-.elfinder-quicklook-navbar-separator {
+.finder-quicklook-navbar-separator {
 	width:1px;
 	height:32px;
 	float:left;
@@ -200,7 +200,7 @@
 }
 
 /* text files preview wrapper */
-.elfinder-quicklook-preview-text-wrapper {
+.finder-quicklook-preview-text-wrapper {
 	width: 100%;
 	height:100%;
 	background:#fff;
@@ -209,14 +209,14 @@
 }
 
 /* text preview */
-pre.elfinder-quicklook-preview-text {
+pre.finder-quicklook-preview-text {
 	margin:0;
 	padding:3px 9px;
 }
 
 /* html/pdf preview */
-.elfinder-quicklook-preview-html,
-.elfinder-quicklook-preview-pdf {
+.finder-quicklook-preview-html,
+.finder-quicklook-preview-pdf {
 	width:100%;
 	height:100%;
 	background:#fff;
@@ -225,13 +225,13 @@ pre.elfinder-quicklook-preview-text {
 }
 
 /* swf preview container */
-.elfinder-quicklook-preview-flash {
+.finder-quicklook-preview-flash {
 	width:100%;
 	height:100%;
 }
 
 /* audio preview container */
-.elfinder-quicklook-preview-audio {
+.finder-quicklook-preview-audio {
 	width:100%;
 	position:absolute;
 	bottom:0;
@@ -239,13 +239,13 @@ pre.elfinder-quicklook-preview-text {
 }
 
 /* audio preview using embed */
-embed.elfinder-quicklook-preview-audio {
+embed.finder-quicklook-preview-audio {
 	height:30px;
 	background:transparent;
 }
 
 /* video preview container */
-.elfinder-quicklook-preview-video {
+.finder-quicklook-preview-video {
 	width:100%;
 	height:100%;
 }

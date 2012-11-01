@@ -5,18 +5,18 @@
  **/
 $.fn.elfindernavbar = function(fm, opts) {
 
-	this.not('.elfinder-navbar').each(function() {
-		var nav    = $(this).addClass('ui-state-default elfinder-navbar'),
+	this.not('.finder-navbar').each(function() {
+		var nav    = $(this).addClass('ui-state-default finder-navbar'),
 			parent = nav.parent()
 				.resize(function() {
 					nav.height(wz.height() - delta);
 				}),
-			wz     = parent.children('.elfinder-workzone').append(nav),
+			wz     = parent.children('.finder-workzone').append(nav),
 			delta  = nav.outerHeight() - nav.height(),
 			ltr    = fm.direction == 'ltr',
 			handle;
 
-		
+
 		if ($.fn.resizable) {
 			handle = nav.resizable({
 					handles : ltr ? 'e' : 'w',
@@ -44,6 +44,6 @@ $.fn.elfindernavbar = function(fm, opts) {
 			});
 		}
 	});
-	
+
 	return this;
 }

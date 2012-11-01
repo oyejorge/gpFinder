@@ -4,7 +4,7 @@
  * @author Dmitry (dio) Levashov
  **/
 $.fn.elfinderworkzone = function(fm) {
-	var cl = 'elfinder-workzone';
+	var cl = 'finder-workzone';
 
 	this.not('.'+cl).each(function() {
 		var wz     = $(this).addClass(cl),

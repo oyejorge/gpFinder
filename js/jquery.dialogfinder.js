@@ -1,10 +1,10 @@
 
 /**
- * @class dialogelfinder - open elFinder in dialog window
+ * @class dialogfinder - open elFinder in dialog window
  *
  * @param  Object  elFinder options with dialog options
  * @example
- * $(selector).dialogelfinder({
+ * $(selector).dialogfinder({
  *     // some elfinder options
  *     title          : 'My files', // dialog title, default = "Files"
  *     width          : 850,        // dialog width, default 840
@@ -13,7 +13,7 @@
  * })
  * @author Dmitry (dio) Levashov
  **/
-$.fn.dialogelfinder = function(opts) {
+$.fn.dialogfinder = function(opts) {
 	var position = 'elfinderPosition',
 		destroy  = 'elfinderDestroyOnClose';
 
@@ -21,19 +21,19 @@ $.fn.dialogelfinder = function(opts) {
 
 
 		var doc     = $(document),
-			toolbar = $('<div class="ui-widget-header dialogelfinder-drag ui-corner-top">'+(opts.title || 'Files')+'</div>'),
-			button  = $('<a href="#" class="dialogelfinder-drag-close ui-corner-all"><span class="ui-icon ui-icon-closethick"/></a>')
+			toolbar = $('<div class="ui-widget-header dialogfinder-drag ui-corner-top">'+(opts.title || 'Files')+'</div>'),
+			button  = $('<a href="#" class="dialogfinder-drag-close ui-corner-all"><span class="ui-icon ui-icon-closethick"/></a>')
 				.appendTo(toolbar)
 				.click(function(e) {
 					e.preventDefault();
 
-					node.dialogelfinder('close');
+					node.dialogfinder('close');
 				}),
-			node    = $(this).addClass('dialogelfinder')
+			node    = $(this).addClass('dialogfinder')
 				.css('position', 'absolute')
 				.hide()
 				.appendTo('body')
-				.draggable({ handle : '.dialogelfinder-drag',
+				.draggable({ handle : '.dialogfinder-drag',
 					     containment : 'window' })
 				.elfinder(opts)
 				.prepend(toolbar),
@@ -42,11 +42,11 @@ $.fn.dialogelfinder = function(opts) {
 
 		node.width(parseInt(node.width()) || 840) // fix width if set to "auto"
 			.data(destroy, !!opts.destroyOnClose)
-			.find('.elfinder-toolbar').removeClass('ui-corner-top');
+			.find('.finder-toolbar').removeClass('ui-corner-top');
 
 		opts.position && node.data(position, opts.position);
 
-		opts.autoOpen !== false && $(this).dialogelfinder('open');
+		opts.autoOpen !== false && $(this).dialogfinder('open');
 
 	});
 

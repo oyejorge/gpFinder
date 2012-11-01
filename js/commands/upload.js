@@ -64,13 +64,13 @@ elFinder.prototype.commands.upload = function() {
 				button.toggleClass(hover)
 			})
 
-		dialog = $('<div class="elfinder-upload-dialog-wrapper"/>')
+		dialog = $('<div class="finder-upload-dialog-wrapper"/>')
 			.append(button);
 
 		if (fm.dragUpload) {
-			dropbox = $('<div class="ui-corner-all elfinder-upload-dropbox">'+fm.i18n('dropFiles')+'</div>')
+			dropbox = $('<div class="ui-corner-all finder-upload-dropbox">'+fm.i18n('dropFiles')+'</div>')
 				.prependTo(dialog)
-				.after('<div class="elfinder-upload-dialog-or">'+fm.i18n('or')+'</div>')[0];
+				.after('<div class="finder-upload-dialog-or">'+fm.i18n('or')+'</div>')[0];
 
 			dropbox.addEventListener('dragenter', function(e) {
 				e.stopPropagation();

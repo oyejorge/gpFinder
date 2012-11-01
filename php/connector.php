@@ -14,7 +14,7 @@ if( function_exists('date_default_timezone_set') ){
 	date_default_timezone_set('Europe/Moscow');
 }
 
-include_once dirname(__FILE__).DIRECTORY_SEPARATOR.'Finder.class.php';
+include_once( dirname(__FILE__).DIRECTORY_SEPARATOR.'Finder.class.php' );
 
 function debug($o) {
 	echo '<pre>';
@@ -36,41 +36,7 @@ function debug($o) {
  * @author Troex Nevelin
  **/
 function logger($cmd, $result, $args, $finder) {
-
-
 	$log = sprintf("[%s] %s: %s \n", date('r'), strtoupper($cmd), var_export($result, true));
-	$logfile = '../files/temp/log.txt';
-	$dir = dirname($logfile);
-	if (!is_dir($dir) && !mkdir($dir)) {
-		return;
-	}
-	if (($fp = fopen($logfile, 'a'))) {
-		fwrite($fp, $log);
-		fclose($fp);
-	}
-	return;
-
-	foreach ($result as $key => $value) {
-		if (empty($value)) {
-			continue;
-		}
-		$data = array();
-		if (in_array($key, array('error', 'warning'))) {
-			array_push($data, implode(' ', $value));
-		} else {
-			if (is_array($value)) { // changes made to files
-				foreach ($value as $file) {
-					$filepath = (isset($file['realpath']) ? $file['realpath'] : $finder->realpath($file['hash']));
-					array_push($data, $filepath);
-				}
-			} else { // other value (ex. header)
-				array_push($data, $value);
-			}
-		}
-		$log .= sprintf(' %s(%s)', $key, implode(', ', $data));
-	}
-	$log .= "\n";
-
 	$logfile = '../files/temp/log.txt';
 	$dir = dirname($logfile);
 	if (!is_dir($dir) && !mkdir($dir)) {
@@ -187,42 +153,6 @@ function access($attr, $path, $data, $volume) {
 	return strpos(basename($path), '.') === 0       // if file/folder begins with '.' (dot)
 		? !($attr == 'read' || $attr == 'write')    // set read+write to false, other (locked+hidden) set to true
 		:  null;                                    // else Finder decide it itself
-}
-
-/**
- * Access control example class
- *
- * @author Dmitry (dio) Levashov
- **/
-class FinderTestACL {
-
-	/**
-	 * make dotfiles not readable, not writable, hidden and locked
-	 *
-	 * @param  string  $attr  attribute name (read|write|locked|hidden)
-	 * @param  string  $path  file path. Attention! This is path relative to volume root directory started with directory separator.
-	 * @param  mixed   $data  data which seted in 'accessControlData' Finder option
-	 * @param  object  $volume  finder volume driver
-	 * @return bool
-	 * @author Dmitry (dio) Levashov
-	 **/
-	public function fsAccess($attr, $path, $data, $volume) {
-
-		if ($volume->name() == 'localfilesystem') {
-			return strpos(basename($path), '.') === 0
-				? !($attr == 'read' || $attr == 'write')
-				: $attr == 'read' || $attr == 'write';
-		}
-
-		return true;
-	}
-
-} // END class
-
-$acl = new FinderTestACL();
-
-function validName($name) {
-	return strpos($name, '.') !== 0;
 }
 
 
@@ -395,10 +325,7 @@ $opts = array(
 
 
 
-// sleep(3);
 header('Access-Control-Allow-Origin: *');
 $finder = new Finder($opts);
 $finder->run();
 
-// echo '<pre>';
-// print_r($connector);

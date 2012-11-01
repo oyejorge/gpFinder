@@ -193,9 +193,6 @@ class Finder {
 	 * @author Dmitry (dio) Levashov
 	 **/
 	public function __construct($opts) {
-		//if (session_id() == '') {
-		//	session_start();
-		//}
 
 		$this->time  = $this->utime();
 		$this->debug = (isset($opts['debug']) && $opts['debug'] ? true : false);
@@ -205,13 +202,13 @@ class Finder {
 		setlocale(LC_ALL, !empty($opts['locale']) ? $opts['locale'] : 'en_US.UTF-8');
 
 		// bind events listeners
-		if (!empty($opts['bind']) && is_array($opts['bind'])) {
-			foreach ($opts['bind'] as $cmd => $handler) {
+		if( !empty($opts['bind']) && is_array($opts['bind']) ){
+			foreach( $opts['bind'] as $cmd => $handler ){
 				$this->bind($cmd, $handler);
 			}
 		}
 
-		if (!isset($opts['roots']) || !is_array($opts['roots'])) {
+		if( !isset($opts['roots']) || !is_array($opts['roots']) ){
 			$opts['roots'] = array();
 		}
 

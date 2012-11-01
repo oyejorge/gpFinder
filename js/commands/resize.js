@@ -1,6 +1,6 @@
 
 /**
- * @class  elFinder command "resize"
+ * @class  Finder command "resize"
  * Open dialog to resize image
  *
  * @author Dmitry (dio) Levashov
@@ -8,7 +8,7 @@
  * @author Naoki Sawada
  * @author Sergio Jovani
  **/
-elFinder.prototype.commands.resize = function() {
+Finder.prototype.commands.resize = function() {
 
 	this.updateOnSelect = false;
 
@@ -470,7 +470,7 @@ elFinder.prototype.commands.resize = function() {
 
 						}
 
-						dialog.elfinderdialog('close');
+						dialog.finderdialog('close');
 
 						fm.request({
 							data : {
@@ -566,7 +566,7 @@ elFinder.prototype.commands.resize = function() {
 
 				dialog.append(preview).append(control);
 
-				buttons[fm.i18n('btnCancel')] = function() { dialog.elfinderdialog('close'); };
+				buttons[fm.i18n('btnCancel')] = function() { dialog.finderdialog('close'); };
 				buttons[fm.i18n('btnApply')] = save;
 
 				fm.dialog(dialog, {
@@ -618,7 +618,7 @@ elFinder.prototype.commands.resize = function() {
 		dialog = fm.getUI().find('#'+id);
 
 		if (dialog.length) {
-			dialog.elfinderdialog('toTop');
+			dialog.finderdialog('toTop');
 			return dfrd.resolve();
 		}
 

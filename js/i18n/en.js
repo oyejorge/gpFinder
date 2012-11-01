@@ -3,22 +3,22 @@
  * @author Troex Nevelin <troex@fury.scancode.ru>
  * @version 2012-02-25
  */
-if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object') {
-	elFinder.prototype.i18.en = {
+if (Finder && Finder.prototype && typeof(Finder.prototype.i18) == 'object') {
+	Finder.prototype.i18.en = {
 		translator : 'Troex Nevelin &lt;troex@fury.scancode.ru&gt;',
 		language   : 'English',
 		direction  : 'ltr',
 		dateFormat : 'M d, Y h:i A', // Mar 13, 2012 05:27 PM
 		fancyDateFormat : '$1 h:i A', // will produce smth like: Today 12:25 PM
 		messages   : {
-			
+
 			/********************************** errors **********************************/
 			'error'                : 'Error',
 			'errUnknown'           : 'Unknown error.',
 			'errUnknownCmd'        : 'Unknown command.',
 			'errJqui'              : 'Invalid jQuery UI configuration. Selectable, draggable and droppable components must be included.',
-			'errNode'              : 'elFinder requires DOM Element to be created.',
-			'errURL'               : 'Invalid elFinder configuration! URL option is not set.',
+			'errNode'              : 'gpFinder requires DOM Element to be created.',
+			'errURL'               : 'Invalid gpFinder configuration! URL option is not set.',
 			'errAccess'            : 'Access denied.',
 			'errConnect'           : 'Unable to connect to backend.',
 			'errAbort'             : 'Connection aborted.',
@@ -52,11 +52,11 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'errCopyTo'            : 'Copying files to volume "$1" not allowed.',
 			'errUpload'            : 'Upload error.',  // old name - errUploadCommon
 			'errUploadFile'        : 'Unable to upload "$1".', // old name - errUpload
-			'errUploadNoFiles'     : 'No files found for upload.', 
+			'errUploadNoFiles'     : 'No files found for upload.',
 			'errUploadTotalSize'   : 'Data exceeds the maximum allowed size.', // old name - errMaxSize
 			'errUploadFileSize'    : 'File exceeds maximum allowed size.', //  old name - errFileMaxSize
-			'errUploadMime'        : 'File type not allowed.', 
-			'errUploadTransfer'    : '"$1" transfer error.', 
+			'errUploadMime'        : 'File type not allowed.',
+			'errUploadTransfer'    : '"$1" transfer error.',
 			'errNotReplace'        : 'Object "$1" already exists at this location and can not be replaced by object with another type.', // new
 			'errReplace'           : 'Unable to replace "$1".',
 			'errSave'              : 'Unable to save "$1".',
@@ -109,8 +109,8 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'cmdresize'    : 'Resize & Rotate',
 			'cmdsort'      : 'Sort',
 			'cmdnetmount'  : 'Mount network volume', // added 18.04.2012
-			
-			/*********************************** buttons ***********************************/ 
+
+			/*********************************** buttons ***********************************/
 			'btnClose'  : 'Close',
 			'btnSave'   : 'Save',
 			'btnRm'     : 'Remove',
@@ -140,7 +140,7 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'ntfsmth'     : 'Doing something >_<',
       		'ntfloadimg'  : 'Loading image',
       		'ntfnetmount' : 'Mounting network volume', // added 18.04.2012
-			
+
 			/************************************ dates **********************************/
 			'dateUnknown' : 'unknown',
 			'Today'       : 'Today',
@@ -159,8 +159,8 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'Dec'         : 'Dec',
 
 			/******************************** sort variants ********************************/
-			'sortname'          : 'by name', 
-			'sortkind'          : 'by kind', 
+			'sortname'          : 'by name',
+			'sortkind'          : 'by kind',
 			'sortsize'          : 'by size',
 			'sortdate'          : 'by date',
 			'sortFoldersFirst'  : 'Folders first',
@@ -187,7 +187,7 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'viewlist'        : 'List view',
 			'viewicons'       : 'Icons view',
 			'places'          : 'Places',
-			'calc'            : 'Calculate', 
+			'calc'            : 'Calculate',
 			'path'            : 'Path',
 			'aliasfor'        : 'Alias for',
 			'locked'          : 'Locked',
@@ -198,7 +198,7 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'yes'             : 'yes',
 			'no'              : 'no',
 			'link'            : 'Link',
-			'searcresult'     : 'Search results',  
+			'searcresult'     : 'Search results',
 			'selected'        : 'selected items',
 			'about'           : 'About',
 			'shortcuts'       : 'Shortcuts',

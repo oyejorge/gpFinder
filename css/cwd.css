@@ -24,7 +24,7 @@
 }
 
 /* container active on dropenter */
-.elfinder .finder-cwd-wrapper.finder-droppable-active {
+.finder .finder-cwd-wrapper.finder-droppable-active {
 	padding:0;
 	border:2px solid #8cafed;
 }
@@ -188,9 +188,9 @@
 /*.finder-cwd-view-list { padding:0 0 4px 0; }*/
 
 .finder-cwd table { width:100%; border-collapse:collapse; border:0 solid; margin:0 0 10px 0; }
-.elfinder .finder-cwd table thead tr { border-left:0 solid; border-top:0 solid; border-right:0 solid; }
+.finder .finder-cwd table thead tr { border-left:0 solid; border-top:0 solid; border-right:0 solid; }
 
-.elfinder .finder-cwd table td {
+.finder .finder-cwd table td {
 	padding:3px 12px;
 	white-space:pre;
 	overflow:hidden;

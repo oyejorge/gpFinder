@@ -1,16 +1,16 @@
 
 /**
- * @class elFinder - file manager for web
+ * @class Finder - file manager for web
  *
  * @author Dmitry (dio) Levashov
  **/
-window.elFinder = function(node, opts) {
+window.Finder = function(node, opts) {
 	this.time('load');
 
 	var self = this,
 
 		/**
-		 * Node on which elfinder creating
+		 * Node on which finder creating
 		 *
 		 * @type jQuery
 		 **/
@@ -178,7 +178,7 @@ window.elFinder = function(node, opts) {
 		base = new self.command(self),
 
 		/**
-		 * elFinder node width
+		 * Finder node width
 		 *
 		 * @type String
 		 * @default "auto"
@@ -186,7 +186,7 @@ window.elFinder = function(node, opts) {
 		width  = 'auto',
 
 		/**
-		 * elFinder node height
+		 * Finder node height
 		 *
 		 * @type Number
 		 * @default 400
@@ -261,7 +261,7 @@ window.elFinder = function(node, opts) {
 					}
 				});
 
-				// prevent tab out of elfinder
+				// prevent tab out of finder
 				if (code == 9 && !$(e.target).is(':input')) {
 					e.preventDefault();
 				}
@@ -282,14 +282,14 @@ window.elFinder = function(node, opts) {
 	this.api = null;
 
 	/**
-	 * elFinder use new api
+	 * Finder use new api
 	 *
 	 * @type Boolean
 	 **/
 	this.newAPI = false;
 
 	/**
-	 * elFinder use old api
+	 * Finder use old api
 	 *
 	 * @type Boolean
 	 **/
@@ -433,7 +433,7 @@ window.elFinder = function(node, opts) {
 	 *
 	 * @type String
 	 **/
-	this.cssClass = 'ui-helper-reset ui-helper-clearfix ui-widget ui-widget-content ui-corner-all elfinder finder-'+(this.direction == 'rtl' ? 'rtl' : 'ltr')+' '+this.options.cssClass;
+	this.cssClass = 'ui-helper-reset ui-helper-clearfix ui-widget ui-widget-content ui-corner-all finder finder-'+(this.direction == 'rtl' ? 'rtl' : 'ltr')+' '+this.options.cssClass;
 
 	/**
 	 * Method to store/fetch data
@@ -1192,7 +1192,7 @@ window.elFinder = function(node, opts) {
 	 * Bind keybord shortcut to keydown event
 	 *
 	 * @example
-	 *    elfinder.shortcut({
+	 *    finder.shortcut({
 	 *       pattern : 'ctrl+a',
 	 *       description : 'Select all files',
 	 *       callback : function(e) { ... },
@@ -1323,7 +1323,7 @@ window.elFinder = function(node, opts) {
 	 * @return jQuery
 	 */
 	this.dialog = function(content, options) {
-		return $('<div/>').append(content).appendTo(node).elfinderdialog(options);
+		return $('<div/>').append(content).appendTo(node).finderdialog(options);
 	}
 
 	/**
@@ -1377,7 +1377,7 @@ window.elFinder = function(node, opts) {
 	 * @return void
 	 **/
 	this.destroy = function() {
-		if (node && node[0].elfinder) {
+		if (node && node[0].finder) {
 			this.trigger('destroy').disable();
 			listeners = {};
 			shortcuts = {};
@@ -1385,7 +1385,7 @@ window.elFinder = function(node, opts) {
 			self.trigger = function() { }
 			node.children().remove();
 			node.append(prevContent.contents()).removeClass(this.cssClass).attr('style', prevStyle);
-			node[0].elfinder = null;
+			node[0].finder = null;
 			if (syncInterval) {
 				clearInterval(syncInterval);
 			}
@@ -1500,7 +1500,7 @@ window.elFinder = function(node, opts) {
 					buttons   : {}
 			};
 
-			opts.buttons[self.i18n(self.i18n('btnClose'))] = function() { $(this).elfinderdialog('close'); };
+			opts.buttons[self.i18n(self.i18n('btnClose'))] = function() { $(this).finderdialog('close'); };
 
 			self.dialog('<span class="finder-dialog-icon finder-dialog-icon-error"/>'+self.i18n(e.data.error), opts);
 		})
@@ -1619,18 +1619,18 @@ window.elFinder = function(node, opts) {
 	 **/
 	this.ui = {
 		// container for nav panel and current folder container
-		workzone : $('<div/>').appendTo(node).elfinderworkzone(this),
+		workzone : $('<div/>').appendTo(node).finderworkzone(this),
 		// container for folders tree / places
-		navbar : $('<div/>').appendTo(node).elfindernavbar(this, this.options.uiOptions.navbar || {}),
+		navbar : $('<div/>').appendTo(node).findernavbar(this, this.options.uiOptions.navbar || {}),
 		// contextmenu
-		contextmenu : $('<div/>').appendTo(node).elfindercontextmenu(this),
+		contextmenu : $('<div/>').appendTo(node).findercontextmenu(this),
 		// overlay
-		overlay : $('<div/>').appendTo(node).elfinderoverlay({
+		overlay : $('<div/>').appendTo(node).finderoverlay({
 			show : function() { self.disable(); },
 			hide : function() { prevEnabled && self.enable(); }
 		}),
 		// current folder container
-		cwd : $('<div/>').appendTo(node).elfindercwd(this, this.options.uiOptions.cwd || {}),
+		cwd : $('<div/>').appendTo(node).findercwd(this, this.options.uiOptions.cwd || {}),
 		// notification dialog window
 		notify : this.dialog('', {
 			cssClass  : 'finder-dialog-notify',
@@ -1645,7 +1645,7 @@ window.elFinder = function(node, opts) {
 
 	// load required ui
 	$.each(this.options.ui || [], function(i, ui) {
-		var name = 'elfinder'+ui,
+		var name = 'finder'+ui,
 			opts = self.options.uiOptions[ui] || {};
 
 		if (!self.ui[ui] && $.fn[name]) {
@@ -1656,7 +1656,7 @@ window.elFinder = function(node, opts) {
 
 
 	// store instance in node
-	node[0].elfinder = this;
+	node[0].finder = this;
 
 	// make node resizable
 	this.options.resizable
@@ -1680,7 +1680,7 @@ window.elFinder = function(node, opts) {
 
 	// attach events to document
 	$(document)
-		// disable elfinder on click outside elfinder
+		// disable finder on click outside finder
 		.bind('click.'+this.namespace, function(e) { enabled && !$(e.target).closest(node).length && self.disable(); })
 		// exec shortcuts
 		.bind(keydown+' '+keypress, execShortcut);
@@ -1728,7 +1728,7 @@ window.elFinder = function(node, opts) {
  *
  * @type  Object
  */
-elFinder.prototype = {
+Finder.prototype = {
 
 	res : function(type, id) {
 		return this.resources[type] && this.resources[type][id];
@@ -2096,7 +2096,7 @@ elFinder.prototype = {
 
 					// to avoid strange bug in safari (not in chrome) with drag&drop.
 					// bug: macos finder opened in any folder,
-					// reset safari cache (option+command+e), reload elfinder page,
+					// reset safari cache (option+command+e), reload finder page,
 					// drop file from finder
 					// on first attempt request starts (progress callback called ones) but never ends.
 					// any next drop - successfull.
@@ -2151,7 +2151,7 @@ elFinder.prototype = {
 	 *
 	 * @param  String    event name
 	 * @param  Function  callback
-	 * @return elFinder
+	 * @return Finder
 	 */
 	one : function(event, callback) {
 		var self = this,
@@ -2330,7 +2330,7 @@ elFinder.prototype = {
 	},
 
 	/**
-	 * Compare files based on elFinder.sort
+	 * Compare files based on Finder.sort
 	 *
 	 * @param  Object  file
 	 * @param  Object  file
@@ -2385,7 +2385,7 @@ elFinder.prototype = {
 	 *    hideCnt : false, // true for not show count
 	 *    progress : 10 // progress bar percents (use cnt : 0 to update progress bar)
 	 * })
-	 * @return elFinder
+	 * @return Finder
 	 */
 	notify : function(opts) {
 		var type     = opts.type,
@@ -2415,7 +2415,7 @@ elFinder.prototype = {
 
 		if (cnt > 0) {
 			!opts.hideCnt && notify.children('.finder-notify-cnt').text('('+cnt+')');
-			ndialog.is(':hidden') && ndialog.elfinderdialog('open');
+			ndialog.is(':hidden') && ndialog.finderdialog('open');
 			notify.data('cnt', cnt);
 
 			if (progress < 100
@@ -2435,7 +2435,7 @@ elFinder.prototype = {
 
 		} else {
 			notify.remove();
-			!ndialog.children().length && ndialog.elfinderdialog('close');
+			!ndialog.children().length && ndialog.finderdialog('close');
 		}
 
 		return this;
@@ -2463,7 +2463,7 @@ elFinder.prototype = {
 	 *   },
 	 *   all : true  // display checkbox "Apply to all"
 	 * })
-	 * @return elFinder
+	 * @return Finder
 	 */
 	confirm : function(opts) {
 		var complete = false,
@@ -2475,7 +2475,7 @@ elFinder.prototype = {
 				buttons   : {},
 				close     : function() {
 					!complete && opts.cancel.callback();
-					$(this).elfinderdialog('destroy');
+					$(this).finderdialog('destroy');
 				}
 			},
 			apply = this.i18n('apllyAll'),
@@ -2486,18 +2486,18 @@ elFinder.prototype = {
 			options.buttons[this.i18n(opts.reject.label)] = function() {
 				opts.reject.callback(!!(checkbox && checkbox.prop('checked')))
 				complete = true;
-				$(this).elfinderdialog('close')
+				$(this).finderdialog('close')
 			};
 		}
 
 		options.buttons[this.i18n(opts.accept.label)] = function() {
 			opts.accept.callback(!!(checkbox && checkbox.prop('checked')))
 			complete = true;
-			$(this).elfinderdialog('close')
+			$(this).finderdialog('close')
 		};
 
 		options.buttons[this.i18n(opts.cancel.label)] = function() {
-			$(this).elfinderdialog('close')
+			$(this).finderdialog('close')
 		};
 
 		if (opts.all) {
@@ -2819,7 +2819,7 @@ elFinder.prototype = {
 		var d = this.options.debug;
 
 		if (d == 'all' || d === true || ($.isArray(d) && $.inArray(type, d) != -1)) {
-			window.console && window.console.log && window.console.log('elfinder debug: ['+type+'] ['+this.id+']', m);
+			window.console && window.console.log && window.console.log('finder debug: ['+type+'] ['+this.id+']', m);
 		}
 		return this;
 	},

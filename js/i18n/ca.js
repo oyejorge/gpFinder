@@ -3,20 +3,20 @@
  * @author Sergio Jovani <lesergi@gmail.com>
  * @version 2011-11-13
  */
-if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object') {
-	elFinder.prototype.i18.ca = {
+if (Finder && Finder.prototype && typeof(Finder.prototype.i18) == 'object') {
+	Finder.prototype.i18.ca = {
 		translator : 'Sergio Jovani &lt;lesergi@gmail.com&gt;',
 		language   : 'Català',
 		direction  : 'ltr',
 		messages   : {
-			
+
 			/********************************** errors **********************************/
 			'error'                : 'Error',
 			'errUnknown'           : 'Error desconegut.',
 			'errUnknownCmd'        : 'Ordre desconeguda.',
 			'errJqui'              : 'La configuració de jQuery UI no és vàlida. S\'han d\'incloure els components "selectable", "draggable" i "droppable".',
-			'errNode'              : 'elFinder necessita crear elements DOM.',
-			'errURL'               : 'La configuració de l\'elFinder no és vàlida! L\'opció URL no està configurada.',
+			'errNode'              : 'gpFinder necessita crear elements DOM.',
+			'errURL'               : 'La configuració de l\'gpFinder no és vàlida! L\'opció URL no està configurada.',
 			'errAccess'            : 'Accés denegat.',
 			'errConnect'           : 'No s\'ha pogut connectar amb el rerefons.',
 			'errAbort'             : 'S\'ha interromput la connexió.',
@@ -54,7 +54,7 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'errMaxSize'           : 'Les dades excedeixen la mida màxima permesa.',
 			'errFileMaxSize'       : 'El fitxer excedeix la mida màxima permesa.',
 			'errUploadMime'        : 'El tipus de fitxer no està permès.',
-			'errUploadTransfer'    : 'S\'ha produït un error en transferir "$1".', 
+			'errUploadTransfer'    : 'S\'ha produït un error en transferir "$1".',
 			'errSave'              : 'No s\'ha pogut desar "$1".',
 			'errCopy'              : 'No s\'ha pogut copiar "$1".',
 			'errMove'              : 'No s\'ha pogut moure "$1".',
@@ -70,7 +70,7 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'errArcMaxSize'        : 'Els fitxers de l\'arxiu excedeixen la mida màxima permesa.',
 			'errResize'            : 'No s\'ha pogut redimensionar "$1".',
 			'errUsupportType'      : 'El tipus de fitxer no està suportat.',
-			
+
 			/******************************* commands names ********************************/
 			'cmdarchive'   : 'Crea arxiu',
 			'cmdback'      : 'Enrere',
@@ -99,8 +99,8 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'cmdview'      : 'Visualitza',
 			'cmdresize'    : 'Redimensiona la imatge',
 			'cmdsort'      : 'Ordena',
-			
-			/*********************************** buttons ***********************************/ 
+
+			/*********************************** buttons ***********************************/
 			'btnClose'  : 'Tanca',
 			'btnSave'   : 'Desa',
 			'btnRm'     : 'Suprimeix',
@@ -108,7 +108,7 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'btnCancel' : 'Cancel·la',
 			'btnNo'     : 'No',
 			'btnYes'    : 'Sí',
-			
+
 			/******************************** notifications ********************************/
 			'ntfopen'     : 'S\'està obrint la carpeta',
 			'ntffile'     : 'S\'està obrint el fitxer',
@@ -128,7 +128,7 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'ntfsearch'   : 'S\'estan cercant els fitxers',
 			'ntfsmth'     : 'S\'estan realitzant operacions',
       'ntfloadimg'  : 'S\'està carregant la imatge',
-			
+
 			/************************************ dates **********************************/
 			'dateUnknown' : 'desconegut',
 			'Today'       : 'Avui',
@@ -145,17 +145,17 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'Oct'         : 'oct.',
 			'Nov'         : 'nov.',
 			'Dec'         : 'des.',
-			
+
 			/******************************** sort variants ********************************/
-			'sortnameDirsFirst' : 'per nom (carpetes primer)', 
-			'sortkindDirsFirst' : 'per tipus (carpetes primer)', 
-			'sortsizeDirsFirst' : 'per mida (carpetes primer)', 
-			'sortdateDirsFirst' : 'per data (carpetes primer)', 
-			'sortname'          : 'per nom', 
-			'sortkind'          : 'per tipus', 
+			'sortnameDirsFirst' : 'per nom (carpetes primer)',
+			'sortkindDirsFirst' : 'per tipus (carpetes primer)',
+			'sortsizeDirsFirst' : 'per mida (carpetes primer)',
+			'sortdateDirsFirst' : 'per data (carpetes primer)',
+			'sortname'          : 'per nom',
+			'sortkind'          : 'per tipus',
 			'sortsize'          : 'per mida',
 			'sortdate'          : 'per data',
-			
+
 			/********************************** messages **********************************/
 			'confirmReq'      : 'Es necessita confirmació',
 			'confirmRm'       : 'Voleu suprimir els fitxers?<br />L\'acció es podrà desfer!',
@@ -178,7 +178,7 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'viewlist'        : 'Vista en llista',
 			'viewicons'       : 'Vista en icones',
 			'places'          : 'Llocs',
-			'calc'            : 'Calcula', 
+			'calc'            : 'Calcula',
 			'path'            : 'Camí',
 			'aliasfor'        : 'Àlies per',
 			'locked'          : 'Bloquejat',
@@ -189,7 +189,7 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'yes'             : 'sí',
 			'no'              : 'no',
 			'link'            : 'Enllaç',
-			'searcresult'     : 'Resultats de la cerca',  
+			'searcresult'     : 'Resultats de la cerca',
 			'selected'        : 'Elements seleccionats',
 			'about'           : 'Quant a',
 			'shortcuts'       : 'Dreceres',
@@ -226,7 +226,7 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
       'mode'            : 'Mode',
       'resize'          : 'Redimensiona',
       'crop'            : 'Retalla',
-			
+
 			/********************************** mimetypes **********************************/
 			'kindUnknown'     : 'Desconegut',
 			'kindFolder'      : 'Carpeta',

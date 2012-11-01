@@ -1,11 +1,11 @@
 
 /**
- * @class elFinder command "rename".
+ * @class Finder command "rename".
  * Rename selected file.
  *
  * @author Dmitry (dio) Levashov, dio@std42.ru
  **/
-elFinder.prototype.commands.rename = function() {
+Finder.prototype.commands.rename = function() {
 
 	this.shortcuts = [{
 		pattern     : 'f2'+(this.fm.OS == 'mac' ? ' enter' : '')

@@ -3,8 +3,8 @@
  * @author Marcin Mikołajczyk <marcin@pjwstk.edu.pl>
  * @version 2012-01-28
  */
-if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object') {
-	elFinder.prototype.i18.pl = {
+if (Finder && Finder.prototype && typeof(Finder.prototype.i18) == 'object') {
+	Finder.prototype.i18.pl = {
 		translator : 'Marcin Mikołajczyk &lt;marcin@pjwstk.edu.pl&gt;',
 		language   : 'Polski',
 		direction  : 'ltr',
@@ -15,8 +15,8 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'errUnknown'           : 'Nieznany błąd.',
 			'errUnknownCmd'        : 'Nieznane polecenie.',
 			'errJqui'              : 'Niepoprawna konfiguracja jQuery UI. Muszą być zawarte komponenty selectable, draggable i droppable.',
-			'errNode'              : 'elFinder wymaga utworzenia obiektu DOM.',
-			'errURL'               : 'Niepoprawna konfiguracja elFinder! Pole URL nie jest ustawione.',
+			'errNode'              : 'gpFinder wymaga utworzenia obiektu DOM.',
+			'errURL'               : 'Niepoprawna konfiguracja gpFinder! Pole URL nie jest ustawione.',
 			'errAccess'            : 'Dostęp zabroniony.',
 			'errConnect'           : 'Błąd połączenia z backend.',
 			'errAbort'             : 'Połączenie zostało przerwane.',
@@ -147,12 +147,12 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'Dec'         : 'gru',
 
 			/******************************** sort variants ********************************/
-			'sortnameDirsFirst' : 'po nazwie (foldery pierwsze)', 
-			'sortkindDirsFirst' : 'po typie (foldery pierwsze)', 
-			'sortsizeDirsFirst' : 'po rozmiarze (foldery pierwsze)', 
-			'sortdateDirsFirst' : 'po dacie (foldery pierwsze)', 
-			'sortname'          : 'po nazwie', 
-			'sortkind'          : 'po typie', 
+			'sortnameDirsFirst' : 'po nazwie (foldery pierwsze)',
+			'sortkindDirsFirst' : 'po typie (foldery pierwsze)',
+			'sortsizeDirsFirst' : 'po rozmiarze (foldery pierwsze)',
+			'sortdateDirsFirst' : 'po dacie (foldery pierwsze)',
+			'sortname'          : 'po nazwie',
+			'sortkind'          : 'po typie',
 			'sortsize'          : 'po rozmiarze',
 			'sortdate'          : 'po dacie',
 

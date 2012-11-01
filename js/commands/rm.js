@@ -1,11 +1,11 @@
 
 /**
- * @class  elFinder command "rm"
+ * @class  Finder command "rm"
  * Delete files
  *
  * @author Dmitry (dio) Levashov
  **/
-elFinder.prototype.commands.rm = function() {
+Finder.prototype.commands.rm = function() {
 
 	this.shortcuts = [{
 		pattern     : 'delete ctrl+backspace'

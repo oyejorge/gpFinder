@@ -1,11 +1,11 @@
 
 /**
- * @class  elFinder command "help"
+ * @class  Finder command "help"
  * "About" dialog
  *
  * @author Dmitry (dio) Levashov
  **/
-elFinder.prototype.commands.help = function() {
+Finder.prototype.commands.help = function() {
 	var fm   = this.fm,
 		self = this,
 		linktpl = '<div class="finder-help-link"> <a href="{url}">{link}</a></div>',
@@ -28,7 +28,7 @@ elFinder.prototype.commands.help = function() {
 		about = function() {
 			html.push('<div id="about" class="ui-tabs-panel ui-widget-content ui-corner-bottom">')
 			html.push('<h3>gpFinder</h3>');
-			html.push('<div class="'+prim+'">An adaptation of <a href="http://elfinder.org/">elFinder</a></div>');
+			html.push('<div class="'+prim+'">An adaptation of <a href="http://elfinder.org/">Finder</a></div>');
 			html.push('<div class="'+prim+'">'+fm.i18n('webfm')+'</div>');
 			html.push('<div class="'+sec+'">'+fm.i18n('ver')+': '+fm.version+', '+fm.i18n('protocolver')+': <span id="apiver"></span></div>');
 			html.push('<div class="'+sec+'">jQuery/jQuery UI: '+$().jquery+'/'+$.ui.version+'</div>');
@@ -148,7 +148,7 @@ elFinder.prototype.commands.help = function() {
 			this.dialog = this.fm.dialog(content, {title : this.title, width : 530, autoOpen : false, destroyOnClose : false});
 		}
 
-		this.dialog.elfinderdialog('open').find('.ui-tabs-nav li a:first').click();
+		this.dialog.finderdialog('open').find('.ui-tabs-nav li a:first').click();
 	}
 
 }

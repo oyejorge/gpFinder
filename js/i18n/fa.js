@@ -3,8 +3,8 @@
  * @author Keyhan Mohammadpour <keyhan_universityworks@yahoo.com>
  * @version 2012-04-07
  */
-if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object') {
-	elFinder.prototype.i18.fa = {
+if (Finder && Finder.prototype && typeof(Finder.prototype.i18) == 'object') {
+	Finder.prototype.i18.fa = {
 		translator : 'Keyhan Mohammadpour &lt;keyhan_universityworks@yahoo.com&gt;',
 		language   : 'فارسی',
 		direction  : 'rtl',
@@ -17,8 +17,8 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'errUnknown'           : 'خطای ناشناخته .',
 			'errUnknownCmd'        : 'دستور ناشناخته .',
 			'errJqui'              : 'تنظیمات کتابخانه JQuery UI شما به درستی تنظیم نشده است . این کتابخانه بایستی شامل Resizable ، Draggable و Droppable باشد .',
-			'errNode'              : 'شی elfinder به درستی ایجاد نشده است .',
-			'errURL'               : 'تنظیمات elfinder شما به درستی انجام نشده است . تنظیم Url را به درستی انجام دهید .',
+			'errNode'              : 'شی finder به درستی ایجاد نشده است .',
+			'errURL'               : 'تنظیمات finder شما به درستی انجام نشده است . تنظیم Url را به درستی انجام دهید .',
 			'errAccess'            : 'محدودیت سطح دسترسی',
 			'errAbort'             : 'ارتباط قطع شده است .',
 			'errTimeout'           : 'مهلت زمانی Connection شما به انتها رسیده ایت .',
@@ -101,7 +101,7 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'cmdresize'    : 'تغییر اندازه فایل',
 			'cmdsort'      : 'مرتب سازی',
 
-			/*********************************** buttons ***********************************/ 
+			/*********************************** buttons ***********************************/
 			'btnClose'  : 'بستن',
 			'btnSave'   : 'ذخیره',
 			'btnRm'     : 'حذف',

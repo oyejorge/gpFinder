@@ -1,12 +1,12 @@
 
 /**
- * @class elFinder command "copy".
+ * @class Finder command "copy".
  * Put files in filemanager clipboard.
  *
- * @type  elFinder.command
+ * @type  Finder.command
  * @author  Dmitry (dio) Levashov
  */
-elFinder.prototype.commands.cut = function() {
+Finder.prototype.commands.cut = function() {
 
 	this.shortcuts = [{
 		pattern     : 'ctrl+x shift+insert'

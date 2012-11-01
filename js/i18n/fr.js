@@ -3,22 +3,22 @@
  * @author Régis Guyomarch <regisg@gmail.com>
  * @version 2012-05-21
  */
-if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object') {
-	elFinder.prototype.i18.fr = {
+if (Finder && Finder.prototype && typeof(Finder.prototype.i18) == 'object') {
+	Finder.prototype.i18.fr = {
 		translator : 'Régis Guyomarch &lt;regisg@gmail.com&gt;',
 		language   : 'française',
 		direction  : 'ltr',
 		dateFormat : 'd M, Y H:i',
 		fancyDateFormat : '$1 H:i',
 		messages   : {
-			
+
 			/********************************** errors **********************************/
 			'error'                : 'Erreur',
 			'errUnknown'           : 'Erreur inconnue.',
 			'errUnknownCmd'        : 'Commande inconnue.',
 			'errJqui'              : 'Mauvaise configuration de jQuery UI. Les composants Selectable, draggable et droppable doivent être inclus.',
-			'errNode'              : 'elFinder requiert que l\'élément DOM ait été créé.',
-			'errURL'               : 'Mauvaise configuration d\'elFinder ! L\'option URL n\a pas été définie.',
+			'errNode'              : 'gpFinder requiert que l\'élément DOM ait été créé.',
+			'errURL'               : 'Mauvaise configuration d\'gpFinder ! L\'option URL n\a pas été définie.',
 			'errAccess'            : 'Accès refusé.',
 			'errConnect'           : 'Impossible de se connecter au backend.',
 			'errAbort'             : 'Connexion interrompue.',
@@ -56,7 +56,7 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'errUploadTotalSize'   : 'Les données dépassent la taille maximale allouée.',
 			'errUploadFileSize'    : 'Le fichier dépasse la taille maximale allouée.',
 			'errUploadMime'        : 'Type de fichier non autorisé.',
-			'errUploadTransfer'    : '"$1" erreur transfert.', 
+			'errUploadTransfer'    : '"$1" erreur transfert.',
 			'errNotReplace'        : 'L\'objet "$1" existe déjà à cet endroit et ne peut être remplacé par un objet d\'un type différent.', // new
 			'errSave'              : 'Impossible de sauvegarder "$1".',
 			'errCopy'              : 'Impossible de copier "$1".',
@@ -77,9 +77,9 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'errNetMount'          : 'Impossible de monter "$1".', // added 17.04.2012
 			'errNetMountNoDriver'  : 'Protocol non supporté.',     // added 17.04.2012
 			'errNetMountFailed'    : 'Echec du montage.',         // added 17.04.2012
-			'errNetMountHostReq'   : 'Hôte requis.', // added 18.04.2012			
-			
-			
+			'errNetMountHostReq'   : 'Hôte requis.', // added 18.04.2012
+
+
 			/******************************* commands names ********************************/
 			'cmdarchive'   : 'Créer une archive',
 			'cmdback'      : 'Précédent',
@@ -109,8 +109,8 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'cmdresize'    : 'Redimensionner l\'image',
 			'cmdsort'      : 'Trier',
 			'cmdnetmount'  : 'Monter un volume réseau',
-			
-			/*********************************** buttons ***********************************/ 
+
+			/*********************************** buttons ***********************************/
 			'btnClose'  : 'Fermer',
 			'btnSave'   : 'Sauvegarder',
 			'btnRm'     : 'Supprimer',
@@ -118,7 +118,7 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'btnNo'     : 'Non',
 			'btnYes'    : 'Oui',
 			'btnMount'  : 'Monter',  // added 18.04.2012
-			
+
 			/******************************** notifications ********************************/
 			'ntfopen'     : 'Ouvrir le dossier',
 			'ntffile'     : 'Ouvrir le fichier',
@@ -138,8 +138,8 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'ntfsearch'   : 'Recherche des fichiers',
 			'ntfsmth'     : 'Fait quelque chose >_<',
 			'ntfloadimg'  : 'Chargement de l\' image',
-			'ntfnetmount' : 'Monte le volume réseau', // added 18.04.2012			
-			
+			'ntfnetmount' : 'Monte le volume réseau', // added 18.04.2012
+
 			/************************************ dates **********************************/
 			'dateUnknown' : 'Inconnue',
 			'Today'       : 'Aujourd\'hui',
@@ -158,8 +158,8 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'Dec'         : 'Déc',
 
 			/******************************** sort variants ********************************/
-			'sortname'          : 'par nom', 
-			'sortkind'          : 'par type', 
+			'sortname'          : 'par nom',
+			'sortkind'          : 'par type',
 			'sortsize'          : 'par taille',
 			'sortdate'          : 'par date',
 			'sortFoldersFirst'  : 'Dossiers en premier',
@@ -185,7 +185,7 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'viewlist'        : 'Vue listing',
 			'viewicons'       : 'Vue icônes',
 			'places'          : 'Places',
-			'calc'            : 'Calculer', 
+			'calc'            : 'Calculer',
 			'path'            : 'Chemin',
 			'aliasfor'        : 'Raccourcis pour',
 			'locked'          : 'Verrouiller',
@@ -196,7 +196,7 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'yes'             : 'oui',
 			'no'              : 'non',
 			'link'            : 'Lien',
-			'searcresult'     : 'Résultat de la recherche',  
+			'searcresult'     : 'Résultat de la recherche',
 			'selected'        : 'Éléments sélectionnés',
 			'about'           : 'À propos',
 			'shortcuts'       : 'Raccourcis',
@@ -240,7 +240,7 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'port'                : 'Port', // added 18.04.2012
 			'user'                : 'Utilisateur', // added 18.04.2012
 			'pass'                : 'Mot de passe', // added 18.04.2012
-			
+
 			/********************************** mimetypes **********************************/
 			'kindUnknown'     : 'Inconnu',
 			'kindFolder'      : 'Dossier',
@@ -322,4 +322,3 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 	}
 }
 
- 

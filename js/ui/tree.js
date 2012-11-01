@@ -1,10 +1,10 @@
 
 /**
- * @class  elFinder folders tree
+ * @class  Finder folders tree
  *
  * @author Dmitry (dio) Levashov
  **/
-$.fn.elfindertree = function(fm, opts) {
+$.fn.findertree = function(fm, opts) {
 	var treeclass = fm.res('class', 'tree');
 
 	this.not('.'+treeclass).each(function() {

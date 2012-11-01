@@ -1,12 +1,12 @@
 
 /**
- * @class elFinder command "download".
+ * @class Finder command "download".
  * Download selected files.
  * Only for new api
  *
  * @author Dmitry (dio) Levashov, dio@std42.ru
  **/
-elFinder.prototype.commands.download = function() {
+Finder.prototype.commands.download = function() {
 	var self   = this,
 		fm     = this.fm,
 		filter = function(hashes) {

@@ -1,10 +1,10 @@
 
 /**
- * @class  elFinder toolbar search button widget.
+ * @class  Finder toolbar search button widget.
  *
  * @author Dmitry (dio) Levashov
  **/
-$.fn.elfindersearchbutton = function(cmd) {
+$.fn.findersearchbutton = function(cmd) {
 	return this.each(function() {
 		var result = false,
 			button = $(this).hide().addClass('ui-widget-content finder-button '+cmd.fm.res('class', 'searchbtn')+''),

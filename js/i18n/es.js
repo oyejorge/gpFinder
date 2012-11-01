@@ -3,20 +3,20 @@
  * @author Julián Torres <julian.torres@pabernosmatao.com>
  * @version 2011-08-25
  */
-if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object') {
-	elFinder.prototype.i18.es = {
+if (Finder && Finder.prototype && typeof(Finder.prototype.i18) == 'object') {
+	Finder.prototype.i18.es = {
 		translator : 'Julián Torres &lt;julian.torres@pabernosmatao.com&gt;',
 		language   : 'Español internacional',
 		direction  : 'ltr',
 		messages   : {
-			
+
 			/********************************** errors **********************************/
 			'error'                : 'Error',
 			'errUnknown'           : 'Error desconocido.',
 			'errUnknownCmd'        : 'Comando desconocido.',
 			'errJqui'              : 'Configuración no válida de jQuery UI. deben estar incluidos los componentes selectable, draggable y droppable.',
-			'errNode'              : 'elFinder necesita crear elementos DOM.',
-			'errURL'               : 'Configuración no válida de elFinder! La opción URL no está configurada.',
+			'errNode'              : 'gpFinder necesita crear elementos DOM.',
+			'errURL'               : 'Configuración no válida de gpFinder! La opción URL no está configurada.',
 			'errAccess'            : 'Acceso denegado.',
 			'errConnect'           : 'No se ha podido conectar con el backend.',
 			'errAbort'             : 'Conexión cancelada.',
@@ -54,7 +54,7 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'errMaxSize'           : 'El tamaño de los datos excede el máximo permitido.',
 			'errFileMaxSize'       : 'El tamaño del archivo excede el máximo permitido.',
 			'errUploadMime'        : 'Tipo de archivo no permitidp.',
-			'errUploadTransfer'    : 'Error al transferir "$1".', 
+			'errUploadTransfer'    : 'Error al transferir "$1".',
 			'errSave'              : 'No se puede guadar "$1".',
 			'errCopy'              : 'No se puede copiar "$1".',
 			'errMove'              : 'No se puede mover "$1".',
@@ -68,7 +68,7 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'errReplByChild'       : 'La carpeta “$1” no puede ser reemplazada por un elemento contenido en ella.',
 			'errArcSymlinks'       : 'Por razones de seguridad no se pueden descomprimir archivos que contengan symlinks.',
 			'errArcMaxSize'        : 'El tamaño del archivo excede el máximo permitido.',
-			
+
 			/******************************* commands names ********************************/
 			'cmdarchive'   : 'Crear archivo',
 			'cmdback'      : 'Atrás',
@@ -95,15 +95,15 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'cmdup'        : 'Ir a la carpeta raíz',
 			'cmdupload'    : 'Subir archivos',
 			'cmdview'      : 'Ver',
-			
-			/*********************************** buttons ***********************************/ 
+
+			/*********************************** buttons ***********************************/
 			'btnClose'  : 'Cerrar',
 			'btnSave'   : 'Guardar',
 			'btnRm'     : 'Eliminar',
 			'btnCancel' : 'Cancelar',
 			'btnNo'     : 'No',
 			'btnYes'    : 'Sí',
-			
+
 			/******************************** notifications ********************************/
 			'ntfopen'     : 'Abrir carpeta',
 			'ntffile'     : 'Abrir archivo',
@@ -123,7 +123,7 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'ntfsearch'   : 'Buscando archivos',
 			'ntfsmth'     : 'Haciendo algo >_<',
       'ntfloadimg'  : 'Cargando imagen',
-			
+
 			/************************************ dates **********************************/
 			'dateUnknown' : 'desconocida',
 			'Today'       : 'Hoy',
@@ -163,7 +163,7 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'viewlist'        : 'ver como lista',
 			'viewicons'       : 'Ver como iconos',
 			'places'          : 'Lugares',
-			'calc'            : 'Calcular', 
+			'calc'            : 'Calcular',
 			'path'            : 'Ruta',
 			'aliasfor'        : 'Alias para',
 			'locked'          : 'Bloqueado',
@@ -174,7 +174,7 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'yes'             : 'si',
 			'no'              : 'no',
 			'link'            : 'Enlace',
-			'searcresult'     : 'Resultados de la búsqueda',  
+			'searcresult'     : 'Resultados de la búsqueda',
 			'selected'        : 'elementos seleccionados',
 			'about'           : 'Acerca',
 			'shortcuts'       : 'Accesos directos',
@@ -207,7 +207,7 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
       'mode'            : 'Modo',
       'resize'          : 'Redimensionar',
       'crop'            : 'Recortar',
-			
+
 			/********************************** mimetypes **********************************/
 			'kindUnknown'     : 'Desconocido',
 			'kindFolder'      : 'Carpeta',

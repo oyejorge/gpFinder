@@ -1,11 +1,11 @@
 
 /**
- * @class  elFinder command "archive"
+ * @class  Finder command "archive"
  * Archive selected files
  *
  * @author Dmitry (dio) Levashov
  **/
-elFinder.prototype.commands.archive = function() {
+Finder.prototype.commands.archive = function() {
 	var self  = this,
 		fm    = self.fm,
 		mimes = [];

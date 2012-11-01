@@ -9,7 +9,7 @@
 .std42-dialog, .std42-dialog .ui-widget-content { background-color:#ededed; background-image:none; background-clip: content-box; }
 
 /* navbar */
-.elfinder .finder-navbar { background:#dde4eb; }
+.finder .finder-navbar { background:#dde4eb; }
 .finder-navbar .ui-state-hover  { background:transparent; border-color:transparent; }
 .finder-navbar .ui-state-active { background: #3875d7;    border-color:#3875d7; color:#fff; }
 .finder-navbar .finder-droppable-active {background:#A7C6E5 !important;}
@@ -33,8 +33,8 @@
 .finder-disabled .finder-cwd table td.ui-state-hover { background:#dadada;}
 
 /* statusbar */
-.elfinder .finder-statusbar { color:#555; }
-.elfinder .finder-statusbar a { text-decoration:none; color:#555;}
+.finder .finder-statusbar { color:#555; }
+.finder .finder-statusbar a { text-decoration:none; color:#555;}
 
 
 .std42-dialog .finder-help, .std42-dialog .finder-help .ui-widget-content { background:#fff;}

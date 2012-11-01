@@ -1,12 +1,12 @@
 
 /**
- * @class elFinder command "getfile".
+ * @class Finder command "getfile".
  * Return selected files info into outer callback.
- * For use elFinder with wysiwyg editors etc.
+ * For use Finder with wysiwyg editors etc.
  *
  * @author Dmitry (dio) Levashov, dio@std42.ru
  **/
-elFinder.prototype.commands.getfile = function() {
+Finder.prototype.commands.getfile = function() {
 	var self   = this,
 		fm     = this.fm,
 		filter = function(files) {

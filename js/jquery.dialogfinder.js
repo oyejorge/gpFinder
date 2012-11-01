@@ -1,23 +1,23 @@
 
 /**
- * @class dialogfinder - open elFinder in dialog window
+ * @class dialogfinder - open Finder in dialog window
  *
- * @param  Object  elFinder options with dialog options
+ * @param  Object  Finder options with dialog options
  * @example
  * $(selector).dialogfinder({
- *     // some elfinder options
+ *     // some finder options
  *     title          : 'My files', // dialog title, default = "Files"
  *     width          : 850,        // dialog width, default 840
  *     autoOpen       : false,      // if false - dialog will not be opened after init, default = true
- *     destroyOnClose : true        // destroy elFinder on close dialog, default = false
+ *     destroyOnClose : true        // destroy Finder on close dialog, default = false
  * })
  * @author Dmitry (dio) Levashov
  **/
 $.fn.dialogfinder = function(opts) {
-	var position = 'elfinderPosition',
-		destroy  = 'elfinderDestroyOnClose';
+	var position = 'finderPosition',
+		destroy  = 'finderDestroyOnClose';
 
-	this.not('.elfinder').each(function() {
+	this.not('.finder').each(function() {
 
 
 		var doc     = $(document),
@@ -35,9 +35,9 @@ $.fn.dialogfinder = function(opts) {
 				.appendTo('body')
 				.draggable({ handle : '.dialogfinder-drag',
 					     containment : 'window' })
-				.elfinder(opts)
+				.finder(opts)
 				.prepend(toolbar),
-			elfinder = node.elfinder('instance');
+			finder = node.finder('instance');
 
 
 		node.width(parseInt(node.width()) || 840) // fix width if set to "auto"
@@ -71,7 +71,7 @@ $.fn.dialogfinder = function(opts) {
 			node.zIndex(zindex).css(pos).show().trigger('resize')
 
 			setTimeout(function() {
-				// fix resize icon position and make elfinder active
+				// fix resize icon position and make finder active
 				node.trigger('resize').mousedown();
 			}, 200);
 		}
@@ -80,11 +80,11 @@ $.fn.dialogfinder = function(opts) {
 
 		if (node.is(':visible')) {
 			!!node.data(destroy)
-				? node.elfinder('destroy').remove()
-				: node.elfinder('close');
+				? node.finder('destroy').remove()
+				: node.finder('close');
 		}
 	} else if (opts == 'instance') {
-		return $(this).getElFinder();
+		return $(this).getFinder();
 	}
 
 	return this;

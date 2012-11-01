@@ -3,22 +3,22 @@
  * @author Barry vd. Heuvel <barry@fruitcakestudio.nl>
  * @version 2012-04-02
  */
-if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object') {
-	elFinder.prototype.i18.nl = {
+if (Finder && Finder.prototype && typeof(Finder.prototype.i18) == 'object') {
+	Finder.prototype.i18.nl = {
 		translator : 'Barry vd. Heuvel &lt;barry@fruitcakestudio.nl&gt;',
 		language   : 'Nederlands',
 		direction  : 'ltr',
 		dateFormat : 'd-m-Y H:i',
 		fancyDateFormat : '$1 H:i',
 		messages   : {
-			
+
 			/********************************** errors **********************************/
 			'error'                : 'Fout',
 			'errUnknown'           : 'Onbekend fout.',
 			'errUnknownCmd'        : 'Onbekend commando.',
 			'errJqui'              : 'Ongeldige jQuery UI configuratie. Selectable, draggable en droppable componenten moeten aanwezig zijn.',
-			'errNode'              : 'Voor elFinder moet een DOM Element gemaakt worden.',
-			'errURL'               : 'Ongeldige elFinder configuratie! URL optie is niet ingesteld.',
+			'errNode'              : 'Voor gpFinder moet een DOM Element gemaakt worden.',
+			'errURL'               : 'Ongeldige gpFinder configuratie! URL optie is niet ingesteld.',
 			'errAccess'            : 'Toegang geweigerd.',
 			'errConnect'           : 'Kan geen verbinding met de backend maken.',
 			'errAbort'             : 'Verbinding afgebroken.',
@@ -56,7 +56,7 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'errMaxSize'           : 'Data overschrijdt de maximale grootte.',
 			'errFileMaxSize'       : 'Bestand overschrijdt de maximale grootte.',
 			'errUploadMime'        : 'Bestandstype niet toegestaan.',
-			'errUploadTransfer'    : '"$1" overdrachtsfout.', 
+			'errUploadTransfer'    : '"$1" overdrachtsfout.',
 			'errSave'              : 'Kan "$1" niet opslaan.',
 			'errCopy'              : 'Kan "$1" niet kopiëren.',
 			'errMove'              : 'Kan "$1" niet verplaatsen.',
@@ -72,12 +72,12 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'errArcMaxSize'        : 'Archief overschrijdt de maximale bestandsgrootte.',
 			'errResize'            : 'Kan het formaat van "$1" niet wijzigen.',
 			'errUsupportType'      : 'Bestandstype wordt niet ondersteund.',
-			'errNotUTF8Content'    : 'Bestand "$1" is niet in UTF-8 and kan niet aangepast worden.', 
-			'errNetMount'          : 'Kan "$1" niet mounten.',   
-			'errNetMountNoDriver'  : 'Niet ondersteund protocol.',   
-			'errNetMountFailed'    : 'Mount mislukt.',    
+			'errNotUTF8Content'    : 'Bestand "$1" is niet in UTF-8 and kan niet aangepast worden.',
+			'errNetMount'          : 'Kan "$1" niet mounten.',
+			'errNetMountNoDriver'  : 'Niet ondersteund protocol.',
+			'errNetMountFailed'    : 'Mount mislukt.',
 			'errNetMountHostReq'   : 'Host is verplicht.',
-      
+
 			/******************************* commands names ********************************/
 			'cmdarchive'   : 'Maak archief',
 			'cmdback'      : 'Vorige',
@@ -107,8 +107,8 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'cmdresize'    : 'Formaat wijzigen',
 			'cmdsort'      : 'Sorteren',
 			'cmdnetmount'  : 'Mount netwerk volume',
-			
-			/*********************************** buttons ***********************************/ 
+
+			/*********************************** buttons ***********************************/
 			'btnClose'  : 'Sluit',
 			'btnSave'   : 'Opslaan',
 			'btnRm'     : 'Verwijder',
@@ -117,7 +117,7 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'btnNo'     : 'Nee',
 			'btnYes'    : 'Ja',
                         'btnMount'  : 'Mount',
-			
+
 			/******************************** notifications ********************************/
 			'ntfopen'     : 'Bezig met openen van map',
 			'ntffile'     : 'Bezig met openen bestand',
@@ -138,7 +138,7 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'ntfsmth'     : 'Iets aan het doen >_<',
 			'ntfloadimg'  : 'Laden van plaatje',
 			'ntfnetmount' : 'Bezig met mounten van netwerk volume',
-			
+
 			/************************************ dates **********************************/
 			'dateUnknown' : 'onbekend',
 			'Today'       : 'Vandaag',
@@ -167,24 +167,24 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'October'     : 'Oktober',
 			'November'    : 'November',
 			'December'    : 'December',
-			'Sunday'      : 'Zondag', 
-			'Monday'      : 'Maandag', 
-			'Tuesday'     : 'Dinsdag', 
-			'Wednesday'   : 'Woensdag', 
-			'Thursday'    : 'Donderdag', 
-			'Friday'      : 'Vrijdag', 
+			'Sunday'      : 'Zondag',
+			'Monday'      : 'Maandag',
+			'Tuesday'     : 'Dinsdag',
+			'Wednesday'   : 'Woensdag',
+			'Thursday'    : 'Donderdag',
+			'Friday'      : 'Vrijdag',
 			'Saturday'    : 'Zaterdag',
-			'Sun'         : 'Zo', 
-			'Mon'         : 'Ma', 
-			'Tue'         : 'Di', 
-			'Wed'         : 'Wo', 
-			'Thu'         : 'Do', 
-			'Fri'         : 'Vr', 
+			'Sun'         : 'Zo',
+			'Mon'         : 'Ma',
+			'Tue'         : 'Di',
+			'Wed'         : 'Wo',
+			'Thu'         : 'Do',
+			'Fri'         : 'Vr',
 			'Sat'         : 'Za',
-			
+
 			/******************************** sort variants ********************************/
-			'sortname'          : 'op naam', 
-			'sortkind'          : 'op type', 
+			'sortname'          : 'op naam',
+			'sortkind'          : 'op type',
 			'sortsize'          : 'op grootte',
 			'sortdate'          : 'op datum',
 			'sortFoldersFirst'  : 'Mappen eerst',
@@ -211,7 +211,7 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'viewlist'        : 'Lijst weergave',
 			'viewicons'       : 'Icoon weergave',
 			'places'          : 'Plaatsen',
-			'calc'            : 'Bereken', 
+			'calc'            : 'Bereken',
 			'path'            : 'Pad',
 			'aliasfor'        : 'Alias voor',
 			'locked'          : 'Vergrendeld',
@@ -222,7 +222,7 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'yes'             : 'ja',
 			'no'              : 'nee',
 			'link'            : 'Link',
-			'searcresult'     : 'Zoek resultaten',  
+			'searcresult'     : 'Zoek resultaten',
 			'selected'        : 'geselecteerde items',
 			'about'           : 'Over',
 			'shortcuts'       : 'Snelkoppelingen',
@@ -264,12 +264,12 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'rotate-ccw'	  : 'Draai 90 graden linksom',
 			'degree'	  : '°',
 			'netMountDialogTitle' : 'Mount network volume',
-			'protocol'        : 'Protocol', 
-			'host'            : 'Host', 
+			'protocol'        : 'Protocol',
+			'host'            : 'Host',
 			'port'            : 'Poort',
-			'user'            : 'Gebruikersnaams', 
-			'pass'            : 'Wachtwoord', 
-			
+			'user'            : 'Gebruikersnaams',
+			'pass'            : 'Wachtwoord',
+
 			/********************************** mimetypes **********************************/
 			'kindUnknown'     : 'Onbekend',
 			'kindFolder'      : 'Map',

@@ -1,10 +1,10 @@
 
 /**
- * @class  elFinder toolbar
+ * @class  Finder toolbar
  *
  * @author Dmitry (dio) Levashov
  **/
-$.fn.elfindertoolbar = function(fm, opts) {
+$.fn.findertoolbar = function(fm, opts) {
 	this.not('.finder-toolbar').each(function() {
 		var commands = fm._commands,
 			self     = $(this).addClass('ui-helper-clearfix ui-widget-header ui-corner-top finder-toolbar'),
@@ -20,7 +20,7 @@ $.fn.elfindertoolbar = function(fm, opts) {
 				i = panels[l].length;
 				while (i--) {
 					if ((cmd = commands[panels[l][i]])) {
-						button = 'elfinder'+cmd.options.ui;
+						button = 'finder'+cmd.options.ui;
 						$.fn[button] && panel.prepend($('<div/>')[button](cmd));
 					}
 				}

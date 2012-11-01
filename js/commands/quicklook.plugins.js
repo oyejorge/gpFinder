@@ -1,10 +1,10 @@
 
-elFinder.prototype.commands.quicklook.plugins = [
+Finder.prototype.commands.quicklook.plugins = [
 
 	/**
 	 * Images preview plugin
 	 *
-	 * @param elFinder.commands.quicklook
+	 * @param Finder.commands.quicklook
 	 **/
 	function(ql) {
 		var mimes   = ['image/jpeg', 'image/png', 'image/gif'],
@@ -67,7 +67,7 @@ elFinder.prototype.commands.quicklook.plugins = [
 	/**
 	 * HTML preview plugin
 	 *
-	 * @param elFinder.commands.quicklook
+	 * @param Finder.commands.quicklook
 	 **/
 	function(ql) {
 		var mimes   = ['text/html', 'application/xhtml+xml'],
@@ -105,7 +105,7 @@ elFinder.prototype.commands.quicklook.plugins = [
 	/**
 	 * Texts preview plugin
 	 *
-	 * @param elFinder.commands.quicklook
+	 * @param Finder.commands.quicklook
 	 **/
 	function(ql) {
 		var fm      = ql.fm,
@@ -143,7 +143,7 @@ elFinder.prototype.commands.quicklook.plugins = [
 	/**
 	 * PDF preview plugin
 	 *
-	 * @param elFinder.commands.quicklook
+	 * @param Finder.commands.quicklook
 	 **/
 	function(ql) {
 		var fm      = ql.fm,
@@ -190,7 +190,7 @@ elFinder.prototype.commands.quicklook.plugins = [
 	/**
 	 * Flash preview plugin
 	 *
-	 * @param elFinder.commands.quicklook
+	 * @param Finder.commands.quicklook
 	 **/
 	function(ql) {
 		var fm      = ql.fm,
@@ -221,7 +221,7 @@ elFinder.prototype.commands.quicklook.plugins = [
 	/**
 	 * HTML5 audio preview plugin
 	 *
-	 * @param elFinder.commands.quicklook
+	 * @param Finder.commands.quicklook
 	 **/
 	function(ql) {
 		var preview  = ql.preview,
@@ -265,7 +265,7 @@ elFinder.prototype.commands.quicklook.plugins = [
 	/**
 	 * HTML5 video preview plugin
 	 *
-	 * @param elFinder.commands.quicklook
+	 * @param Finder.commands.quicklook
 	 **/
 	function(ql) {
 		var preview  = ql.preview,
@@ -303,7 +303,7 @@ elFinder.prototype.commands.quicklook.plugins = [
 	/**
 	 * Audio/video preview plugin using browser plugins
 	 *
-	 * @param elFinder.commands.quicklook
+	 * @param Finder.commands.quicklook
 	 **/
 	function(ql) {
 		var preview = ql.preview,

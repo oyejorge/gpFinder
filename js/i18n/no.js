@@ -3,20 +3,20 @@
  * @author Stian Jacobsen <stian@promonorge.no>
  * @version 2012-07-03
  */
-if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object') {
-	elFinder.prototype.i18.no = {
+if (Finder && Finder.prototype && typeof(Finder.prototype.i18) == 'object') {
+	Finder.prototype.i18.no = {
 		translator : 'Stian Jacobsen &lt;stian@promonorge.no&gt;',
 		language   : 'Norwegian Bokmål',
 		direction  : 'ltr',
 		messages   : {
-			
+
 			/********************************** errors **********************************/
 			'error'                : 'Feil',
 			'errUnknown'           : 'Ukjent feil.',
 			'errUnknownCmd'        : 'Ukjent kommando.',
 			'errJqui'              : 'Ugyldig jQuery UI konfigurasjon. Selectable, draggable og droppable komponentene må være inkludert.',
-			'errNode'              : 'elFinder påkrever at DOM Elementer kan opprettes.',
-			'errURL'               : 'Ugyldig elFinder konfigurasjon! URL-valget er ikke satt.',
+			'errNode'              : 'gpFinder påkrever at DOM Elementer kan opprettes.',
+			'errURL'               : 'Ugyldig gpFinder konfigurasjon! URL-valget er ikke satt.',
 			'errAccess'            : 'Ingen adgang.',
 			'errConnect'           : 'Kunne ikke koble til.',
 			'errAbort'             : 'Tilkoblingen avbrutt.',
@@ -54,7 +54,7 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'errMaxSize'           : 'Innholdet overgår maksimum tillatt størrelse.',
 			'errFileMaxSize'       : 'Filen vergår maksimum tillatt størrelse.',
 			'errUploadMime'        : 'Filtypen ikke tillatt.',
-			'errUploadTransfer'    : '"$1" overførings feil.', 
+			'errUploadTransfer'    : '"$1" overførings feil.',
 			'errSave'              : 'Kunne ikke lagre "$1".',
 			'errCopy'              : 'Kunne ikke kopiere "$1".',
 			'errMove'              : 'Kunne ikke flytte "$1".',
@@ -65,7 +65,7 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'errArcType'           : 'akriv-typen er ikke støttet.',
 			'errNoArchive'         : 'Filen er ikke et arkiv eller et arkiv som ikke er støttet.',
 			'errCmdNoSupport'      : 'Backend støtter ikke denne kommandoen.',
-			
+
 			/******************************* commands names ********************************/
 			'cmdarchive'   : 'Opprett arkiv',
 			'cmdback'      : 'Tilbake',
@@ -92,15 +92,15 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'cmdup'        : 'Opp et nivå',
 			'cmdupload'    : 'Last opp filer',
 			'cmdview'      : 'Vis',
-			
-			/*********************************** buttons ***********************************/ 
+
+			/*********************************** buttons ***********************************/
 			'btnClose'  : 'Lukk',
 			'btnSave'   : 'Lagre',
 			'btnRm'     : 'Slett',
 			'btnCancel' : 'Avbryt',
 			'btnNo'     : 'Nei',
 			'btnYes'    : 'Ja',
-			
+
 			/******************************** notifications ********************************/
 			'ntfopen'     : 'Åpne mappe',
 			'ntffile'     : 'Åpne fil',
@@ -119,7 +119,7 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'ntfextract'  : 'Pakker ut filer fra arkiv',
 			'ntfsearch'   : 'Søker i filer',
 			'ntfsmth'     : 'Gjør noe... >_<',
-			
+
 			/************************************ dates **********************************/
 			'dateUnknown' : 'Ukjent',
 			'Today'       : 'I dag',
@@ -159,7 +159,7 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'viewlist'        : 'Listevisning',
 			'viewicons'       : 'Ikoner',
 			'places'          : 'Områder',
-			'calc'            : 'Beregn', 
+			'calc'            : 'Beregn',
 			'path'            : 'Bane',
 			'aliasfor'        : 'Alias for',
 			'locked'          : 'Låst',
@@ -170,7 +170,7 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'yes'             : 'ja',
 			'no'              : 'nei',
 			'link'            : 'Link',
-			'searcresult'     : 'Søkeresultater',  
+			'searcresult'     : 'Søkeresultater',
 			'selected'        : 'valgte filer',
 			'about'           : 'Om',
 			'shortcuts'       : 'Snarveier',
@@ -197,7 +197,7 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'selectForUpload' : 'Velg filer til opplasting',
 			'moveFiles'       : 'Flytt filer',
 			'copyFiles'       : 'Kopier filer',
-			
+
 			/********************************** mimetypes **********************************/
 			'kindUnknown'     : 'Ukjent',
 			'kindFolder'      : 'Mappe',

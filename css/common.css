@@ -3,7 +3,7 @@
 /*********************************************/
 
 /* common container */
-.elfinder { padding:0; position:relative; display:block; }
+.finder { padding:0; position:relative; display:block; }
 
 /* right to left enviroment */
 .finder-rtl { text-align:right; direction:rtl; }
@@ -84,7 +84,7 @@
 .finder-overlay { opacity: 0; filter:Alpha(Opacity=0); }
 
 /* panels under/below cwd (for search field etc) */
-.elfinder .finder-panel {
+.finder .finder-panel {
 	position:relative;
 	background-image:none;
 	padding:7px 12px;

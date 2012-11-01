@@ -1,12 +1,12 @@
 
 /**
- * @class  elFinder command "paste"
+ * @class  Finder command "paste"
  * Paste filesfrom clipboard into directory.
  * If files pasted in its parent directory - files duplicates will created
  *
  * @author Dmitry (dio) Levashov
  **/
-elFinder.prototype.commands.paste = function() {
+Finder.prototype.commands.paste = function() {
 
 	this.updateOnSelect  = false;
 

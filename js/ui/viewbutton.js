@@ -1,12 +1,12 @@
 
 /**
- * @class  elFinder toolbar button to switch current directory view.
+ * @class  Finder toolbar button to switch current directory view.
  *
  * @author Dmitry (dio) Levashov
  **/
-$.fn.elfinderviewbutton = function(cmd) {
+$.fn.finderviewbutton = function(cmd) {
 	return this.each(function() {
-		var button = $(this).elfinderbutton(cmd),
+		var button = $(this).finderbutton(cmd),
 			icon   = button.children('.finder-button-icon');
 
 		cmd.change(function() {

@@ -1,10 +1,10 @@
 
 /**
- * @class  elFinder contextmenu
+ * @class  Finder contextmenu
  *
  * @author Dmitry (dio) Levashov
  **/
-$.fn.elfindercontextmenu = function(fm) {
+$.fn.findercontextmenu = function(fm) {
 
 	return this.each(function() {
 		var menu = $(this).addClass('ui-helper-reset ui-widget ui-state-default ui-corner-all finder-contextmenu finder-contextmenu-'+fm.direction)

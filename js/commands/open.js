@@ -1,11 +1,11 @@
 
 /**
- * @class  elFinder command "open"
+ * @class  Finder command "open"
  * Enter folder or open files in new windows
  *
  * @author Dmitry (dio) Levashov
  **/
-elFinder.prototype.commands.open = function() {
+Finder.prototype.commands.open = function() {
 	this.alwaysEnabled = true;
 
 	this._handlers = {

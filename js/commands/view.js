@@ -1,11 +1,11 @@
 
 /**
- * @class  elFinder command "view"
+ * @class  Finder command "view"
  * Change current directory view (icons/list)
  *
  * @author Dmitry (dio) Levashov
  **/
-elFinder.prototype.commands.view = function() {
+Finder.prototype.commands.view = function() {
 	this.value          = this.fm.viewType;
 	this.alwaysEnabled  = true;
 	this.updateOnSelect = false;

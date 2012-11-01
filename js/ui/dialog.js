@@ -1,10 +1,10 @@
 
 /**
- * @class  elFinder dialog
+ * @class  Finder dialog
  *
  * @author Dmitry (dio) Levashov
  **/
-$.fn.elfinderdialog = function(opts) {
+$.fn.finderdialog = function(opts) {
 	var dialog;
 
 	if (typeof(opts) == 'string' && (dialog = this.closest('.ui-dialog')).length) {
@@ -21,7 +21,7 @@ $.fn.elfinderdialog = function(opts) {
 		}
 	}
 
-	opts = $.extend({}, $.fn.elfinderdialog.defaults, opts);
+	opts = $.extend({}, $.fn.finderdialog.defaults, opts);
 
 	this.filter(':not(.ui-dialog-content)').each(function() {
 		var self       = $(this).addClass('ui-dialog-content ui-widget-content'),
@@ -57,7 +57,7 @@ $.fn.elfinderdialog = function(opts) {
 					}
 				})
 				.bind('open', function() {
-					opts.modal && overlay.elfinderoverlay('show');
+					opts.modal && overlay.finderoverlay('show');
 					dialog.trigger('totop');
 					typeof(opts.open) == 'function' && $.proxy(opts.open, self[0])();
 
@@ -84,7 +84,7 @@ $.fn.elfinderdialog = function(opts) {
 					var dialogs = parent.find('.finder-dialog:visible'),
 						z = maxZIndex();
 
-					opts.modal && overlay.elfinderoverlay('hide');
+					opts.modal && overlay.finderoverlay('hide');
 
 					// get focus to next dialog
 					if (dialogs.length) {
@@ -141,7 +141,7 @@ $.fn.elfinderdialog = function(opts) {
 		if (opts.closeOnEscape) {
 			$(document).bind('keyup.'+id, function(e) {
 				if (e.keyCode == $.ui.keyCode.ESCAPE && dialog.is('.'+clactive)) {
-					self.elfinderdialog('close');
+					self.finderdialog('close');
 					$(document).unbind('keyup.'+id);
 				}
 			})
@@ -151,7 +151,7 @@ $.fn.elfinderdialog = function(opts) {
 				.prepend($('<a href="#" class="ui-dialog-titlebar-close ui-corner-all"><span class="ui-icon ui-icon-closethick"/></a>')
 					.mousedown(function(e) {
 						e.preventDefault();
-						self.elfinderdialog('close');
+						self.finderdialog('close');
 					}))
 
 		);
@@ -188,14 +188,14 @@ $.fn.elfinderdialog = function(opts) {
 
 		typeof(opts.create) == 'function' && $.proxy(opts.create, this)();
 
-		opts.autoOpen && self.elfinderdialog('open');
+		opts.autoOpen && self.finderdialog('open');
 
 	});
 
 	return this;
 }
 
-$.fn.elfinderdialog.defaults = {
+$.fn.finderdialog.defaults = {
 	cssClass  : '',
 	title     : '',
 	modal     : false,

@@ -1,10 +1,10 @@
 
 /**
- * elFinder current working directory ui.
+ * Finder current working directory ui.
  *
  * @author Dmitry (dio) Levashov
  **/
-$.fn.elfindercwd = function(fm, options) {
+$.fn.findercwd = function(fm, options) {
 
 	this.not('.finder-cwd').each(function() {
 		// fm.time('cwdLoad');
@@ -310,7 +310,7 @@ $.fn.elfindercwd = function(fm, options) {
 			},
 
 			/**
-			 * Fire elfinder "select" event and pass selected files to it
+			 * Fire finder "select" event and pass selected files to it
 			 *
 			 * @return void
 			 */
@@ -849,7 +849,7 @@ $.fn.elfindercwd = function(fm, options) {
 				wrapper.height(wz.height() - h);
 			},
 
-			// elfinder node
+			// finder node
 			parent = $(this).parent().resize(resize),
 			// workzone node
 			wz = parent.children('.finder-workzone').append(wrapper.append(this))

@@ -1,11 +1,11 @@
 
 /**
- * @class  elFinder command "quicklook"
+ * @class  Finder command "quicklook"
  * Fast preview for some files types
  *
  * @author Dmitry (dio) Levashov
  **/
-elFinder.prototype.commands.quicklook = function() {
+Finder.prototype.commands.quicklook = function() {
 	var self       = this,
 		fm         = self.fm,
 		/**
@@ -116,13 +116,13 @@ elFinder.prototype.commands.quicklook = function() {
 		 **/
 		height,
 		/**
-		 * elFinder node
+		 * Finder node
 		 *
 		 * @type jQuery
 		 **/
 		parent,
 		/**
-		 * elFinder current directory node
+		 * Finder current directory node
 		 *
 		 * @type jQuery
 		 **/

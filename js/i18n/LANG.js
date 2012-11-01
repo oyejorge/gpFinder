@@ -1,31 +1,31 @@
 /**
- * elFinder translation template
+ * Finder translation template
  * use this file to create new translation
- * submit new translation via https://github.com/Studio-42/elFinder/issues
+ * submit new translation via https://github.com/oyejorge/gpFinder/issues
  * or make a pull request
  */
- 
+
 /**
  * XXXXX translation
  * @author Translator Name <translator@email.tld>
  * @version 201x-xx-xx
  */
-if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object') {
-	elFinder.prototype.i18.REPLACE_WITH_xx_OR_xx_YY_LANG_CODE = {
+if (Finder && Finder.prototype && typeof(Finder.prototype.i18) == 'object') {
+	Finder.prototype.i18.REPLACE_WITH_xx_OR_xx_YY_LANG_CODE = {
 		translator : 'Translator name &lt;translator@email.tld&gt;',
 		language   : 'Language of translation in your language',
 		direction  : 'ltr',
 		dateFormat : 'd.m.Y H:i',
 		fancyDateFormat : '$1 H:i',
 		messages   : {
-			
+
 			/********************************** errors **********************************/
 			'error'                : 'Error',
 			'errUnknown'           : 'Unknown error.',
 			'errUnknownCmd'        : 'Unknown command.',
 			'errJqui'              : 'Invalid jQuery UI configuration. Selectable, draggable and droppable components must be included.',
-			'errNode'              : 'elFinder requires DOM Element to be created.',
-			'errURL'               : 'Invalid elFinder configuration! URL option is not set.',
+			'errNode'              : 'gpFinder requires DOM Element to be created.',
+			'errURL'               : 'Invalid gpFinder configuration! URL option is not set.',
 			'errAccess'            : 'Access denied.',
 			'errConnect'           : 'Unable to connect to backend.',
 			'errAbort'             : 'Connection aborted.',
@@ -63,7 +63,7 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'errMaxSize'           : 'Data exceeds the maximum allowed size.',
 			'errFileMaxSize'       : 'File exceeds maximum allowed size.',
 			'errUploadMime'        : 'File type not allowed.',
-			'errUploadTransfer'    : '"$1" transfer error.', 
+			'errUploadTransfer'    : '"$1" transfer error.',
 			'errSave'              : 'Unable to save "$1".',
 			'errCopy'              : 'Unable to copy "$1".',
 			'errMove'              : 'Unable to move "$1".',
@@ -112,8 +112,8 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'cmdview'      : 'View',
 			'cmdresize'    : 'Resize image',
 			'cmdsort'      : 'Sort',
-			
-			/*********************************** buttons ***********************************/ 
+
+			/*********************************** buttons ***********************************/
 			'btnClose'  : 'Close',
 			'btnSave'   : 'Save',
 			'btnRm'     : 'Remove',
@@ -121,7 +121,7 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'btnCancel' : 'Cancel',
 			'btnNo'     : 'No',
 			'btnYes'    : 'Yes',
-			
+
 			/******************************** notifications ********************************/
 			'ntfopen'     : 'Open folder',
 			'ntffile'     : 'Open file',
@@ -142,7 +142,7 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'ntfsmth'     : 'Doing something >_<',
 			'ntfloadimg'  : 'Loading image',
 			'ntfnetmount' : 'Mounting network volume', // added 18.04.2012
-			
+
 			/************************************ dates **********************************/
 			'dateUnknown' : 'unknown',
 			'Today'       : 'Today',
@@ -171,27 +171,27 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'October'     : 'October',
 			'November'    : 'November',
 			'December'    : 'December',
-			'Sunday'      : 'Sunday', 
-			'Monday'      : 'Monday', 
-			'Tuesday'     : 'Tuesday', 
-			'Wednesday'   : 'Wednesday', 
-			'Thursday'    : 'Thursday', 
-			'Friday'      : 'Friday', 
+			'Sunday'      : 'Sunday',
+			'Monday'      : 'Monday',
+			'Tuesday'     : 'Tuesday',
+			'Wednesday'   : 'Wednesday',
+			'Thursday'    : 'Thursday',
+			'Friday'      : 'Friday',
 			'Saturday'    : 'Saturday',
-			'Sun'         : 'Sun', 
-			'Mon'         : 'Mon', 
-			'Tue'         : 'Tue', 
-			'Wed'         : 'Wed', 
-			'Thu'         : 'Thu', 
-			'Fri'         : 'Fri', 
+			'Sun'         : 'Sun',
+			'Mon'         : 'Mon',
+			'Tue'         : 'Tue',
+			'Wed'         : 'Wed',
+			'Thu'         : 'Thu',
+			'Fri'         : 'Fri',
 			'Sat'         : 'Sat',
 			/******************************** sort variants ********************************/
-			'sortname'          : 'by name', 
-			'sortkind'          : 'by kind', 
+			'sortname'          : 'by name',
+			'sortkind'          : 'by kind',
 			'sortsize'          : 'by size',
 			'sortdate'          : 'by date',
 			'sortFoldersFirst'  : 'Folders first', // added 22.06.2012
-			
+
 			/********************************** messages **********************************/
 			'confirmReq'      : 'Confirmation required',
 			'confirmRm'       : 'Are you sure you want to remove files?<br/>This cannot be undone!',
@@ -214,7 +214,7 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'viewlist'        : 'List view',
 			'viewicons'       : 'Icons view',
 			'places'          : 'Places',
-			'calc'            : 'Calculate', 
+			'calc'            : 'Calculate',
 			'path'            : 'Path',
 			'aliasfor'        : 'Alias for',
 			'locked'          : 'Locked',
@@ -225,7 +225,7 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'yes'             : 'yes',
 			'no'              : 'no',
 			'link'            : 'Link',
-			'searcresult'     : 'Search results',  
+			'searcresult'     : 'Search results',
 			'selected'        : 'selected items',
 			'about'           : 'About',
 			'shortcuts'       : 'Shortcuts',

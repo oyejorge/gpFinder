@@ -1,11 +1,11 @@
 /**
- * @class elFinder.history
+ * @class Finder.history
  * Store visited folders
  * and provide "back" and "forward" methods
  *
  * @author Dmitry (dio) Levashov
  */
-elFinder.prototype.history = function(fm) {
+Finder.prototype.history = function(fm) {
 	var self = this,
 		/**
 		 * Update history on "open" event?
@@ -48,7 +48,7 @@ elFinder.prototype.history = function(fm) {
 			}
 			return $.Deferred().reject();
 		};
-	
+
 	/**
 	 * Return true if there is previous visited directories
 	 *
@@ -57,7 +57,7 @@ elFinder.prototype.history = function(fm) {
 	this.canBack = function() {
 		return current > 0;
 	}
-	
+
 	/**
 	 * Return true if can go forward
 	 *
@@ -66,14 +66,14 @@ elFinder.prototype.history = function(fm) {
 	this.canForward = function() {
 		return current < history.length - 1;
 	}
-	
+
 	/**
 	 * Go back
 	 *
 	 * @return void
 	 */
 	this.back = go;
-	
+
 	/**
 	 * Go forward
 	 *
@@ -82,8 +82,8 @@ elFinder.prototype.history = function(fm) {
 	this.forward = function() {
 		return go(true);
 	}
-	
-	// bind to elfinder events
+
+	// bind to finder events
 	fm.open(function(e) {
 		var l = history.length,
 			cwd = fm.cwd().hash;
@@ -96,5 +96,5 @@ elFinder.prototype.history = function(fm) {
 		update = true;
 	})
 	.reload(reset);
-	
+
 }

@@ -1,11 +1,11 @@
 
 /**
- * @class  elFinder command "back"
+ * @class  Finder command "back"
  * Open last visited folder
  *
  * @author Dmitry (dio) Levashov
  **/
-elFinder.prototype.commands.back = function() {
+Finder.prototype.commands.back = function() {
 	this.alwaysEnabled  = true;
 	this.updateOnSelect = false;
 	this.shortcuts      = [{

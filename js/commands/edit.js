@@ -1,11 +1,11 @@
 
 /**
- * @class elFinder command "edit".
+ * @class Finder command "edit".
  * Edit text file in dialog window
  *
  * @author Dmitry (dio) Levashov, dio@std42.ru
  **/
-elFinder.prototype.commands.edit = function() {
+Finder.prototype.commands.edit = function() {
 	var self  = this,
 		fm    = this.fm,
 		mimes = fm.res('mimes', 'text') || [],
@@ -40,11 +40,11 @@ elFinder.prototype.commands.edit = function() {
 				save = function() {
 					ta.editor && ta.editor.save(ta[0], ta.editor.instance);
 					dfrd.resolve(ta.getContent());
-					ta.elfinderdialog('close');
+					ta.finderdialog('close');
 				},
 				cancel = function() {
 					dfrd.reject();
-					ta.elfinderdialog('close');
+					ta.finderdialog('close');
 				},
 				opts = {
 					title   : file.name,
@@ -52,7 +52,7 @@ elFinder.prototype.commands.edit = function() {
 					buttons : {},
 					close   : function() {
 						ta.editor && ta.editor.close(ta[0], ta.editor.instance);
-						$(this).elfinderdialog('destroy');
+						$(this).finderdialog('destroy');
 					},
 					open    : function() {
 						fm.disable();
@@ -141,7 +141,7 @@ elFinder.prototype.commands.edit = function() {
 
 
 			if (d.length) {
-				d.elfinderdialog('toTop');
+				d.finderdialog('toTop');
 				return dfrd.resolve();
 			}
 

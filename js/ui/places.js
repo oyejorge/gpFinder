@@ -1,10 +1,10 @@
 
 /**
- * @class elFinder places/favorites ui
+ * @class Finder places/favorites ui
  *
  * @author Dmitry (dio) Levashov
  **/
-$.fn.elfinderplaces = function(fm, opts) {
+$.fn.finderplaces = function(fm, opts) {
 	return this.each(function() {
 		var dirs      = [],
 			c         = 'class',

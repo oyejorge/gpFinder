@@ -1,11 +1,11 @@
 
 /**
- * @class  elFinder command "extract"
+ * @class  Finder command "extract"
  * Extract files from archive
  *
  * @author Dmitry (dio) Levashov
  **/
-elFinder.prototype.commands.extract = function() {
+Finder.prototype.commands.extract = function() {
 	var self    = this,
 		fm      = self.fm,
 		mimes   = [],

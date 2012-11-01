@@ -3,8 +3,8 @@
  * @author Jay Gridley <gridley.jay@hotmail.com>
  * @version 2012-03-23
  */
-if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object') {
-	elFinder.prototype.i18.cs = {
+if (Finder && Finder.prototype && typeof(Finder.prototype.i18) == 'object') {
+	Finder.prototype.i18.cs = {
 		translator : 'Jay Gridley &lt;gridley.jay@hotmail.com&gt;',
 		language   : 'čeština',
 		direction  : 'ltr',
@@ -17,8 +17,8 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'errUnknown'           : 'Neznámá chyba.',
 			'errUnknownCmd'        : 'Neznámý příkaz.',
 			'errJqui'              : 'Nedostačující konfigurace jQuery UI. Musí být zahrnuty komponenty Selectable, Draggable a Droppable.',
-			'errNode'              : 'elFinder vyžaduje vytvořený DOM Element.',
-			'errURL'               : 'Chybná konfigurace elFinderu! Není nastavena hodnota URL.',
+			'errNode'              : 'gpFinder vyžaduje vytvořený DOM Element.',
+			'errURL'               : 'Chybná konfigurace gpFinderu! Není nastavena hodnota URL.',
 			'errAccess'            : 'Přístup zamítnut.',
 			'errConnect'           : 'Nepodařilo se připojit k backendu (konektoru).',
 			'errAbort'             : 'Připojení zrušeno.',

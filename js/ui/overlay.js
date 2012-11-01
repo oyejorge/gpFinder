@@ -1,5 +1,5 @@
 
-$.fn.elfinderoverlay = function(opts) {
+$.fn.finderoverlay = function(opts) {
 
 	this.filter(':not(.finder-overlay)').each(function() {
 		opts = $.extend({}, opts);

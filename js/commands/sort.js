@@ -1,11 +1,11 @@
 
 /**
- * @class  elFinder command "sort"
+ * @class  Finder command "sort"
  * Change sort files rule
  *
  * @author Dmitry (dio) Levashov
  **/
-elFinder.prototype.commands.sort = function() {
+Finder.prototype.commands.sort = function() {
 	/**
 	 * Command options
 	 *

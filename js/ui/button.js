@@ -1,11 +1,11 @@
 
 /**
- * @class  elFinder toolbar button widget.
+ * @class  Finder toolbar button widget.
  * If command has variants - create menu
  *
  * @author Dmitry (dio) Levashov
  **/
-$.fn.elfinderbutton = function(cmd) {
+$.fn.finderbutton = function(cmd) {
 	return this.each(function() {
 
 		var c        = 'class',

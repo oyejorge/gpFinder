@@ -1,10 +1,10 @@
 
 /**
- * @class  elFinder toolbar button menu with sort variants.
+ * @class  Finder toolbar button menu with sort variants.
  *
  * @author Dmitry (dio) Levashov
  **/
-$.fn.elfindersortbutton = function(cmd) {
+$.fn.findersortbutton = function(cmd) {
 
 	return this.each(function() {
 		var fm       = cmd.fm,

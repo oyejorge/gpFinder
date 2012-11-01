@@ -23,7 +23,7 @@
 /*.finder-buttonset:first-child { margin:0; }*/
 
 /* button */
-.elfinder .finder-button {
+.finder .finder-button {
 	width:16px;
 	height:16px;
 	margin:0;
@@ -34,7 +34,7 @@
 	border:0 solid;
 }
 
-.elfinder .ui-icon-search { cursor:pointer;}
+.finder .ui-icon-search { cursor:pointer;}
 
 .finder-button:first-child {
 	-moz-border-radius-topleft: 4px;
@@ -66,8 +66,8 @@
 }
 
 /* change icon opacity^ not button */
-.elfinder .finder-button.ui-state-disabled { opacity:1; filter:Alpha(Opacity=100);}
-.elfinder .finder-button.ui-state-disabled .finder-button-icon { opacity:.4; filter:Alpha(Opacity=40);}
+.finder .finder-button.ui-state-disabled { opacity:1; filter:Alpha(Opacity=100);}
+.finder .finder-button.ui-state-disabled .finder-button-icon { opacity:.4; filter:Alpha(Opacity=40);}
 
 /* rtl enviroment */
 .finder-rtl .finder-buttonset { float:right; }
@@ -113,7 +113,7 @@
 .finder-button-icon-rotate-l  { background-position: 0 -641px; }
 
 /* button with dropdown menu*/
-.elfinder .finder-menubutton { overflow:visible; }
+.finder .finder-menubutton { overflow:visible; }
 
 
 
@@ -161,10 +161,10 @@
 	cursor: pointer;
 }
 
-.elfinder .finder-button form input { background:transparent; cursor: default;}
+.finder .finder-button form input { background:transparent; cursor: default;}
 
 /* search "button" */
-.elfinder .finder-button-search {
+.finder .finder-button-search {
 	border:0 solid;
 	background:transparent;
 	padding:0;

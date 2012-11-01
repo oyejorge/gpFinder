@@ -1,13 +1,13 @@
 
 /**
- * @class elFinder command "upload"
+ * @class Finder command "upload"
  * Upload files using iframe or XMLHttpRequest & FormData.
  * Dialog allow to send files using drag and drop
  *
- * @type  elFinder.command
+ * @type  Finder.command
  * @author  Dmitry (dio) Levashov
  */
-elFinder.prototype.commands.upload = function() {
+Finder.prototype.commands.upload = function() {
 	var hover = this.fm.res('class', 'hover');
 
 	this.disableOnSearch = true;
@@ -31,7 +31,7 @@ elFinder.prototype.commands.upload = function() {
 	this.exec = function(data) {
 		var fm = this.fm,
 			upload = function(data) {
-				dialog.elfinderdialog('close');
+				dialog.finderdialog('close');
 				fm.upload(data)
 					.fail(function(error) {
 						dfrd.reject(error);

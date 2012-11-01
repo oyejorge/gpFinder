@@ -1,12 +1,12 @@
 
 /**
- * @class elFinder command "duplicate"
+ * @class Finder command "duplicate"
  * Create file/folder copy with suffix "copy Number"
  *
- * @type  elFinder.command
+ * @type  Finder.command
  * @author  Dmitry (dio) Levashov
  */
-elFinder.prototype.commands.duplicate = function() {
+Finder.prototype.commands.duplicate = function() {
 	var fm = this.fm;
 
 	this.getstate = function(sel) {

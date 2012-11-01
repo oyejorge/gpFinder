@@ -1,4 +1,4 @@
-$.fn.elfinderpanel = function(fm) {
+$.fn.finderpanel = function(fm) {
 
 	return this.each(function() {
 		var panel = $(this).addClass('finder-panel ui-state-default ui-corner-all'),

@@ -1,9 +1,9 @@
 /**
- * @class elfindernav - elFinder container for diretories tree and places
+ * @class findernav - Finder container for diretories tree and places
  *
  * @author Dmitry (dio) Levashov
  **/
-$.fn.elfindernavbar = function(fm, opts) {
+$.fn.findernavbar = function(fm, opts) {
 
 	this.not('.finder-navbar').each(function() {
 		var nav    = $(this).addClass('ui-state-default finder-navbar'),

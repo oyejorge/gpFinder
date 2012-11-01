@@ -107,9 +107,6 @@
 	<!-- Finder dialog -->
 	<script src="js/jquery.dialogfinder.js"></script>
 
-	<!-- Finder 1.x connector API support
-	<script src="js/proxy/elFinderSupportVer1.js"></script>
-	-->
 
 	<!-- Finder custom extenstions
 	<script src="extensions/jplayer/elfinder.quicklook.jplayer.js"></script>
@@ -148,15 +145,11 @@
 
 	<script>
 		$().ready(function() {
-			$('#finder').elfinder({
+			$('#finder').finder({
 				requestType : 'post',
 
 				// url : 'php/connector.php',
 				url : 'php/connector.php',
-				// transport : new elFinderSupportVer1(),
-				// getFileCallback : function(files, fm) {
-				// 	console.log(files);
-				// },
 				debug : true, //['error', 'warning', 'event-destroy'],
 				handlers : {
                     select : function(event, FinderInstance) {
@@ -208,7 +201,7 @@
 				// }
 			})
 
-			// $('#finder2').elfinder({
+			// $('#finder2').finder({
 			// 	url : 'connectors/php/connector.php',
 			// 	width:650,
 			// 	lang : 'ru'
@@ -217,15 +210,15 @@
 			// console.log(f1)
 			//
 			// setTimeout(function() {
-			// 	console.log($('#finder').elfinder('instance'))
+			// 	console.log($('#finder').finder('instance'))
 			// }, 2000)
 
-			// new elFinder($('<div/>'))
+			// new Finder($('<div/>'))
 
-			// var f2 = $('#asd').elfinder({
+			// var f2 = $('#asd').finder({
 			// 	url : 'connectors/php/connector.php',
 			// 	lang : 'ru'
-			// }).elfinder('instance')
+			// }).finder('instance')
 
 			$('#back').click(function(e) {
 				f1.exec('back')

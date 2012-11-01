@@ -1,12 +1,12 @@
 
 /**
- * @class elFinder ui
+ * @class Finder ui
  * Display current folder path in statusbar.
  * Click on folder name in path - open folder
  *
  * @author Dmitry (dio) Levashov
  **/
-$.fn.elfinderpath = function(fm) {
+$.fn.finderpath = function(fm) {
 	return this.each(function() {
 		var path = $(this).addClass('finder-path').html('&nbsp;')
 				.delegate('a', 'click', function(e) {

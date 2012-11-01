@@ -1,11 +1,11 @@
 
 /**
- * @class  elFinder command "mkfile"
+ * @class  Finder command "mkfile"
  * Create new empty file
  *
  * @author Dmitry (dio) Levashov
  **/
-elFinder.prototype.commands.mkfile = function() {
+Finder.prototype.commands.mkfile = function() {
 	this.disableOnSearch = true;
 	this.updateOnSelect  = false;
 	this.mime            = 'text/plain';

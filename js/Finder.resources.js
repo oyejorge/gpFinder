@@ -6,7 +6,7 @@
  * @type Object
  * @author Dmitry (dio) Levashov
  **/
-elFinder.prototype.resources = {
+Finder.prototype.resources = {
 	'class' : {
 		hover       : 'ui-state-hover',
 		active      : 'ui-state-active',

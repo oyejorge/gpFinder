@@ -4,22 +4,22 @@
  * @author Andy Hu <andyhu7@yahoo.com.hk>
  * @version 2012-04-11
  */
-if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object') {
-	elFinder.prototype.i18.zh_CN = {
+if (Finder && Finder.prototype && typeof(Finder.prototype.i18) == 'object') {
+	Finder.prototype.i18.zh_CN = {
 		translator : '翻译者 &lt;deerchao@gmail.com&gt;, Andy Hu &lt;andyhu7@yahoo.com.hk&gt;',
 		language   : '简体中文',
 		direction  : 'ltr',
 		dateFormat : 'Y-m-d H:i',
 		fancyDateFormat : '$1 H:i',
 		messages   : {
-			
+
 			/********************************** errors **********************************/
 			'error'                : '错误',
 			'errUnknown'           : '未知的错误.',
 			'errUnknownCmd'        : '未知的命令.',
 			'errJqui'              : '无效的 jQuery UI 配置. 必须包含 Selectable, draggable 以及 droppable 组件.',
-			'errNode'              : 'elFinder 需要能创建 DOM 元素.',
-			'errURL'               : '无效的 elFinder 配置! URL 选项未配置.',
+			'errNode'              : 'gpFinder 需要能创建 DOM 元素.',
+			'errURL'               : '无效的 gpFinder 配置! URL 选项未配置.',
 			'errAccess'            : '访问被拒绝.',
 			'errConnect'           : '不能连接到后端.',
 			'errAbort'             : '连接中止.',
@@ -57,7 +57,7 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'errMaxSize'           : '数据超过了允许的最大大小.',
 			'errFileMaxSize'       : '文件超过了允许的最大大小.',
 			'errUploadMime'        : '不允许的文件类型.',
-			'errUploadTransfer'    : '"$1" 传输错误.', 
+			'errUploadTransfer'    : '"$1" 传输错误.',
 			'errSave'              : '无法保存 "$1".',
 			'errCopy'              : '无法复制 "$1".',
 			'errMove'              : '无法移动 "$1".',
@@ -73,7 +73,7 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'errArcMaxSize'        : '压缩包文件超过最大允许文件大小范围.',
 			'errResize'            : '无法重新调整大小 "$1".',
 			'errUsupportType'      : '不被支持的文件格式.',
-			
+
 			/******************************* commands names ********************************/
 			'cmdarchive'   : '创建压缩包',
 			'cmdback'      : '后退',
@@ -102,8 +102,8 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'cmdview'      : '查看',
 			'cmdresize'    : '重新调整大小',
 			'cmdsort'      : '排序',
-			
-			/*********************************** buttons ***********************************/ 
+
+			/*********************************** buttons ***********************************/
 			'btnClose'  : '关闭',
 			'btnSave'   : '保存',
 			'btnRm'     : '删除',
@@ -111,7 +111,7 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'btnCancel' : '取消',
 			'btnNo'     : '否',
 			'btnYes'    : '是',
-			
+
 			/******************************** notifications ********************************/
 			'ntfopen'     : '打开文件夹',
 			'ntffile'     : '打开文件',
@@ -131,7 +131,7 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'ntfsearch'   : '搜索文件',
 			'ntfsmth'     : '正在忙 >_<',
 			'ntfloadimg'  : '正在加载图片',
-			
+
 			/************************************ dates **********************************/
 			'dateUnknown' : '未知',
 			'Today'       : '今天',
@@ -167,20 +167,20 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'Thursday'    : '星期四',
 			'Friday'      : '星期五',
 			'Saturday'    : '星期六',
-			'Sun'         : '周日', 
-			'Mon'         : '周一', 
-			'Tue'         : '周二', 
-			'Wed'         : '周三', 
-			'Thu'         : '周四', 
-			'Fri'         : '周五', 
+			'Sun'         : '周日',
+			'Mon'         : '周一',
+			'Tue'         : '周二',
+			'Wed'         : '周三',
+			'Thu'         : '周四',
+			'Fri'         : '周五',
 			'Sat'         : '周六',
 			/******************************** sort variants ********************************/
-			'sortnameDirsFirst' : '按名称 (文件夹在最前)', 
-			'sortkindDirsFirst' : '按类型 (文件夹在最前)', 
-			'sortsizeDirsFirst' : '按大小 (文件夹在最前)', 
-			'sortdateDirsFirst' : '按日期 (文件夹在最前)', 
-			'sortname'          : '按名称', 
-			'sortkind'          : '按类型', 
+			'sortnameDirsFirst' : '按名称 (文件夹在最前)',
+			'sortkindDirsFirst' : '按类型 (文件夹在最前)',
+			'sortsizeDirsFirst' : '按大小 (文件夹在最前)',
+			'sortdateDirsFirst' : '按日期 (文件夹在最前)',
+			'sortname'          : '按名称',
+			'sortkind'          : '按类型',
 			'sortsize'          : '按大小',
 			'sortdate'          : '按日期',
 
@@ -206,7 +206,7 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'viewlist'        : '列表视图',
 			'viewicons'       : '图标视图',
 			'places'          : '位置',
-			'calc'            : '计算', 
+			'calc'            : '计算',
 			'path'            : '路径',
 			'aliasfor'        : '别名',
 			'locked'          : '锁定',
@@ -217,7 +217,7 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'yes'             : '是',
 			'no'              : '否',
 			'link'            : '链接',
-			'searcresult'     : '搜索结果',  
+			'searcresult'     : '搜索结果',
 			'selected'        : '选中的项目',
 			'about'           : '关于',
 			'shortcuts'       : '快捷键',
@@ -258,7 +258,7 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'rotate-cw'       : '顺时针旋转90度',
 			'rotate-ccw'      : '逆时针旋转90度',
 			'degree'          : '度',
-			
+
 			/********************************** mimetypes **********************************/
 			'kindUnknown'     : '未知',
 			'kindFolder'      : '文件夹',

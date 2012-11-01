@@ -1,9 +1,9 @@
 
 /**
- * @class elfinderworkzone - elFinder container for nav and current directory
+ * @class finderworkzone - Finder container for nav and current directory
  * @author Dmitry (dio) Levashov
  **/
-$.fn.elfinderworkzone = function(fm) {
+$.fn.finderworkzone = function(fm) {
 	var cl = 'finder-workzone';
 
 	this.not('.'+cl).each(function() {

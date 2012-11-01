@@ -1,11 +1,11 @@
 
 /**
- * @class  elFinder command "mkdir"
+ * @class  Finder command "mkdir"
  * Create new folder
  *
  * @author Dmitry (dio) Levashov
  **/
-elFinder.prototype.commands.mkdir = function() {
+Finder.prototype.commands.mkdir = function() {
 	this.disableOnSearch = true;
 	this.updateOnSelect  = false;
 	this.mime            = 'directory';

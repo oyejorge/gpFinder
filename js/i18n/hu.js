@@ -3,20 +3,20 @@
  * @author Gáspár Lajos <info@glsys.eu>
  * @version 2011-09-10
  */
-if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object') {
-	elFinder.prototype.i18.hu = {
+if (Finder && Finder.prototype && typeof(Finder.prototype.i18) == 'object') {
+	Finder.prototype.i18.hu = {
 		translator : 'Gáspár Lajos &lt;info@glsys.eu&gt;',
 		language   : 'magyar',
 		direction  : 'ltr',
 		messages   : {
-			
+
 			/********************************** errors **********************************/
 			'error'                : 'Hiba',
 			'errUnknown'           : 'Ismeretlen hiba.',
 			'errUnknownCmd'        : 'Ismeretlen parancs.',
 			'errJqui'              : 'Hibás jQuery UI konfiguráció. A "selectable", "draggable" és a "droppable" komponensek szükségesek.',
-			'errNode'              : 'elFinder requires DOM Element to be created.',
-			'errURL'               : 'Hibás elFinder konfiguráció! "URL" paraméter nincs megadva.',
+			'errNode'              : 'gpFinder requires DOM Element to be created.',
+			'errURL'               : 'Hibás gpFinder konfiguráció! "URL" paraméter nincs megadva.',
 			'errAccess'            : 'Hozzáférés megtagadva.',
 			'errConnect'           : 'Nem sikerült csatlakozni a kiszolgálóhoz.',
 			'errAbort'             : 'Kapcsolat megszakítva.',
@@ -54,7 +54,7 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'errMaxSize'           : 'Data exceeds the maximum allowed size.',
 			'errFileMaxSize'       : 'File exceeds maximum allowed size.',
 			'errUploadMime'        : 'File type not allowed.',
-			'errUploadTransfer'    : '"$1" transfer error.', 
+			'errUploadTransfer'    : '"$1" transfer error.',
 			'errSave'              : '"$1" mentése nem sikerült.',
 			'errCopy'              : '"$1" másolása nem sikerült.',
 			'errMove'              : '"$1" áthelyezése nem sikerült.',
@@ -65,7 +65,7 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'errArcType'           : 'Nem támogatott archívum típus.',
 			'errNoArchive'         : 'File is not archive or has unsupported archive type.',
 			'errCmdNoSupport'      : 'Backend does not support this command.',
-			
+
 			/******************************* commands names ********************************/
 			'cmdarchive'   : 'Archívum létrehozása',
 			'cmdback'      : 'Vissza',
@@ -92,15 +92,15 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'cmdup'        : 'Ugrás a szülőmappába',
 			'cmdupload'    : 'Feltöltés',
 			'cmdview'      : 'View',
-			
-			/*********************************** buttons ***********************************/ 
+
+			/*********************************** buttons ***********************************/
 			'btnClose'  : 'Bezár',
 			'btnSave'   : 'Ment',
 			'btnRm'     : 'Töröl',
 			'btnCancel' : 'Mégsem',
 			'btnNo'     : 'Nem',
 			'btnYes'    : 'Igen',
-			
+
 			/******************************** notifications ********************************/
 			'ntfopen'     : 'Mappa megnyitás',
 			'ntffile'     : 'Fájl megnyitás',
@@ -119,7 +119,7 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'ntfextract'  : 'Kibontás archívumból',
 			'ntfsearch'   : 'Fájlok keresése',
 			'ntfsmth'     : 'Doing something >_<',
-			
+
 			/************************************ dates **********************************/
 			'dateUnknown' : 'Ismeretlen',
 			'Today'       : 'Ma',
@@ -197,7 +197,7 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'selectForUpload' : 'fájlok böngészése',
 			'moveFiles'       : 'Fájlok áthelyezése',
 			'copyFiles'       : 'Fájlok másolása',
-			
+
 			/********************************** mimetypes **********************************/
 			'kindUnknown'     : 'Ismeretlen',
 			'kindFolder'      : 'Mappa',

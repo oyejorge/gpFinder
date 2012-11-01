@@ -3,8 +3,8 @@
  * @author Leandro Carvalho <contato@leandrowebdev.net>
  * @version 2011-07-09
  */
-if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object') {
-	elFinder.prototype.i18.pt_BR = {
+if (Finder && Finder.prototype && typeof(Finder.prototype.i18) == 'object') {
+	Finder.prototype.i18.pt_BR = {
 		translator : 'Leandro Carvalho &lt;contato@leandrowebdev.net&gt;',
 		language   : 'Português',
 		direction  : 'ltr',
@@ -17,8 +17,8 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'errUnknown'           : 'Erro desconhecido.',
 			'errUnknownCmd'        : 'Comando desconhecido.',
 			'errJqui'              : 'Configuração inválida do JQuery UI. Verifique os componentes selectable, draggable e droppable incluidos.',
-			'errNode'              : 'elFinder requer um elemento DOM para ser criado.',
-			'errURL'               : 'Configuração inválida do elFinder! Você deve setar a opção da URL.',
+			'errNode'              : 'gpFinder requer um elemento DOM para ser criado.',
+			'errURL'               : 'Configuração inválida do gpFinder! Você deve setar a opção da URL.',
 			'errAccess'            : 'Acesso negado.',
 			'errConnect'           : 'Incapaz de conectar ao backend.',
 			'errAbort'             : 'Conexão abortada.',
@@ -56,7 +56,7 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'errMaxSize'           : 'Os dados excedem o tamanho máximo permitido.',
 			'errFileMaxSize'       : 'Arquivo excede o tamanho máximo permitido.',
 			'errUploadMime'        : 'Tipo de arquivo não permitido.',
-			'errUploadTransfer'    : '"$1" erro na transferência.', 
+			'errUploadTransfer'    : '"$1" erro na transferência.',
 			'errSave'              : 'Incapaz de salvar "$1".',
 			'errCopy'              : 'Incapaz de copiar "$1".',
 			'errMove'              : 'Incapaz de mover "$1".',
@@ -103,7 +103,7 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'cmdsort'      : 'Ordenar',
 			'cmdnetmount'  : 'Montar unidade de rede', // added 18.04.2012
 
-			/*********************************** buttons ***********************************/ 
+			/*********************************** buttons ***********************************/
 			'btnClose'  : 'Fechar',
 			'btnSave'   : 'Salvar',
 			'btnRm'     : 'Remover',
@@ -151,15 +151,15 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'Dec'         : 'Dez',
 
 			/******************************** sort variants ********************************/
-			'sortnameDirsFirst' : 'por nome (pastas primeiro)', 
-			'sortkindDirsFirst' : 'por tipo (pastas primeiro)', 
-			'sortsizeDirsFirst' : 'por tam. (pastas primeiro)', 
-			'sortdateDirsFirst' : 'por data (pastas primeiro)', 
-			'sortname'          : 'por nome', 
-			'sortkind'          : 'por tipo', 
+			'sortnameDirsFirst' : 'por nome (pastas primeiro)',
+			'sortkindDirsFirst' : 'por tipo (pastas primeiro)',
+			'sortsizeDirsFirst' : 'por tam. (pastas primeiro)',
+			'sortdateDirsFirst' : 'por data (pastas primeiro)',
+			'sortname'          : 'por nome',
+			'sortkind'          : 'por tipo',
 			'sortsize'          : 'por tam.',
 			'sortdate'          : 'por data',
-			
+
 			/********************************** messages **********************************/
 			'confirmReq'      : 'Confirmação requerida',
 			'confirmRm'       : 'Você tem certeza que quer remover os arquivos?<br />Isto não pode ser desfeito!',
@@ -182,7 +182,7 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'viewlist'        : 'Exibir como lista',
 			'viewicons'       : 'Exibir como ícones',
 			'places'          : 'Lugares',
-			'calc'            : 'Calcular', 
+			'calc'            : 'Calcular',
 			'path'            : 'Caminho',
 			'aliasfor'        : 'Alias para',
 			'locked'          : 'Bloqueado',
@@ -193,7 +193,7 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'yes'             : 'sim',
 			'no'              : 'não',
 			'link'            : 'Link',
-			'searcresult'     : 'resultados da pesquisa',  
+			'searcresult'     : 'resultados da pesquisa',
 			'selected'        : 'itens selecionados',
 			'about'           : 'Sobre',
 			'shortcuts'       : 'Atalhos',

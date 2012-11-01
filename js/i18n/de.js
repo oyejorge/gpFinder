@@ -3,20 +3,20 @@
  * @author JPG & Mace <dev@flying-datacenter.de>
  * @version 2011-07-26
  */
-if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object') {
-	elFinder.prototype.i18.de = {
+if (Finder && Finder.prototype && typeof(Finder.prototype.i18) == 'object') {
+	Finder.prototype.i18.de = {
 		translator : 'JPG & Mace &lt;dev@flying-datacenter.de&gt;',
 		language   : 'Deutsch',
 		direction  : 'ltr',
 		messages   : {
-			
+
 			/********************************** errors **********************************/
 			'error'                : 'Fehler',
 			'errUnknown'           : 'Unbekannter Fehler.',
 			'errUnknownCmd'        : 'Unbekannter Befehl.',
 			'errJqui'              : 'Ungültige jQuery UI Konfiguration. Die Komponenten Selectable, draggable und droppable müssen inkludiert sein.',
-			'errNode'              : 'Für elFinder muss das DOM Element erstellt werden.',
-			'errURL'               : 'Ungültige elFinder Konfiguration! Die URL Option nicht gesetzt.',
+			'errNode'              : 'Für gpFinder muss das DOM Element erstellt werden.',
+			'errURL'               : 'Ungültige gpFinder Konfiguration! Die URL Option nicht gesetzt.',
 			'errAccess'            : 'Zugriff verweigert.',
 			'errConnect'           : 'Verbindung zum Backend fehlgeschlagen',
 			'errAbort'             : 'Verbindung abgebrochen.',
@@ -54,7 +54,7 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'errMaxSize'           : 'Daten überschreiten die Maximalgröße.',
 			'errFileMaxSize'       : 'Die Datei überschreitet die Maximalgröße',
 			'errUploadMime'        : 'Dateityp nicht zulässig.',
-			'errUploadTransfer'    : '"$1" Transfer Fehler.', 
+			'errUploadTransfer'    : '"$1" Transfer Fehler.',
 			'errSave'              : 'Kann "$1" nicht speichern.',
 			'errCopy'              : 'Kann "$1" nicht kopieren.',
 			'errMove'              : 'Kann "$1" nicht verschieben.',
@@ -65,7 +65,7 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'errArcType'           : 'Archivtyp nicht untersützt.',
 			'errNoArchive'         : 'Bei der Datei handelt es nicht um ein Archiv oder der Archivtyp nicht unterstütz.',
 			'errCmdNoSupport'      : 'Das Backend unterstütz diesen Befehl nicht.',
-			
+
 			/******************************* commands names ********************************/
 			'cmdarchive'   : 'Archiv erstellen',
 			'cmdback'      : 'Zurück',
@@ -92,15 +92,15 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'cmdup'        : 'Ins übergeordnete Verzeichnis wechseln',
 			'cmdupload'    : 'Datei hochladen',
 			'cmdview'      : 'Ansehen',
-			
-			/*********************************** buttons ***********************************/ 
+
+			/*********************************** buttons ***********************************/
 			'btnClose'  : 'Schließen',
 			'btnSave'   : 'Speichern',
 			'btnRm'     : 'Entfernen',
 			'btnCancel' : 'Abbrechen',
 			'btnNo'     : 'Nein',
 			'btnYes'    : 'Ja',
-			
+
 			/******************************** notifications ********************************/
 			'ntfopen'     : 'öffne Verzeichnis',
 			'ntffile'     : 'öffne Datei',
@@ -119,7 +119,7 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'ntfextract'  : 'Entpacke Dateien',
 			'ntfsearch'   : 'Suche',
 			'ntfsmth'     : 'Bin beschäftigt >_<',
-			
+
 			/************************************ dates **********************************/
 			'dateUnknown' : 'unbekannt',
 			'Today'       : 'Heute',
@@ -138,8 +138,8 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'Dec'         : 'Dez',
 
 			/******************************** sort variants ********************************/
-            'sortname'          : 'nach Name', 
-            'sortkind'          : 'nach freundlicher', 
+            'sortname'          : 'nach Name',
+            'sortkind'          : 'nach freundlicher',
             'sortsize'          : 'nach Größe',
             'sortdate'          : 'nach Datum',
             'sortFoldersFirst'  : 'Ordner zuerst',
@@ -166,7 +166,7 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'viewlist'        : 'Spaltenansicht',
 			'viewicons'       : 'Symbolansicht',
 			'places'          : 'Orte',
-			'calc'            : 'Berechne', 
+			'calc'            : 'Berechne',
 			'path'            : 'Pfad',
 			'aliasfor'        : 'Verknüpfund zu',
 			'locked'          : 'Gesperrt',
@@ -177,7 +177,7 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'yes'             : 'ja',
 			'no'              : 'nein',
 			'link'            : 'Link',
-			'searcresult'     : 'Suchergebnisse',  
+			'searcresult'     : 'Suchergebnisse',
 			'selected'        : 'Objekte ausgewählt',
 			'about'           : 'über',
 			'shortcuts'       : 'Tastenkombinationen',
@@ -204,7 +204,7 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'selectForUpload' : 'Dateien zum Upload auswählen',
 			'moveFiles'       : 'Dateien verschieben',
 			'copyFiles'       : 'Dateien kopieren',
-						
+
 			/********************************** mimetypes **********************************/
 			'kindUnknown'     : 'Unbekannt',
 			'kindFolder'      : 'Verzeichnis',

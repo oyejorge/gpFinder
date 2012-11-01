@@ -1,11 +1,11 @@
 
 /**
- * @class  elFinder command "netmount"
+ * @class  Finder command "netmount"
  * Mount network volume with user credentials.
  *
  * @author Dmitry (dio) Levashov
  **/
-elFinder.prototype.commands.netmount = function() {
+Finder.prototype.commands.netmount = function() {
 	var self = this;
 
 	this.alwaysEnabled  = true;
@@ -78,11 +78,11 @@ elFinder.prototype.commands.netmount = function() {
 						.done(function() { dfrd.resolve(); })
 						.fail(function(error) { dfrd.reject(error); });
 
-					self.dialog.elfinderdialog('close');
+					self.dialog.finderdialog('close');
 				}
 
 				opts.buttons[fm.i18n('btnCancel')] = function() {
-					self.dialog.elfinderdialog('close');
+					self.dialog.finderdialog('close');
 				}
 
 				return fm.dialog(content, opts);

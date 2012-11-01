@@ -1,15 +1,15 @@
 /**
- * elFinder command prototype
+ * Finder command prototype
  *
- * @type  elFinder.command
+ * @type  Finder.command
  * @author  Dmitry (dio) Levashov
  */
-elFinder.prototype.command = function(fm) {
+Finder.prototype.command = function(fm) {
 
 	/**
-	 * elFinder instance
+	 * Finder instance
 	 *
-	 * @type  elFinder
+	 * @type  Finder
 	 */
 	this.fm = fm;
 
@@ -60,7 +60,7 @@ elFinder.prototype.command = function(fm) {
 	this.updateOnSelect = true;
 
 	/**
-	 * elFinder events defaults handlers.
+	 * Finder events defaults handlers.
 	 * Inside handlers "this" is current command object
 	 *
 	 * @type  Object
@@ -76,7 +76,7 @@ elFinder.prototype.command = function(fm) {
 	};
 
 	/**
-	 * elFinder events handlers.
+	 * Finder events handlers.
 	 * Inside handlers "this" is current command object
 	 *
 	 * @type  Object

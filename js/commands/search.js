@@ -1,11 +1,11 @@
 
 /**
- * @class  elFinder command "search"
+ * @class  Finder command "search"
  * Find files
  *
  * @author Dmitry (dio) Levashov
  **/
-elFinder.prototype.commands.search = function() {
+Finder.prototype.commands.search = function() {
 	this.title          = 'Find files';
 	this.options        = {ui : 'searchbutton'}
 	this.alwaysEnabled  = true;

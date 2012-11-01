@@ -1,44 +1,44 @@
-$.fn.elfinder = function(o) {
-	
+$.fn.finder = function(o) {
+
 	if (o == 'instance') {
-		return this.getElFinder();
+		return this.getFinder();
 	}
-	
+
 	return this.each(function() {
-		
+
 		var cmd = typeof(o) == 'string' ? o : '';
-		if (!this.elfinder) {
-			new elFinder(this, typeof(o) == 'object' ? o : {})
+		if (!this.finder) {
+			new Finder(this, typeof(o) == 'object' ? o : {})
 		}
-		
+
 		switch(cmd) {
 			case 'close':
 			case 'hide':
-				this.elfinder.hide();
+				this.finder.hide();
 				break;
-				
+
 			case 'open':
 			case 'show':
-				this.elfinder.show();
+				this.finder.show();
 				break;
-				
+
 			case'destroy':
-				this.elfinder.destroy();
+				this.finder.destroy();
 				break;
 		}
-		
+
 	})
 }
 
-$.fn.getElFinder = function() {
+$.fn.getFinder = function() {
 	var instance;
-	
+
 	this.each(function() {
-		if (this.elfinder) {
-			instance = this.elfinder;
+		if (this.finder) {
+			instance = this.finder;
 			return false;
 		}
 	});
-	
+
 	return instance;
 }

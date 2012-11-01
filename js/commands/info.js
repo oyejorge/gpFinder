@@ -1,11 +1,11 @@
 
 /**
- * @class elFinder command "info".
+ * @class Finder command "info".
  * Display dialog with file properties.
  *
  * @author Dmitry (dio) Levashov, dio@std42.ru
  **/
-elFinder.prototype.commands.info = function() {
+Finder.prototype.commands.info = function() {
 	var m   = 'msg',
 		fm  = this.fm,
 		spclass = 'finder-info-spinner',
@@ -66,7 +66,7 @@ elFinder.prototype.commands.info = function() {
 			opts    = {
 				title : this.title,
 				width : 'auto',
-				close : function() { $(this).elfinderdialog('destroy'); }
+				close : function() { $(this).finderdialog('destroy'); }
 			},
 			count = [],
 			replSpinner = function(msg) { dialog.find('.'+spclass).parent().text(msg); },
@@ -79,7 +79,7 @@ elFinder.prototype.commands.info = function() {
 		}
 
 		if (dialog.length) {
-			dialog.elfinderdialog('toTop');
+			dialog.finderdialog('toTop');
 			return $.Deferred().resolve();
 		}
 

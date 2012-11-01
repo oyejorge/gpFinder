@@ -1,10 +1,10 @@
 /**
- * Default elFinder config
+ * Default Finder config
  *
  * @type  Object
  * @autor Dmitry (dio) Levashov
  */
-elFinder.prototype._options = {
+Finder.prototype._options = {
 	/**
 	 * Connector url. Required!
 	 *
@@ -30,7 +30,7 @@ elFinder.prototype._options = {
 	 * @default null
 	 * @example
 	 *  transport : {
-	 *    init : function(elfinderInstance) { },
+	 *    init : function(finderInstance) { },
 	 *    send : function(options) {
 	 *      var dfrd = $.Deferred();
 	 *      // connect to backend ...
@@ -41,7 +41,7 @@ elFinder.prototype._options = {
 	 *      // upload ...
 	 *      return dfrd;
 	 *    }
-	 *    
+	 *
 	 *  }
 	 **/
 	transport : {},
@@ -62,7 +62,7 @@ elFinder.prototype._options = {
 	 * @default  'auto'
 	 */
 	dragUploadAllow : 'auto',
-	
+
 	/**
 	 * Timeout for upload using iframe
 	 *
@@ -70,7 +70,7 @@ elFinder.prototype._options = {
 	 * @default  0 - no timeout
 	 */
 	iframeTimeout : 0,
-	
+
 	/**
 	 * Data to append to all requests and to upload files
 	 *
@@ -78,9 +78,9 @@ elFinder.prototype._options = {
 	 * @default  {}
 	 */
 	customData : {},
-	
+
 	/**
-	 * Event listeners to bind on elFinder init
+	 * Event listeners to bind on Finder init
 	 *
 	 * @type Object
 	 * @default  {}
@@ -104,16 +104,16 @@ elFinder.prototype._options = {
 
 	/**
 	 * Active commands list
-	 * If some required commands will be missed here, elFinder will add its
+	 * If some required commands will be missed here, Finder will add its
 	 *
 	 * @type Array
 	 */
 	commands : [
-		'open', 'reload', 'home', 'up', 'back', 'forward', 'getfile', 'quicklook', 
-		'download', 'rm', 'duplicate', 'rename', 'mkdir', 'mkfile', 'upload', 'copy', 
+		'open', 'reload', 'home', 'up', 'back', 'forward', 'getfile', 'quicklook',
+		'download', 'rm', 'duplicate', 'rename', 'mkdir', 'mkfile', 'upload', 'copy',
 		'cut', 'paste', 'edit', 'extract', 'archive', 'search', 'info', 'view', 'help', 'resize', 'sort', 'netmount'
 	],
-	
+
 	/**
 	 * Commands options.
 	 *
@@ -151,7 +151,7 @@ elFinder.prototype._options = {
 				// 	 * files mimetypes allowed to edit in current wysisyg
 				// 	 * @type  Array
 				// 	 */
-				// 	mimes : ['text/html'], 
+				// 	mimes : ['text/html'],
 				// 	/**
 				// 	 * Called when "edit" dialog loaded.
 				// 	 * Place to init wysisyg.
@@ -179,24 +179,24 @@ elFinder.prototype._options = {
 				// 	 * @return void
 				// 	 */
 				// 	save : function(textarea, editor) {}
-				// 
+				//
 				// }
 			]
 		},
-		
+
 
 		help : {view : ['about', 'shortcuts', 'help']}
 	},
-	
+
 	/**
 	 * Callback for "getfile" commands.
-	 * Required to use elFinder with WYSIWYG editors etc..
+	 * Required to use Finder with WYSIWYG editors etc..
 	 *
 	 * @type Function
 	 * @default null (command not active)
 	 */
 	getFileCallback : null,
-	
+
 	/**
 	 * Default directory view. icons/list
 	 *
@@ -204,7 +204,7 @@ elFinder.prototype._options = {
 	 * @default "icons"
 	 */
 	defaultView : 'icons',
-	
+
 	/**
 	 * UI plugins to load.
 	 * Current dir ui and dialogs loads always.
@@ -215,7 +215,7 @@ elFinder.prototype._options = {
 	 * @full ['toolbar', 'places', 'tree', 'path', 'stat']
 	 */
 	ui : ['toolbar', 'tree', 'path', 'stat'],
-	
+
 	/**
 	 * Some UI plugins options.
 	 * @type Object
@@ -270,7 +270,7 @@ elFinder.prototype._options = {
 
 	/**
 	 * Custom files sort rules.
-	 * All default rules (name/size/kind/date) set in elFinder._sortRules
+	 * All default rules (name/size/kind/date) set in Finder._sortRules
 	 *
 	 * @type {Object}
 	 * @example
@@ -286,7 +286,7 @@ elFinder.prototype._options = {
 	 * @type {String}
 	 */
 	sortType : 'name',
-	
+
 	/**
 	 * Default sort order.
 	 *
@@ -294,7 +294,7 @@ elFinder.prototype._options = {
 	 * @default "asc"
 	 */
 	sortOrder : 'asc',
-	
+
 	/**
 	 * Display folders first?
 	 *
@@ -302,15 +302,15 @@ elFinder.prototype._options = {
 	 * @default true
 	 */
 	sortStickFolders : true,
-	
+
 	/**
-	 * If true - elFinder will formating dates itself, 
+	 * If true - Finder will formating dates itself,
 	 * otherwise - backend date will be used.
 	 *
 	 * @type Boolean
 	 */
 	clientFormatDate : true,
-	
+
 	/**
 	 * Show UTC dates.
 	 * Required set clientFormatDate to true
@@ -318,7 +318,7 @@ elFinder.prototype._options = {
 	 * @type Boolean
 	 */
 	UTCDate : false,
-	
+
 	/**
 	 * File modification datetime format.
 	 * Value from selected language data  is used by default.
@@ -328,7 +328,7 @@ elFinder.prototype._options = {
 	 * @default  ""
 	 */
 	dateFormat : '',
-	
+
 	/**
 	 * File modification datetime format in form "Yesterday 12:23:01".
 	 * Value from selected language data is used by default.
@@ -340,31 +340,31 @@ elFinder.prototype._options = {
 	 * @example "$1 H:m:i"
 	 */
 	fancyDateFormat : '',
-	
+
 	/**
-	 * elFinder width
+	 * Finder width
 	 *
 	 * @type String|Number
 	 * @default  "auto"
 	 */
 	width : 'auto',
-	
+
 	/**
-	 * elFinder height
+	 * Finder height
 	 *
 	 * @type Number
 	 * @default  "auto"
 	 */
 	height : 400,
-	
+
 	/**
-	 * Make elFinder resizable if jquery ui resizable available
+	 * Make Finder resizable if jquery ui resizable available
 	 *
 	 * @type Boolean
 	 * @default  true
 	 */
 	resizable : true,
-	
+
 	/**
 	 * Timeout before open notifications dialogs
 	 *
@@ -372,7 +372,7 @@ elFinder.prototype._options = {
 	 * @default  500 (.5 sec)
 	 */
 	notifyDelay : 500,
-	
+
 	/**
 	 * Allow shortcuts
 	 *
@@ -380,7 +380,7 @@ elFinder.prototype._options = {
 	 * @default  true
 	 */
 	allowShortcuts : true,
-	
+
 	/**
 	 * Remeber last opened dir to open it after reload or in next session
 	 *
@@ -388,7 +388,7 @@ elFinder.prototype._options = {
 	 * @default  true
 	 */
 	rememberLastDir : true,
-	
+
 	/**
 	 * Lazy load config.
 	 * How many files display at once?
@@ -397,7 +397,7 @@ elFinder.prototype._options = {
 	 * @default  50
 	 */
 	showFiles : 30,
-	
+
 	/**
 	 * Lazy load config.
 	 * Distance in px to cwd bottom edge to start display files
@@ -406,7 +406,7 @@ elFinder.prototype._options = {
 	 * @default  50
 	 */
 	showThreshold : 50,
-	
+
 	/**
 	 * Additional rule to valid new file name.
 	 * By default not allowed empty names or '..'
@@ -418,15 +418,15 @@ elFinder.prototype._options = {
 	 *  validName : /^[^\s]$/
 	 */
 	validName : false,
-	
+
 	/**
 	 * Sync content interval
-	 * @todo - fix in elFinder
+	 * @todo - fix in Finder
 	 * @type Number
 	 * @default  0 (do not sync)
 	 */
 	sync : 0,
-	
+
 	/**
 	 * How many thumbnails create in one request
 	 *
@@ -434,7 +434,7 @@ elFinder.prototype._options = {
 	 * @default  5
 	 */
 	loadTmbs : 5,
-	
+
 	/**
 	 * Cookie option for browsersdoes not suppot localStorage
 	 *
@@ -446,7 +446,7 @@ elFinder.prototype._options = {
 		path    : '/',
 		secure  : false
 	},
-	
+
 	/**
 	 * Contextmenu config
 	 *

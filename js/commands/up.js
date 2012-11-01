@@ -1,11 +1,11 @@
 
 /**
- * @class  elFinder command "up"
+ * @class  Finder command "up"
  * Go into parent directory
  *
  * @author Dmitry (dio) Levashov
  **/
-elFinder.prototype.commands.up = function() {
+Finder.prototype.commands.up = function() {
 	this.alwaysEnabled = true;
 	this.updateOnSelect = false;
 

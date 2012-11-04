@@ -1030,8 +1030,9 @@ class Finder {
 			return array('error' => $this->error(self::ERROR_UPLOAD, self::ERROR_TRGDIR_NOT_FOUND, '#'.$target), 'header' => $header);
 		}
 
-		foreach ($files['name'] as $i => $name) {
-			if (($error = $files['error'][$i]) > 0) {
+		foreach( $files['name'] as $i => $name ){
+			$error = $files['error'][$i];
+			if( $error > 0 ){
 				$result['warning'] = $this->error(self::ERROR_UPLOAD_FILE, $name, $error == UPLOAD_ERR_INI_SIZE || $error == UPLOAD_ERR_FORM_SIZE ? self::ERROR_UPLOAD_FILE_SIZE : self::ERROR_UPLOAD_TRANSFER);
 				$this->uploadDebug = 'Upload error code: '.$error;
 				break;
@@ -1039,13 +1040,22 @@ class Finder {
 
 			$tmpname = $files['tmp_name'][$i];
 
-			if (($fp = fopen($tmpname, 'rb')) == false) {
+			//make sure it's an uploaded file
+			if( !is_uploaded_file($tmpname) ){
+				$result['warning'] = $this->error(self::ERROR_UPLOAD_FILE, $name, self::ERROR_UPLOAD_TRANSFER);
+				$this->uploadDebug = 'Upload error: not an uploaded file';
+				break;
+			}
+
+			$fp = fopen($tmpname, 'rb');
+			if( $fp === false ){
 				$result['warning'] = $this->error(self::ERROR_UPLOAD_FILE, $name, self::ERROR_UPLOAD_TRANSFER);
 				$this->uploadDebug = 'Upload error: unable open tmp file';
 				break;
 			}
 
-			if (($file = $volume->upload($fp, $target, $name, $tmpname)) === false) {
+			$file = $volume->upload($fp, $target, $name, $tmpname);
+			if( $file === false ){
 				$result['warning'] = $this->error(self::ERROR_UPLOAD_FILE, $name, $volume->error());
 				fclose($fp);
 				break;

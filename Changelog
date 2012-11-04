@@ -1,3 +1,14 @@
+2012-11-02  gpFinder 2.0b1
+	* Added saveData and returnData configuration options
+	* Added MountVolume() method
+	* File inclusion handled by Finder.class.php
+	* Removed FinderConnector
+	* Using constants for chmod settings
+	* Check tmbPath works for mixed OSes
+	* Removed beeper
+	* use call_user_func() for callbacks
+	* Added *-before events
+
 2012-10-23  gpFinder created from elFinder 2.x
 
 2012-04-10  Troex Nevelin  <troex@fury.scancode.ru>

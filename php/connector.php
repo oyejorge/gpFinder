@@ -36,109 +36,36 @@ function debug($o) {
  * @author Troex Nevelin
  **/
 function logger($cmd, $result, $args, $finder) {
+
 	$log = sprintf("[%s] %s: %s \n", date('r'), strtoupper($cmd), var_export($result, true));
 	$logfile = '../files/temp/log.txt';
 	$dir = dirname($logfile);
 	if (!is_dir($dir) && !mkdir($dir)) {
 		return;
 	}
-	if (($fp = fopen($logfile, 'a'))) {
+	if (($fp = fopen($logfile, 'w'))) {
 		fwrite($fp, $log);
 		fclose($fp);
 	}
 }
 
+function logger_before( $cmd, $args, $finder ){
 
-/**
- * Simple logger function.
- * Demonstrate how to work with Finder event api.
- *
- * @package Finder
- * @author Dmitry (dio) Levashov
- **/
-class FinderSimpleLogger {
-
-	/**
-	 * Log file path
-	 *
-	 * @var string
-	 **/
-	protected $file = '';
-
-	/**
-	 * constructor
-	 *
-	 * @return void
-	 * @author Dmitry (dio) Levashov
-	 **/
-	public function __construct($path) {
-		$this->file = $path;
-		$dir = dirname($path);
-		if (!is_dir($dir)) {
-			mkdir($dir);
-		}
+	$logfile = '../files/temp/log-before.txt';
+	$dir = dirname($logfile);
+	if( !is_dir($dir) && !mkdir($dir) ){
+		return $args;
 	}
 
-	/**
-	 * Create log record
-	 *
-	 * @param  string   $cmd       command name
-	 * @param  array    $result    command result
-	 * @param  array    $args      command arguments from client
-	 * @param  object $finder  Finder instance
-	 * @return void|true
-	 * @author Dmitry (dio) Levashov
-	 **/
-	public function log($cmd, $result, $args, $finder) {
-		$log = $cmd.' ['.date('d.m H:s')."]\n";
+	$log = "[".date('r')."] ".strtoupper($cmd).": ".var_export($args,true)." \n";
 
-		if (!empty($result['error'])) {
-			$log .= "\tERROR: ".implode(' ', $result['error'])."\n";
-		}
-
-		if (!empty($result['warning'])) {
-			$log .= "\tWARNING: ".implode(' ', $result['warning'])."\n";
-		}
-
-		if (!empty($result['removed'])) {
-			foreach ($result['removed'] as $file) {
-				// removed file contain additional field "realpath"
-				$log .= "\tREMOVED: ".$file['realpath']."\n";
-			}
-		}
-
-		if (!empty($result['added'])) {
-			foreach ($result['added'] as $file) {
-				$log .= "\tADDED: ".$finder->realpath($file['hash'])."\n";
-			}
-		}
-
-		if (!empty($result['changed'])) {
-			foreach ($result['changed'] as $file) {
-				$log .= "\tCHANGED: ".$finder->realpath($file['hash'])."\n";
-			}
-		}
-
-		$this->write($log);
+	if( ($fp = fopen($logfile, 'w')) ){
+		fwrite($fp, $log);
+		fclose($fp);
 	}
+	return $args;
+}
 
-	/**
-	 * Write log into file
-	 *
-	 * @param  string  $log  log record
-	 * @return void
-	 * @author Dmitry (dio) Levashov
-	 **/
-	protected function write($log) {
-
-		if (($fp = @fopen($this->file, 'a'))) {
-			fwrite($fp, $log."\n");
-			fclose($fp);
-		}
-	}
-
-
-} // END class
 
 
 /**
@@ -156,14 +83,12 @@ function access($attr, $path, $data, $volume) {
 }
 
 
-$logger = new FinderSimpleLogger('../files/temp/log.txt');
-
-
 
 $opts = array(
 	'locale' => 'en_US.UTF-8',
 	'bind' => array(
-		'*' => 'logger'
+		'*' => 'logger',
+		'*-before' => 'logger_before'
 		// 'mkdir mkfile rename duplicate upload rm paste' => 'logger'
 	),
 	'debug' => true,

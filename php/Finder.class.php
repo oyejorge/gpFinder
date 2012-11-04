@@ -218,8 +218,8 @@ class Finder {
 
 		// bind events listeners
 		if( !empty($opts['bind']) && is_array($opts['bind']) ){
-			foreach( $opts['bind'] as $cmd => $handler ){
-				$this->bind($cmd, $handler);
+			foreach( $opts['bind'] as $cmd => $listener ){
+				$this->bind($cmd, $listener);
 			}
 		}
 
@@ -372,27 +372,26 @@ class Finder {
 	}
 
 	/**
-	 * Add handler to Finder command
+	 * Add lister to Finder command
 	 *
 	 * @param  string  command name
-	 * @param  string|array  callback name or array(object, method)
+	 * @param  callback  callback name or array(object, method)
 	 * @return Finder
-	 * @author Dmitry (dio) Levashov
-	 **/
-	public function bind($cmd, $handler) {
-		$cmds = $cmd == '*'
-			? array_keys($this->commands)
-			: array_map('trim', explode(' ', $cmd));
+	 *
+	 */
+	public function bind($cmd, $listener) {
+		$cmds = explode(' ', $cmd);
+		foreach($cmds as $cmd){
+			$cmd = trim($cmd);
+			if( empty($cmd) ){
+				continue;
+			}
+			if( !isset($this->listeners[$cmd]) ){
+				$this->listeners[$cmd] = array();
+			}
 
-		foreach ($cmds as $cmd) {
-			if ($cmd) {
-				if (!isset($this->listeners[$cmd])) {
-					$this->listeners[$cmd] = array();
-				}
-
-				if( is_callable($handler) ){
-					$this->listeners[$cmd][] = $handler;
-				}
+			if( is_callable($listener) ){
+				$this->listeners[$cmd][] = $listener;
 			}
 		}
 
@@ -400,24 +399,57 @@ class Finder {
 	}
 
 	/**
-	 * Remove event (command exec) handler
+	 * Remove event (command exec) listener
 	 *
-	 * @param  string  command name
-	 * @param  string|array  callback name or array(object, method)
+	 * @param  string $event event name
+	 * @param  callback  callback name or array(object, method)
 	 * @return Finder
-	 * @author Dmitry (dio) Levashov
-	 **/
-	public function unbind($cmd, $handler) {
-		if (!empty($this->listeners[$cmd])) {
-			foreach ($this->listeners[$cmd] as $i => $h) {
-				if ($h === $handler) {
-					unset($this->listeners[$cmd][$i]);
-					return $this;
+	 *
+	 */
+	public function unbind($event, $listener){
+		$events = explode(' ', $event);
+		foreach($events as $event){
+			$event = trim($event);
+			if( empty($event) ){
+				continue;
+			}
+
+			if( empty($this->listeners[$event]) ){
+				continue;
+			}
+
+			foreach( $this->listeners[$event] as $i => $h ){
+				if( $h === $listener ){
+					unset($this->listeners[$event][$i]);
 				}
 			}
 		}
 		return $this;
 	}
+
+	/**
+	 * Return a list of listeners for the current event
+	 * @param string $event
+	 * @return array
+	 */
+	public function GetListeners( $event, $state = false ){
+		$listeners = array();
+
+		if( $state ){
+			$state = '-'.trim($state,'-');
+			$event .= $state;
+		}
+
+		if( !empty($this->listeners[$event]) ){
+			$listeners = $this->listeners[$event];
+		}
+		if( !empty($this->listeners['*'.$state]) ){
+			$listeners = array_merge($listeners,$this->listeners['*'.$state]);
+		}
+		return $listeners;
+	}
+
+
 
 	/**
 	 * Return true if command exists
@@ -451,36 +483,45 @@ class Finder {
 	 **/
 	public function exec($cmd, $args) {
 
-		if (!$this->loaded) {
+		if( !$this->loaded ){
 			return array('error' => $this->error(self::ERROR_CONF, self::ERROR_CONF_NO_VOL));
 		}
 
-		if (!$this->commandExists($cmd)) {
+		if( !$this->commandExists($cmd) ){
 			return array('error' => $this->error(self::ERROR_UNKNOWN_CMD));
 		}
 
-		if (!empty($args['mimes']) && is_array($args['mimes'])) {
+		if( !empty($args['mimes']) && is_array($args['mimes']) ){
 			foreach ($this->volumes as $id => $v) {
 				$this->volumes[$id]->setMimesFilter($args['mimes']);
 			}
 		}
 
+		// call "*-before" events
+		$listeners = $this->GetListeners($cmd,'before');
+		foreach( $listeners as $listener ){
+			$args = call_user_func($listener,$before,$args,$this);
+		}
+		if( !is_array($args) ){
+			return array('error' => $this->error('errPerm'));
+		}
+
+		//call the command
 		$result = call_user_func( array($this,$cmd), $args );
 
-		if (isset($result['removed'])) {
+		if( isset($result['removed']) ){
 			foreach ($this->volumes as $volume) {
 				$result['removed'] = array_merge($result['removed'], $volume->removed());
 				$volume->resetRemoved();
 			}
 		}
 
-		// call handlers for this command
-		if (!empty($this->listeners[$cmd])) {
-			foreach ($this->listeners[$cmd] as $handler) {
-				// handler return true to force sync client after command completed
-				if( call_user_func($handler,$cmd,$result,$args,$this) ){
-					$result['sync'] = true;
-				}
+		// call listeners for this command
+		$listeners = $this->GetListeners($cmd);
+		foreach( $listeners as $listener ){
+			// listener return true to force sync client after command completed
+			if( call_user_func($listener,$cmd,$result,$args,$this) ){
+				$result['sync'] = true;
 			}
 		}
 
@@ -512,7 +553,7 @@ class Finder {
 				'mountErrors' => $this->mountErrors
 				);
 
-			foreach ($this->volumes as $id => $volume) {
+			foreach( $this->volumes as $id => $volume ){
 				$result['debug']['volumes'][] = $volume->debug();
 			}
 		}
@@ -1019,14 +1060,14 @@ class Finder {
 	protected function upload($args) {
 		$target = $args['target'];
 		$volume = $this->volume($target);
-		$files  = isset($args['FILES']['upload']) && is_array($args['FILES']['upload']) ? $args['FILES']['upload'] : array();
+		$files =& $args['FILES']['upload'];
 		$result = array('added' => array(), 'header' => empty($args['html']) ? false : 'Content-Type: text/html; charset=utf-8');
 
-		if (empty($files)) {
+		if( !is_array($files) || empty($files) ){
 			return array('error' => $this->error(self::ERROR_UPLOAD, self::ERROR_UPLOAD_NO_FILES), 'header' => $header);
 		}
 
-		if (!$volume) {
+		if( !$volume ){
 			return array('error' => $this->error(self::ERROR_UPLOAD, self::ERROR_TRGDIR_NOT_FOUND, '#'.$target), 'header' => $header);
 		}
 

@@ -67,6 +67,33 @@ function logger_before( $cmd, $args, $finder ){
 }
 
 
+/**
+ * Prevents any files with "php" in the name from being uploaded
+ *
+ */
+function upload_check( $event, $args, $finder ){
+	logger_before( $cmd, $args, $finder );
+
+	$files =& $args['FILES']['upload'];
+	if( !is_array($files) || empty($files) ){
+		return $args;
+	}
+
+	$new_files = array();
+	foreach( $files['name'] as $i => $name ){
+		if( stripos($name,'php') !== false ){
+			unset($files['name'][$i]);
+			unset($files['type'][$i]);
+			unset($files['tmp_name'][$i]);
+			unset($files['error'][$i]);
+			unset($files['size'][$i]);
+		}
+	}
+
+
+	return $args;
+}
+
 
 /**
  * Simple function to demonstrate how to control file access using "accessControl" callback.
@@ -88,7 +115,8 @@ $opts = array(
 	'locale' => 'en_US.UTF-8',
 	'bind' => array(
 		'*' => 'logger',
-		'*-before' => 'logger_before'
+		//'*-before' => 'logger_before'
+		'upload-before' => 'upload_check'
 		// 'mkdir mkfile rename duplicate upload rm paste' => 'logger'
 	),
 	'debug' => true,

@@ -6,3 +6,6 @@ temp
 chars-test
 .tmb
 .quarantine
+.easymin
+finder.src.html
+connector.php

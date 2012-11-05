@@ -186,14 +186,6 @@
 
 .finder-help-shortcut-pattern { float:left; width:160px;}
 
-.finder-help-logo {
-	width:100px;
-	height:96px;
-	float:left;
-	margin-right:1em;
-	background:url('../img/logo.png') center center no-repeat;
-}
-
 .finder-help h3 { font-size:1.5em; margin:.2em 0 .3em 0; }
 
 .finder-help-separator { clear:both; padding:.5em;  }

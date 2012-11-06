@@ -137,7 +137,7 @@ class FinderVolumeMySQL extends FinderVolumeDriver {
 		if( ($tmp = $this->options['tmpPath']) ){
 			if( !file_exists($tmp) ){
 				if( @mkdir($tmp) ){
-					@chmod( $tmp, finder_chmod_dir );
+					@chmod($tmp, $this->options['tmbPathMode']);
 				}
 			}
 

@@ -16,12 +16,6 @@ if( function_exists('date_default_timezone_set') ){
 
 include_once( dirname(__FILE__).DIRECTORY_SEPARATOR.'Finder.class.php' );
 
-function debug($o) {
-	echo '<pre>';
-	print_r($o);
-	echo '</pre>';
-}
-
 
 
 /**
@@ -45,6 +39,28 @@ function logger($cmd, $result, $args, $finder) {
 	}
 	if (($fp = fopen($logfile, 'w'))) {
 		fwrite($fp, $log);
+		fclose($fp);
+	}
+}
+
+
+
+function debug(){
+	static $file = false;
+	if( !$file ){
+		$time = time();
+		do{
+			$file = dirname(dirname(__FILE__)).'/files/log_'.$time;
+			$time++;
+		}while( file_exists($file) );
+	}
+
+
+	$args = func_get_args();
+	$content = print_r($args,true)."\n-----------------------------------------------------------------------------------\n\n";
+	$fp = fopen($file, 'a');
+	if( $fp ){
+		fwrite($fp, $content);
 		fclose($fp);
 	}
 }

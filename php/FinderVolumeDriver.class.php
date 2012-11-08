@@ -118,13 +118,6 @@ abstract class FinderVolumeDriver {
 	);
 
 	/**
-	 * How many subdirs levels return for tree
-	 *
-	 * @var int
-	 **/
-	protected $treeDeep = 1;
-
-	/**
 	 * Errors from last failed action
 	 *
 	 * @var array
@@ -719,7 +712,6 @@ abstract class FinderVolumeDriver {
 
 
 		$root = $this->stat($this->root);
-
 		if (!$root) {
 			return $this->setError('Root folder does not exists.');
 		}
@@ -737,7 +729,6 @@ abstract class FinderVolumeDriver {
 				'read'    => false
 			));
 		}
-		$this->treeDeep = $this->options['treeDeep'] > 0 ? (int)$this->options['treeDeep'] : 1;
 		$this->tmbSize  = $this->options['tmbSize'] > 0 ? (int)$this->options['tmbSize'] : 48;
 		$this->URL      = $this->options['URL'];
 		if ($this->URL && preg_match("|[^/?&=]$|", $this->URL)) {
@@ -1100,7 +1091,9 @@ abstract class FinderVolumeDriver {
 			return false;
 		}
 
-		$dirs = $this->gettree($path, $deep > 0 ? $deep -1 : $this->treeDeep-1, $exclude ? $this->decode($exclude) : null);
+		$this->options['treeDeep'] = $this->options['treeDeep'] > 0 ? (int)$this->options['treeDeep'] : 1;
+
+		$dirs = $this->gettree($path, $deep > 0 ? $deep -1 : $this->options['treeDeep']-1, $exclude ? $this->decode($exclude) : null);
 		array_unshift($dirs, $dir);
 		return $dirs;
 	}

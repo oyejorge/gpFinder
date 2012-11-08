@@ -193,6 +193,8 @@ class FinderVolumeFTP extends FinderVolumeDriver {
 			return $this->setError('Unable to open root folder.');
 		}
 
+		return true;
+
 		// check for MLST support
 		$features = ftp_raw($this->connect, 'FEAT');
 		if (!is_array($features)) {
@@ -336,8 +338,8 @@ class FinderVolumeFTP extends FinderVolumeDriver {
 			}
 			return;
 		}
-		foreach (ftp_rawlist($this->connect, $path) as $raw) {
-			if (($stat = $this->parseRaw($raw))) {
+		foreach(ftp_rawlist($this->connect, $path) as $raw) {
+			if(($stat = $this->parseRaw($raw))) {
 				$p    = $path.'/'.$stat['name'];
 				$stat = $this->updateCache($p, $stat);
 				if (empty($stat['hidden'])) {
@@ -513,7 +515,25 @@ class FinderVolumeFTP extends FinderVolumeDriver {
 	 * @return array|false
 	 * @author Dmitry (dio) Levashov
 	 **/
-	protected function _stat($path) {
+	protected function _stat($path){
+
+
+		$stat = array();
+		$stat['size'] = ftp_size($this->connect, $path);
+		$stat['ts'] = ftp_mdtm($this->connect, $path);
+
+		if( $this->is_dir($path) ){
+			$stat['mime'] = 'directory';
+
+		}else{
+			$stat['mime'] = $this->mimetype($path);
+		}
+
+		return $stat;
+
+
+
+
 		$raw = ftp_raw($this->connect, 'MLST '.$path);
 
 		if (is_array($raw) && count($raw) > 1 && substr(trim($raw[0]), 0, 1) == 2) {
@@ -614,6 +634,27 @@ class FinderVolumeFTP extends FinderVolumeDriver {
 		}
 
 		return array();
+	}
+
+	/**
+	 * Return true if the $path is a directory
+	 *
+	 */
+	function is_dir($path){
+
+		$pwd = @ftp_pwd($this->connect);
+
+		ob_start(); //prevent error messages
+		$changed_dir = @ftp_chdir($this->connect, $path );
+		ob_end_clean();
+
+		if( $changed_dir ){
+			$new_pwd = @ftp_pwd($this->connect);
+			if( $path == $new_pwd || $pwd != $new_pwd ){
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**

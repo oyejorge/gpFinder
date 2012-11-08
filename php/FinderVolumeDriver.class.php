@@ -476,7 +476,7 @@ abstract class FinderVolumeDriver {
 
 	/**
 	 * Configure after successfull mount.
-	 * By default set thumbnails path and image manipulation library.
+	 * By default set thumbnails path
 	 *
 	 * @return void
 	 * @author Dmitry (dio) Levashov
@@ -498,8 +498,6 @@ abstract class FinderVolumeDriver {
 				$this->tmbPathWritable = is_writable($path);
 			}
 		}
-
-
 	}
 
 
@@ -782,7 +780,6 @@ abstract class FinderVolumeDriver {
 		if ($this->tmbURL && preg_match("|[^/?&=]$|", $this->tmbURL)) {
 			$this->tmbURL .= '/';
 		}
-
 
 
 		$this->configure();

@@ -134,20 +134,6 @@ class FinderVolumeMySQL extends FinderVolumeDriver {
 	protected function configure() {
 		parent::configure();
 
-		if( ($tmp = $this->options['tmpPath']) ){
-			if( !file_exists($tmp) ){
-				if( @mkdir($tmp) ){
-					@chmod($tmp, $this->options['tmbPathMode']);
-				}
-			}
-
-			$this->tmpPath = is_dir($tmp) && is_writable($tmp) ? $tmp : false;
-		}
-
-		if (!$this->tmpPath && $this->tmbPath && $this->tmbPathWritable) {
-			$this->tmpPath = $this->tmbPath;
-		}
-
 		$this->mimeDetect = 'internal';
 	}
 

@@ -732,9 +732,6 @@ abstract class FinderVolumeDriver {
 			$this->tmbURL .= '/';
 		}
 
-		$this->nameValidator = is_string($this->options['acceptedName']) && !empty($this->options['acceptedName'])
-			? $this->options['acceptedName']
-			: '';
 
 		$this->_checkArchivers();
 		// manual control archive types to create
@@ -772,8 +769,6 @@ abstract class FinderVolumeDriver {
 		}
 
 		$this->configure();
-		// echo $this->uploadMaxSize;
-		// echo $this->options['uploadMaxSize'];
 		return $this->mounted = true;
 	}
 
@@ -1864,22 +1859,24 @@ abstract class FinderVolumeDriver {
 	}
 
 	/**
-	 * Validate file name based on $this->options['acceptedName'] regexp
+	 * Validate file name based on $this->options['acceptedName'] regexp or callback
 	 *
 	 * @param  string  $name  file name
 	 * @return bool
 	 * @author Dmitry (dio) Levashov
 	 **/
 	protected function nameAccepted($name) {
-		if ($this->nameValidator) {
-			if (function_exists($this->nameValidator)) {
-				$f = $this->nameValidator;
-				return $f($name);
-			}
 
-			return preg_match($this->nameValidator, $name);
+		if( empty($this->options['acceptedName']) ){
+			return true;
 		}
-		return true;
+		$validator =& $this->options['acceptedName'];
+
+		if( is_string($validator) && !is_callable($validator) ){
+			return preg_match($validator, $name);
+		}
+
+		return call_user_func( $validator, $name );
 	}
 
 	/**

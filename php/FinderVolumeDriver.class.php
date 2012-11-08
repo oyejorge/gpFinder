@@ -86,13 +86,6 @@ abstract class FinderVolumeDriver {
 	protected $tmbURL = '';
 
 	/**
-	 * Thumbnails size in px
-	 *
-	 * @var int
-	 **/
-	protected $tmbSize = 48;
-
-	/**
 	 * Image manipulation lib name
 	 * auto|imagick|mogtify|gd
 	 *
@@ -729,7 +722,6 @@ abstract class FinderVolumeDriver {
 				'read'    => false
 			));
 		}
-		$this->tmbSize  = $this->options['tmbSize'] > 0 ? (int)$this->options['tmbSize'] : 48;
 		$this->URL      = $this->options['URL'];
 		if ($this->URL && preg_match("|[^/?&=]$|", $this->URL)) {
 			$this->URL .= '/';
@@ -2679,7 +2671,7 @@ abstract class FinderVolumeDriver {
 
 		$result = false;
 
-		$tmbSize = $this->tmbSize;
+		$tmbSize = $this->options['tmbSize'] > 0 ? (int)$this->options['tmbSize'] : 48;
 
   		if (($s = getimagesize($tmb)) == false) {
 			return false;

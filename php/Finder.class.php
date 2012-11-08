@@ -648,17 +648,20 @@ class Finder {
 		}
 
 		$this->MountVolume( $volume, $driver, $options );
-
-		if( $volume->mount($options) ){
-			$netVolumes        = $this->getNetVolumes();
-			$options['driver'] = $driver;
-			$netVolumes[]      = $options;
-			$netVolumes        = array_unique($netVolumes);
-			$this->saveNetVolumes($netVolumes);
-			return array('sync' => true);
-		} else {
+		if( !$volume->mount($options) ){
 			return array('error' => $this->error(self::ERROR_NETMOUNT, $args['host'], implode(' ', $volume->error())));
 		}
+
+		if( !$volume->connect() ){
+			return array('error' => $this->error(self::ERROR_NETMOUNT, $args['host'], implode(' ', $volume->error())));
+		}
+
+		$netVolumes        = $this->getNetVolumes();
+		$options['driver'] = $driver;
+		$netVolumes[]      = $options;
+		$netVolumes        = array_unique($netVolumes);
+		$this->saveNetVolumes($netVolumes);
+		return array('sync' => true);
 	}
 
 	/**
@@ -725,8 +728,9 @@ class Finder {
 
 		// get folders trees
 		if ($args['tree']) {
-			foreach ($this->volumes as $id => $v) {
-				if (($tree = $v->tree('', 0, $cwd['hash'])) != false) {
+			foreach($this->volumes as $id => $v){
+				$v->connect();
+				if(($tree = $v->tree('', 0, $cwd['hash'])) != false) {
 					$files = array_merge($files, $tree);
 				}
 			}
@@ -1240,6 +1244,7 @@ class Finder {
 		$result = array();
 
 		foreach ($this->volumes as $volume) {
+			$volume->connect();
 			$result = array_merge($result, $volume->search($q, $mimes));
 		}
 
@@ -1322,13 +1327,19 @@ class Finder {
 	 * @return FinderStorageDriver
 	 * @author Dmitry (dio) Levashov
 	 **/
-	protected function volume($hash) {
-		foreach ($this->volumes as $id => $v) {
-			if (strpos(''.$hash, $id) === 0) {
-				return $this->volumes[$id];
-			}
+	protected function volume($hash){
+
+		$hash_parts = explode('_',$hash);
+		$volume_id = array_shift($hash_parts).'_';
+		if( !isset($this->volumes[$volume_id]) ){
+			return false;
 		}
-		return false;
+
+		if( !$this->volumes[$volume_id]->connect() ){
+			return false;
+		}
+
+		return $this->volumes[$volume_id];
 	}
 
 	/**

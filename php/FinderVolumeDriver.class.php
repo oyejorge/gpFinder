@@ -501,6 +501,45 @@ abstract class FinderVolumeDriver {
 	}
 
 
+	/**
+	 * Allow the volume to connect
+	 * @return bool
+	 */
+	public function connect(){
+
+		$root = $this->stat($this->root);
+		if (!$root) {
+			return $this->setError('Root folder does not exists.');
+		}
+		if (!$root['read'] && !$root['write']) {
+			return $this->setError('Root folder has not read and write permissions.');
+		}
+
+		if( !$root['read'] ){
+			$this->options['URL']     = '';
+			$this->options['tmbURL']  = '';
+			$this->options['tmbPath'] = '';
+			// read only volume
+			array_unshift($this->attributes, array(
+				'pattern' => '/.*/',
+				'read'    => false
+			));
+		}
+		$this->URL      = $this->options['URL'];
+		if ($this->URL && preg_match("|[^/?&=]$|", $this->URL)) {
+			$this->URL .= '/';
+		}
+
+		$this->tmbURL   = !empty($this->options['tmbURL']) ? $this->options['tmbURL'] : '';
+		if ($this->tmbURL && preg_match("|[^/?&=]$|", $this->tmbURL)) {
+			$this->tmbURL .= '/';
+		}
+
+
+		$this->configure();
+		return true;
+	}
+
 	/*********************************************************************/
 	/*                              PUBLIC API                           */
 	/*********************************************************************/
@@ -746,43 +785,6 @@ abstract class FinderVolumeDriver {
 			$this->imgLib = function_exists('gd_info') ? 'gd' : '';
 		}
 
-
-
-
-		/**
-		 * volume root
-		 *
-		 */
-		$root = $this->stat($this->root);
-		if (!$root) {
-			return $this->setError('Root folder does not exists.');
-		}
-		if (!$root['read'] && !$root['write']) {
-			return $this->setError('Root folder has not read and write permissions.');
-		}
-
-		if( !$root['read'] ){
-			$this->options['URL']     = '';
-			$this->options['tmbURL']  = '';
-			$this->options['tmbPath'] = '';
-			// read only volume
-			array_unshift($this->attributes, array(
-				'pattern' => '/.*/',
-				'read'    => false
-			));
-		}
-		$this->URL      = $this->options['URL'];
-		if ($this->URL && preg_match("|[^/?&=]$|", $this->URL)) {
-			$this->URL .= '/';
-		}
-
-		$this->tmbURL   = !empty($this->options['tmbURL']) ? $this->options['tmbURL'] : '';
-		if ($this->tmbURL && preg_match("|[^/?&=]$|", $this->tmbURL)) {
-			$this->tmbURL .= '/';
-		}
-
-
-		$this->configure();
 		return $this->mounted = true;
 	}
 

@@ -55,7 +55,7 @@ abstract class FinderVolumeDriver {
 	 *
 	 * @var string
 	 **/
-	protected $startPath = '';
+	protected $startPath = false;
 
 	/**
 	 * Base URL
@@ -716,6 +716,8 @@ abstract class FinderVolumeDriver {
 		}
 
 		$this->rootName = empty($this->options['alias']) ? $this->_basename($this->root) : $this->options['alias'];
+
+
 		$root = $this->stat($this->root);
 
 		if (!$root) {
@@ -725,24 +727,7 @@ abstract class FinderVolumeDriver {
 			return $this->setError('Root folder has not read and write permissions.');
 		}
 
-		// debug($root);
-
-		if ($root['read']) {
-			// check startPath - path to open by default instead of root
-			if ($this->options['startPath']) {
-				$start = $this->stat($this->options['startPath']);
-				if (!empty($start)
-				&& $start['mime'] == 'directory'
-				&& $start['read']
-				&& empty($start['hidden'])
-				&& $this->_inpath($this->options['startPath'], $this->root)) {
-					$this->startPath = $this->options['startPath'];
-					if (substr($this->startPath, -1, 1) == $this->options['separator']) {
-						$this->startPath = substr($this->startPath, 0, -1);
-					}
-				}
-			}
-		} else {
+		if( !$root['read'] ){
 			$this->options['URL']     = '';
 			$this->options['tmbURL']  = '';
 			$this->options['tmbPath'] = '';
@@ -856,9 +841,31 @@ abstract class FinderVolumeDriver {
 	 *
 	 * @return string
 	 * @author Dmitry (dio) Levashov
-	 **/
-	public function defaultPath() {
-		return $this->encode($this->startPath ? $this->startPath : $this->root);
+	 */
+	public function defaultPath(){
+
+		if( $this->startPath ){
+			return $this->encode($this->startPath);
+		}
+		$this->startPath = $this->root;
+
+
+		// check startPath - path to open by default instead of root
+		if( $this->options['startPath'] ){
+			$start = $this->stat($this->options['startPath']);
+			if (!empty($start)
+			&& $start['mime'] == 'directory'
+			&& $start['read']
+			&& empty($start['hidden'])
+			&& $this->_inpath($this->options['startPath'], $this->root)) {
+				$this->startPath = $this->options['startPath'];
+				if (substr($this->startPath, -1, 1) == $this->options['separator']) {
+					$this->startPath = substr($this->startPath, 0, -1);
+				}
+			}
+		}
+
+		return $this->encode($this->startPath);
 	}
 
 	/**

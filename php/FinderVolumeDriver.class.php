@@ -499,16 +499,6 @@ abstract class FinderVolumeDriver {
 			}
 		}
 
-		// set image manipulation library
-		$type = preg_match('/^(imagick|gd|auto)$/i', $this->options['imgLib'])
-			? strtolower($this->options['imgLib'])
-			: 'auto';
-
-		if (($type == 'imagick' || $type == 'auto') && extension_loaded('imagick')) {
-			$this->imgLib = 'imagick';
-		} else {
-			$this->imgLib = function_exists('gd_info') ? 'gd' : '';
-		}
 
 	}
 
@@ -704,35 +694,10 @@ abstract class FinderVolumeDriver {
 		$this->rootName = empty($this->options['alias']) ? $this->_basename($this->root) : $this->options['alias'];
 
 
-		$root = $this->stat($this->root);
-		if (!$root) {
-			return $this->setError('Root folder does not exists.');
-		}
-		if (!$root['read'] && !$root['write']) {
-			return $this->setError('Root folder has not read and write permissions.');
-		}
-
-		if( !$root['read'] ){
-			$this->options['URL']     = '';
-			$this->options['tmbURL']  = '';
-			$this->options['tmbPath'] = '';
-			// read only volume
-			array_unshift($this->attributes, array(
-				'pattern' => '/.*/',
-				'read'    => false
-			));
-		}
-		$this->URL      = $this->options['URL'];
-		if ($this->URL && preg_match("|[^/?&=]$|", $this->URL)) {
-			$this->URL .= '/';
-		}
-
-		$this->tmbURL   = !empty($this->options['tmbURL']) ? $this->options['tmbURL'] : '';
-		if ($this->tmbURL && preg_match("|[^/?&=]$|", $this->tmbURL)) {
-			$this->tmbURL .= '/';
-		}
-
-
+		/**
+		 * Archiver section
+		 *
+		 */
 		$this->_checkArchivers();
 		// manual control archive types to create
 		if (!empty($this->options['archiveMimes']) && is_array($this->options['archiveMimes'])) {
@@ -767,6 +732,58 @@ abstract class FinderVolumeDriver {
 				}
 			}
 		}
+
+
+		/**
+		 * Set image manipulation library
+		 *
+		 */
+		$type = preg_match('/^(imagick|gd|auto)$/i', $this->options['imgLib'])
+			? strtolower($this->options['imgLib'])
+			: 'auto';
+
+		if (($type == 'imagick' || $type == 'auto') && extension_loaded('imagick')) {
+			$this->imgLib = 'imagick';
+		} else {
+			$this->imgLib = function_exists('gd_info') ? 'gd' : '';
+		}
+
+
+
+
+		/**
+		 * volume root
+		 *
+		 */
+		$root = $this->stat($this->root);
+		if (!$root) {
+			return $this->setError('Root folder does not exists.');
+		}
+		if (!$root['read'] && !$root['write']) {
+			return $this->setError('Root folder has not read and write permissions.');
+		}
+
+		if( !$root['read'] ){
+			$this->options['URL']     = '';
+			$this->options['tmbURL']  = '';
+			$this->options['tmbPath'] = '';
+			// read only volume
+			array_unshift($this->attributes, array(
+				'pattern' => '/.*/',
+				'read'    => false
+			));
+		}
+		$this->URL      = $this->options['URL'];
+		if ($this->URL && preg_match("|[^/?&=]$|", $this->URL)) {
+			$this->URL .= '/';
+		}
+
+		$this->tmbURL   = !empty($this->options['tmbURL']) ? $this->options['tmbURL'] : '';
+		if ($this->tmbURL && preg_match("|[^/?&=]$|", $this->tmbURL)) {
+			$this->tmbURL .= '/';
+		}
+
+
 
 		$this->configure();
 		return $this->mounted = true;

@@ -6,6 +6,7 @@
 ./Finder.history.js
 ./Finder.command.js
 ./Finder.resources.js
+./Finder.mime.js
 ./jquery.dialogfinder.js
 ./i18n/en.js
 ./ui

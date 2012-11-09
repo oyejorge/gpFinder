@@ -727,17 +727,19 @@ class Finder {
 		$files = array($cwd);
 
 		// get folders trees
-		if ($args['tree']) {
-			foreach($this->volumes as $id => $v){
-				$v->connect();
-				if(($tree = $v->tree('', 0, $cwd['hash'])) != false) {
+		if( $args['tree'] ){
+			foreach($this->volumes as $id => $vol){
+				$vol->connect();
+				$tree = $vol->tree('', 0, $cwd['hash']);
+				if( $tree !== false ){
 					$files = array_merge($files, $tree);
 				}
 			}
 		}
 
 		// get current working directory files list and add to $files if not exists in it
-		if (($ls = $volume->scandir($cwd['hash'])) === false) {
+		$ls = $volume->scandir($cwd['hash']);
+		if( $ls === false) {
 			return array('error' => $this->error(self::ERROR_OPEN, $cwd['name'], $volume->error()));
 		}
 

@@ -814,8 +814,6 @@ window.Finder = function(node, opts) {
 			defdone  = !(options.preventDefault || options.preventDone),
 			// options for notify dialog
 			notify   = $.extend({}, options.notify),
-			// do not normalize data - return as is
-			raw      = !!options.raw,
 			// sync files on request fail
 			syncOnFail = options.syncOnFail,
 			// open notify dialog timeout
@@ -834,7 +832,7 @@ window.Finder = function(node, opts) {
 			 * Default success handler.
 			 * Call default data handlers and fire event with command name.
 			 *
-			 * @param Object  normalized response data
+			 * @param Object  response data
 			 * @return void
 			 **/
 			done = function(data) {
@@ -901,10 +899,6 @@ window.Finder = function(node, opts) {
 			 * @return void
 			 **/
 			success = function(response) {
-				if (raw) {
-					return dfrd.resolve(response);
-				}
-
 				if (!response) {
 					return dfrd.reject(['errResponse', 'errDataEmpty'], xhr);
 				} else if (!$.isPlainObject(response)) {
@@ -915,7 +909,6 @@ window.Finder = function(node, opts) {
 					return dfrd.reject('errResponse', xhr);
 				}
 
-				response = self.normalize(response);
 
 				if (!self.api) {
 					self.api    = response.api || 1;
@@ -1809,7 +1802,6 @@ Finder.prototype = {
 		if (!this.validResponse('upload', data)) {
 			return {error : ['errResponse']};
 		}
-		data = this.normalize(data);
 		data.removed = $.map(data.added||[], function(f) { return f.hash; })
 		return data;
 
@@ -2140,45 +2132,6 @@ Finder.prototype = {
 		return this._node.text(name).html();
 	},
 
-	/**
-	 * Cleanup ajax data.
-	 * For old api convert data into new api format
-	 *
-	 * @param  String  command name
-	 * @param  Object  data from backend
-	 * @return Object
-	 */
-	normalize : function(data) {
-		var filter = function(file) {
-
-			if (file && file.hash && file.name && file.mime) {
-				if (file.mime == 'application/x-empty') {
-					file.mime = 'text/plain';
-				}
-				return file;
-			}
-			return null;
-			return file && file.hash && file.name && file.mime ? file : null;
-		};
-
-
-		if (data.files) {
-			data.files = $.map(data.files, filter);
-		}
-		if (data.tree) {
-			data.tree = $.map(data.tree, filter);
-		}
-		if (data.added) {
-			data.added = $.map(data.added, filter);
-		}
-		if (data.changed) {
-			data.changed = $.map(data.changed, filter);
-		}
-		if (data.api) {
-			data.init = true;
-		}
-		return data;
-	},
 
 	/**
 	 * Update sort options

@@ -16,8 +16,6 @@ if( function_exists('date_default_timezone_set') ){
 
 include_once( dirname(__FILE__).DIRECTORY_SEPARATOR.'Finder.class.php' );
 
-
-
 /**
  * Smart logger function
  * Demonstrate how to work with Finder event api
@@ -301,6 +299,7 @@ $opts = array(
  *
  */
 session_start();
+//$_SESSION = array();
 function SaveFinderData($data){
 	$_SESSION['finder_data'] = $data;
 }

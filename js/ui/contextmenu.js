@@ -105,7 +105,7 @@ $.fn.findercontextmenu = function(fm) {
 						sep = true;
 					}
 				})
-			},
+			};
 
 		fm.one('load', function() {
 			fm.bind('contextmenu', function(e) {

@@ -647,8 +647,7 @@ class Finder {
 			}
 		}
 
-		$this->MountVolume( $volume, $driver, $options );
-		if( !$volume->mount($options) ){
+		if( !$this->MountVolume( $volume, $driver, $options ) ){
 			return array('error' => $this->error(self::ERROR_NETMOUNT, $args['host'], implode(' ', $volume->error())));
 		}
 
@@ -661,7 +660,21 @@ class Finder {
 		$netVolumes[]      = $options;
 		$netVolumes        = array_unique($netVolumes);
 		$this->saveNetVolumes($netVolumes);
-		return array('sync' => true);
+
+
+		//add to list of volumes
+		$id = $volume->id();
+		$this->volumes[$id] = $volume;
+
+
+		// simulate open request send open data
+		// data : {cmd : 'open', init : 1, target : cwd, tree : this.ui.tree ? 1 : 0},
+		$args = array();
+		$args['cmd'] = 'open';
+		$args['init'] = 1;
+		$args['target'] = $id;
+		$args['tree'] = 1;
+		return $this->open($args);
 	}
 
 	/**

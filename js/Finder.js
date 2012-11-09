@@ -838,7 +838,13 @@ window.Finder = function(node, opts) {
 			done = function(data) {
 				data.warning && self.error(data.warning);
 
-				cmd == 'open' && open($.extend(true, {}, data));
+				if( cmd == 'netmount' ){
+					cmd = 'open';
+				}
+
+				if( cmd == 'open' ){
+					open($.extend(true, {}, data));
+				}
 
 				// fire some event to update cache/ui
 				data.removed && data.removed.length && self.remove(data);
@@ -1091,11 +1097,7 @@ window.Finder = function(node, opts) {
 		})
 		.done(function(odata, pdata) {
 
-			//alert('here');
-			//self.debug('odata', odata)
-			//self.debug('pdata', pdata)
-
-			var diff = self.diff(odata.files.concat(pdata && pdata.tree ? pdata.tree : []));
+			var diff = self.diff( odata.files.concat(pdata && pdata.tree ? pdata.tree : []) );
 
 			diff.removed.length && self.remove(diff);
 			diff.added.length   && self.add(diff);

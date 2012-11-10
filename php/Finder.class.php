@@ -672,7 +672,7 @@ class Finder {
 		$args = array();
 		$args['cmd'] = 'open';
 		$args['init'] = 1;
-		$args['target'] = $id;
+		$args['target'] = $volume->defaultPath(); //$id;
 		$args['tree'] = 1;
 		return $this->open($args);
 	}

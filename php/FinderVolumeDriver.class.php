@@ -506,6 +506,11 @@ abstract class FinderVolumeDriver {
 	 * @return bool
 	 */
 	public function connect(){
+		static $connected = false;
+
+		if( $connected ){
+			return true;
+		}
 
 		$root = $this->stat($this->root);
 		if (!$root) {
@@ -537,6 +542,7 @@ abstract class FinderVolumeDriver {
 
 
 		$this->configure();
+		$connected = true;
 		return true;
 	}
 

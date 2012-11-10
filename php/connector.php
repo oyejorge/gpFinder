@@ -86,7 +86,7 @@ function logger_before( $cmd, $args, $finder ){
  *
  */
 function upload_check( $event, $args, $finder ){
-	logger_before( $cmd, $args, $finder );
+	logger_before( $event, $args, $finder );
 
 	$files =& $args['FILES']['upload'];
 	if( !is_array($files) || empty($files) ){

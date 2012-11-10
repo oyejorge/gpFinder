@@ -129,8 +129,6 @@ class FinderVolumeFTP extends FinderVolumeDriver {
 		$this->options['separator'] = '/';
 
 		return true;
-		//return $this->connect();
-
 	}
 
 
@@ -174,6 +172,11 @@ class FinderVolumeFTP extends FinderVolumeDriver {
 	 * @author Dmitry (dio) Levashov
 	 */
 	public function connect() {
+		static $connected = false;
+
+		if( $connected ){
+			return true;
+		}
 
 		if (!($this->connect = ftp_connect($this->options['host'], $this->options['port'], $this->options['timeout']))) {
 			return $this->setError('Unable to connect to FTP server '.$this->options['host']);
@@ -195,22 +198,8 @@ class FinderVolumeFTP extends FinderVolumeDriver {
 			return $this->setError('Unable to open root folder.');
 		}
 
-		return parent::connect();
-
-		// check for MLST support
-		$features = ftp_raw($this->connect, 'FEAT');
-		if (!is_array($features)) {
-			$this->umount();
-			return $this->setError('Server does not support command FEAT. wtf? 0_o');
-		}
-
-		foreach ($features as $feat) {
-			if (strpos(trim($feat), 'MLST') === 0) {
-				return true;
-			}
-		}
-
-		return $this->setError('Server does not support command MLST. wtf? 0_o');
+		$connected = parent::connect();
+		return $connected;
 	}
 
 	/*********************************************************************/

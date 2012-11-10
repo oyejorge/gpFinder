@@ -230,6 +230,7 @@ class FinderVolumeFTP extends FinderVolumeDriver {
 		}
 		$stat = array();
 
+		//windows
 		if( $is_windows && preg_match('/([0-9]{2})-([0-9]{2})-([0-9]{2}) +([0-9]{2}):([0-9]{2})(AM|PM) +([0-9]+|<DIR>) +(.+)/', $line, $info) ){
 			if( $info[3] < 70 ){
 				$info[3] += 2000;
@@ -248,6 +249,7 @@ class FinderVolumeFTP extends FinderVolumeDriver {
 			}
 
 
+		//unix
 		}elseif( !$is_windows && $info = preg_split('/[ ]/', $line, 9, PREG_SPLIT_NO_EMPTY) ){
 			$lcount = count($info);
 			if ( $lcount < 8 ){
@@ -256,6 +258,8 @@ class FinderVolumeFTP extends FinderVolumeDriver {
 
 			$stat['perm'] = substr($info[0], 1);
 			$perm = $this->parsePermissions($info[0]);
+			$stat['read']  = $perm['read'];
+			$stat['write'] = $perm['write'];
 
 			if( $lcount == 8 ){
 				sscanf($info[5], '%d-%d-%d', $year, $month, $day);

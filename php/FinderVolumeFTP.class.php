@@ -222,65 +222,97 @@ class FinderVolumeFTP extends FinderVolumeDriver {
 	 *
 	 * @param  string  $raw  line from ftp_rawlist() output
 	 * @return array
-	 * @author Dmitry Levashov
-	 **/
-	protected function parseRaw($raw) {
-		$info = preg_split("/\s+/", $raw, 9);
+	 */
+	function ParseRaw($line){
+		static $is_windows;
+		if( is_null($is_windows) ){
+			$is_windows = stripos( ftp_systype($this->connect), 'win') !== false;
+		}
 		$stat = array();
 
-		if (count($info) < 9 || $info[8] == '.' || $info[8] == '..') {
-			return false;
-		}
-
-		if (!isset($this->ftpOsUnix)) {
-			$this->ftpOsUnix = !preg_match('/\d/', substr($info[0], 0, 1));
-		}
-
-		if ($this->ftpOsUnix) {
-
-			$stat['ts'] = strtotime($info[5].' '.$info[6].' '.$info[7]);
-			if (empty($stat['ts'])) {
-				$stat['ts'] = strtotime($info[6].' '.$info[5].' '.$info[7]);
+		if( $is_windows && preg_match('/([0-9]{2})-([0-9]{2})-([0-9]{2}) +([0-9]{2}):([0-9]{2})(AM|PM) +([0-9]+|<DIR>) +(.+)/', $line, $info) ){
+			if( $info[3] < 70 ){
+				$info[3] += 2000;
+			}else{
+				$info[3] += 1900; // 4digit year fix
 			}
 
-			$name = $info[8];
+			$stat['ts'] = @mktime($info[4] + (strcasecmp($info[6], 'PM') == 0 ? 12 : 0), $info[5], 0, $info[1], $info[2], $info[3]);
+			$stat['name'] = $info[8];
+			if( $info[7] == '<DIR>' ){
+				$stat['mime'] = 'directory';
+				$stat['size'] = 0;
+			}else{
+				$stat['mime'] = $this->mimetype($stat['name']);
+				$stat['size'] = $info[7];
+			}
 
-			if (preg_match('|(.+)\-\>(.+)|', $name, $m)) {
-				$name   = trim($m[1]);
-				$target = trim($m[2]);
-				if (substr($target, 0, 1) != '/') {
+
+		}elseif( !$is_windows && $info = preg_split('/[ ]/', $line, 9, PREG_SPLIT_NO_EMPTY) ){
+			$lcount = count($info);
+			if ( $lcount < 8 ){
+				return false;
+			}
+
+			$stat['perm'] = substr($info[0], 1);
+			$perm = $this->parsePermissions($info[0]);
+
+			if( $lcount == 8 ){
+				sscanf($info[5], '%d-%d-%d', $year, $month, $day);
+				sscanf($info[6], '%d:%d', $hour, $minute);
+				$stat['ts'] = @mktime($hour, $minute, 0, $month, $day, $year);
+				$stat['name'] = $info[7];
+			}else{
+				$month = $info[5];
+				$day = $info[6];
+				if( preg_match('/([0-9]{2}):([0-9]{2})/', $info[7], $l2) ){
+					$year = date("Y");
+					$hour = $l2[1];
+					$minute = $l2[2];
+				}else{
+					$year = $info[7];
+					$hour = 0;
+					$minute = 0;
+				}
+				$stat['ts'] = strtotime( sprintf('%d %s %d %02d:%02d', $day, $month, $year, $hour, $minute) );
+				$stat['name'] = $info[8];
+			}
+
+			//directory
+			if( $info[0]{0} === 'd' ){
+				$stat['mime'] = 'directory';
+				$stat['size'] = 0;
+
+			//symlink
+			}elseif( $info[0]{0} === 'l' ){
+
+
+				$name_parts = explode('->',$stat['name']);
+				$stat['name'] = trim($name_parts[0]);
+				$target = trim($name_parts[0]);
+				if( substr($target, 0, 1) != '/' ){
 					$target = $this->root.'/'.$target;
 				}
 				$target = $this->_normpath($target);
-				$stat['name']  = $name;
-				if ($this->_inpath($target, $this->root)
-				&& ($tstat = $this->stat($target))) {
+				if( $this->_inpath($target, $this->root) && ($tstat = $this->stat($target)) ){
 					$stat['size']  = $tstat['mime'] == 'directory' ? 0 : $info[4];
 					$stat['alias'] = $this->_relpath($target);
 					$stat['thash'] = $tstat['hash'];
 					$stat['mime']  = $tstat['mime'];
 					$stat['read']  = $tstat['read'];
 					$stat['write']  = $tstat['write'];
-				} else {
-
+				}else{
 					$stat['mime']  = 'symlink-broken';
 					$stat['read']  = false;
 					$stat['write'] = false;
 					$stat['size']  = 0;
-
 				}
-				return $stat;
-			}
 
-			$perm = $this->parsePermissions($info[0]);
-			$stat['name']  = $name;
-			$stat['mime']  = substr(strtolower($info[0]), 0, 1) == 'd' ? 'directory' : $this->mimetype($stat['name']);
-			$stat['size']  = $stat['mime'] == 'directory' ? 0 : $info[4];
-			$stat['read']  = $perm['read'];
-			$stat['write'] = $perm['write'];
-			$stat['perm']  = substr($info[0], 1);
-		} else {
-			die('Windows ftp servers not supported yet');
+			//file
+			}else{
+				$stat['mime'] = $this->mimetype($stat['name']);
+				$stat['size'] = $info[4];
+			}
 		}
 
 		return $stat;
@@ -319,24 +351,29 @@ class FinderVolumeFTP extends FinderVolumeDriver {
 	protected function cacheDir($path) {
 		$this->dirsCache[$path] = array();
 
-		if (preg_match('/\s|\'|\"/', $path)) {
-			foreach (ftp_nlist($this->connect, $path) as $p) {
+		if( preg_match('/\s|\'|\"/', $path) ){
+			$list = ftp_nlist($this->connect, $path);
+			foreach($list as $p) {
 				$p = $path.'/'.$p;
-				if (($stat = $this->_stat($p)) &&empty($stat['hidden'])) {
+				if (($stat = $this->_stat($p)) && empty($stat['hidden'])) {
 					// $files[] = $stat;
 					$this->dirsCache[$path][] = $p;
 				}
 			}
 			return;
 		}
-		foreach(ftp_rawlist($this->connect, $path) as $raw) {
-			if(($stat = $this->parseRaw($raw))) {
-				$p    = $path.'/'.$stat['name'];
-				$stat = $this->updateCache($p, $stat);
-				if (empty($stat['hidden'])) {
-					// $files[] = $stat;
-					$this->dirsCache[$path][] = $p;
-				}
+
+		$list = ftp_rawlist($this->connect, $path);
+		foreach($list as $raw) {
+			$stat = $this->parseRaw($raw);
+			if( !$stat ){
+				continue;
+			}
+			$p    = $path.'/'.$stat['name'];
+			$stat = $this->updateCache($p, $stat);
+			if (empty($stat['hidden'])) {
+				// $files[] = $stat;
+				$this->dirsCache[$path][] = $p;
 			}
 		}
 	}

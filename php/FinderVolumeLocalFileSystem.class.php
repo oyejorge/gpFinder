@@ -598,16 +598,11 @@ class FinderVolumeLocalFileSystem extends FinderVolumeDriver {
 			$arcs['extract']['application/x-bzip2'] = array( 'function'=>'PhpExtract', 'ext'=> 'tbz' );
 		}
 
-		$this->archivers = $arcs;
-		return;
-
-
-
 		if (!function_exists('exec')) {
-			$this->options['archivers'] = $this->options['archive'] = array();
+			$this->archivers = $arcs;
+			// $this->options['archivers'] = $this->options['archive'] = array();
 			return;
 		}
-
 
 		// 7z supports multiple types, but isn't the ideal either
 		// these setting will be overwritten if a better option is found

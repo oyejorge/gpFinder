@@ -1,4 +1,9 @@
-2012-11-02  gpFinder 2.0b1
+2012-11-11  gpFinder 2.0rc2
+	* Tar & Zip archive without exec()
+	* Ftp without MLST
+	* netmount returns open information instead of prompting sync
+
+2012-11-02  gpFinder 2.0rc1
 	* Added saveData and returnData configuration options
 	* Added MountVolume() method
 	* File inclusion handled by Finder.class.php

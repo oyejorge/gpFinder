@@ -574,27 +574,27 @@ class FinderVolumeLocalFileSystem extends FinderVolumeDriver {
 			);
 
 		//.tar
-		//$arcs['create']['application/x-tar']  = array( 'function'=>'CreateTar' );
-		$arcs['extract']['application/x-tar'] = array( 'function'=>'PhpExtract', 'args'=> array('type'=> 'tar') );
+		//$arcs['create']['application/x-tar']  = array( 'function'=>'PhpCompress' );
+		$arcs['extract']['application/x-tar'] = array( 'function'=>'PhpExtract', 'type'=> 'tar' );
 
 
 	    if( function_exists('gzopen') ){
 
 			//.zip
-			//$arcs['create']['application/zip']  = array( 'function'=>'CreateZip' );
-			$arcs['extract']['application/zip'] = array( 'function'=>'PhpExtract', 'args'=> array('type'=> 'zip') );
+			$arcs['create']['application/zip']  = array( 'function'=>'PhpCompress' );
+			$arcs['extract']['application/zip'] = array( 'function'=>'PhpExtract', 'type'=> 'zip' );
 
 
 			// .tar.gz
-			//$arcs['create']['application/x-gzip']  = array( 'function'=>'CreateTar' );
-			$arcs['extract']['application/x-gzip'] = array( 'function'=>'PhpExtract', 'args'=> array('type'=> 'tgz') );
+			//$arcs['create']['application/x-gzip']  = array( 'function'=>'PhpCompress' );
+			$arcs['extract']['application/x-gzip'] = array( 'function'=>'PhpExtract', 'type'=> 'tgz' );
 
 		}
 
 		// .tar.bz
 		if( function_exists('bzopen') ){
-			$arcs['create']['application/x-bzip2']  = array( 'function'=>'CreateTar' );
-			$arcs['extract']['application/x-bzip2'] = array( 'function'=>'PhpExtract', 'args'=> array('type'=> 'tbz') );
+			//$arcs['create']['application/x-bzip2']  = array( 'function'=>'PhpCompress' );
+			$arcs['extract']['application/x-bzip2'] = array( 'function'=>'PhpExtract', 'type'=> 'tbz' );
 		}
 
 		$this->archivers = $arcs;
@@ -826,14 +826,15 @@ class FinderVolumeLocalFileSystem extends FinderVolumeDriver {
 	/**
 	 * Extract files from an archive using pclzip.lib.php or Archive_Tar.php
 	 *
-	 * @param  string  $path  archive path
+	 * @param string  $path  archive path
+	 * @param array $archiver
 	 * @return bool
 	 */
-	protected function PhpExtract( $path, $args ){
+	protected function PhpExtract( $path, $archiver ){
 
 		// create archive object
 		@ini_set('memory_limit', '256M');
-		switch( $args['type'] ){
+		switch( $archiver['type'] ){
 			case 'zip':
 				include('pclzip.lib.php');
 				$archive = new PclZip($path);
@@ -872,7 +873,7 @@ class FinderVolumeLocalFileSystem extends FinderVolumeDriver {
 
 
 		// extract
-		switch( $args['type'] ){
+		switch( $archiver['type'] ){
 			case 'zip':
 				if( !$archive->extract($dest,$remove_path) ){
 					return $this->setError('Extract Failed');
@@ -949,6 +950,14 @@ class FinderVolumeLocalFileSystem extends FinderVolumeDriver {
 	}
 
 
+	/**
+	 * Create archive using php function and return the path
+	 *
+	 */
+	protected function PhpCompress($dir, $files, $name ){
+
+
+	}
 
 	/**
 	 * Create archive and return its path

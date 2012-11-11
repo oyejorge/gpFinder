@@ -1623,8 +1623,7 @@ abstract class FinderVolumeDriver {
 		$this->clearcache();
 
 		if( isset($archiver['function']) ){
-			$archiver += array('args'=>array());
-			$path = call_user_func( array($this,$archiver['function']), $path, $archiver['args'] );
+			$path = call_user_func( array($this,$archiver['function']), $path, $archiver );
 		}else{
 			$path = $this->_extract($path, $archiver);
 		}
@@ -1677,7 +1676,20 @@ abstract class FinderVolumeDriver {
 		$name = (count($files) == 1 ? $files[0] : 'Archive').'.'.$archiver['ext'];
 		$name = $this->uniqueName($dir, $name, '');
 		$this->clearcache();
-		return ($path = $this->_archive($dir, $files, $name, $archiver)) ? $this->stat($path) : false;
+
+
+		if( isset($archiver['function']) ){
+			$path = call_user_func( array($this,$archiver['function']), $dir, $files, $name, $archiver );
+		}else{
+			$path = $this->_archive($dir, $files, $name, $archiver);
+		}
+
+		if( !$path ){
+			return $this->error('errArchive');
+		}
+
+
+		return $this->stat($path);
 	}
 
 	/**

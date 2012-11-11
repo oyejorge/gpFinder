@@ -973,7 +973,7 @@ window.Finder = function(node, opts) {
 		// quiet abort not completed "open" requests
 		if (cmd == 'open') {
 			while ((_xhr = queue.pop())) {
-				if( (_xhr.state() != 'resolved') && (jqxhr.state() != 'rejected') ){
+				if( (_xhr.state() != 'resolved') && (_xhr.state() != 'rejected') ){
 					_xhr.quiet = true;
 					_xhr.abort();
 				}

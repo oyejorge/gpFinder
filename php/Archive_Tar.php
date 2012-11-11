@@ -92,7 +92,7 @@ class Archive_Tar extends PEAR
     /**
      * @var object PEAR_Error object
      */
-    var $error_object=null; 
+    var $error_object=null;
 
     // {{{ constructor
     /**
@@ -649,14 +649,14 @@ class Archive_Tar extends PEAR
     // {{{ _error()
     function _error($p_message)
     {
-        $this->error_object = &$this->raiseError($p_message); 
+        $this->error_object = &$this->raiseError($p_message);
     }
     // }}}
 
     // {{{ _warning()
     function _warning($p_message)
     {
-        $this->error_object = &$this->raiseError($p_message); 
+        $this->error_object = &$this->raiseError($p_message);
     }
     // }}}
 
@@ -1110,12 +1110,12 @@ class Archive_Tar extends PEAR
         $v_magic = 'ustar ';
 
         $v_version = ' ';
-        
+
         if (function_exists('posix_getpwuid'))
         {
           $userinfo = posix_getpwuid($v_info[4]);
           $groupinfo = posix_getgrgid($v_info[5]);
-          
+
           $v_uname = $userinfo['name'];
           $v_gname = $groupinfo['name'];
         }
@@ -1199,7 +1199,7 @@ class Archive_Tar extends PEAR
         {
           $userinfo = posix_getpwuid($p_uid);
           $groupinfo = posix_getgrgid($p_gid);
-          
+
           $v_uname = $userinfo['name'];
           $v_gname = $groupinfo['name'];
         }
@@ -1208,7 +1208,7 @@ class Archive_Tar extends PEAR
           $v_uname = '';
           $v_gname = '';
         }
-        
+
         $v_devmajor = '';
 
         $v_devminor = '';
@@ -1347,7 +1347,7 @@ class Archive_Tar extends PEAR
                          "a8checksum/a1typeflag/a100link/a6magic/a2version/" .
                          "a32uname/a32gname/a8devmajor/a8devminor/a131prefix",
                          $v_binary_data);
-                         
+
         if (strlen($v_data["prefix"]) > 0) {
             $v_data["filename"] = "$v_data[prefix]/$v_data[filename]";
         }
@@ -1590,13 +1590,15 @@ class Archive_Tar extends PEAR
       }
 
       // ----- Look if this file need to be extracted
-      if (($v_extract_file) && (!$v_listing))
-      {
-        if (($p_remove_path != '')
-            && (substr($v_header['filename'], 0, $p_remove_path_size)
-			    == $p_remove_path))
-          $v_header['filename'] = substr($v_header['filename'],
-		                                 $p_remove_path_size);
+      if( ($v_extract_file) && (!$v_listing) ){
+        if( ($p_remove_path != '') && (substr($v_header['filename'].'/', 0, $p_remove_path_size) == $p_remove_path) ){
+          $v_header['filename'] = substr($v_header['filename'], $p_remove_path_size);
+
+          //skip files that match $p_remove_path
+          if( $v_header['filename'] == '' ){
+			  continue;
+		  }
+        }
         if (($p_path != './') && ($p_path != '/')) {
           while (substr($p_path, -1) == '/')
             $p_path = substr($p_path, 0, strlen($p_path)-1);
@@ -1673,7 +1675,7 @@ class Archive_Tar extends PEAR
             }
 
             @fclose($v_dest_file);
-            
+
             if ($p_preserve) {
                 @chown($v_header['filename'], $v_header['uid']);
                 @chgrp($v_header['filename'], $v_header['gid']);
@@ -1695,7 +1697,7 @@ class Archive_Tar extends PEAR
                             .'does not exist. Archive may be corrupted.');
               return false;
           }
-          
+
           $filesize = filesize($v_header['filename']);
           if ($filesize != $v_header['size']) {
               $this->_error('Extracted file '.$v_header['filename']
@@ -1774,7 +1776,7 @@ class Archive_Tar extends PEAR
 
             if ($this->_compress_type == 'gz') {
                 $end_blocks = 0;
-                
+
                 while (!@gzeof($v_temp_tar)) {
                     $v_buffer = @gzread($v_temp_tar, 512);
                     if ($v_buffer == ARCHIVE_TAR_END_BLOCK || strlen($v_buffer) == 0) {
@@ -1796,7 +1798,7 @@ class Archive_Tar extends PEAR
             }
             elseif ($this->_compress_type == 'bz2') {
                 $end_blocks = 0;
-                
+
                 while (strlen($v_buffer = @bzread($v_temp_tar, 512)) > 0) {
                     if ($v_buffer == ARCHIVE_TAR_END_BLOCK || strlen($v_buffer) == 0) {
                         $end_blocks++;
@@ -1938,11 +1940,11 @@ class Archive_Tar extends PEAR
                 }
             }
         }
-        
+
         if (defined('OS_WINDOWS') && OS_WINDOWS) {
             $v_result = strtr($v_result, '\\', '/');
         }
-        
+
         return $v_result;
     }
 

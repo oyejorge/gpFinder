@@ -568,12 +568,27 @@ class FinderVolumeLocalFileSystem extends FinderVolumeDriver {
 	 */
 	protected function _checkArchivers() {
 
+		$arcs = array(
+			'create'  => array(),
+			'extract' => array()
+			);
+
 
 		//pclzip
 	    if( function_exists('gzopen') ){
 			$arcs['create']['application/zip']  = array('function'=>'CreateZip');
 			$arcs['extract']['application/zip'] = array('function'=>'ExtractZip');
 		}
+
+		//tar
+		$arcs['create']['application/x-tar']  = array('function'=>'CreateTar');
+		$arcs['extract']['application/x-tar'] = array('function'=>'ExtractTar');
+
+
+
+
+
+
 		$this->archivers = $arcs;
 		return;
 
@@ -583,10 +598,6 @@ class FinderVolumeLocalFileSystem extends FinderVolumeDriver {
 			$this->options['archivers'] = $this->options['archive'] = array();
 			return;
 		}
-		$arcs = array(
-			'create'  => array(),
-			'extract' => array()
-			);
 
 		//exec('tar --version', $o, $ctar);
 		$this->procExec('tar --version', $o, $ctar);
@@ -818,32 +829,26 @@ class FinderVolumeLocalFileSystem extends FinderVolumeDriver {
 	}
 
 	/**
-	 * Extract files from zip archive
+	 * Extract files from a zip archive using pclzip.lib.php
 	 *
 	 * @param  string  $path  archive path
 	 * @return bool
 	 */
 	protected function ExtractZip($path){
 
+		// create archive object
 		include('pclzip.lib.php');
 		$archive = new PclZip($path);
-
 		$list = $archive->listContent();
 		if( !count($list) ){
 			return $this->setError('Empty Archive');
 		}
 
-		// determine if we need to create a folder for the files in the archive
-		$root_names = array();
-		foreach($list as $file){
-			$filename = ltrim( str_replace('\\','/',$file['filename']) ,' 	/' );
-			$parts = explode('/',$filename);
-			$root_names[] = array_shift($parts);
-		}
-		$root_names = array_unique($root_names);
 
-		// destination path
+		// destination path .. determine if we need to create a folder for the files in the archive
+		$root_names = $this->ArchiveRoots($list);
 		$extract_args = array();
+		$remove_path = '';
 		if( count($root_names) > 1 ){
 			$dest = $this->ArchiveDestination( $path );
 		}elseif( count($list) == 1 ){
@@ -851,20 +856,61 @@ class FinderVolumeLocalFileSystem extends FinderVolumeDriver {
 			$dest = $this->ArchiveDestination( $path );//not ideal, but the listing is updated this way
 		}else{
 			$name = array_shift($root_names);
-			$extract_args[] = PCLZIP_OPT_REMOVE_PATH;
-			$extract_args[] = $name;
+			$remove_path = $name;
 			$dest = $this->IncrementName( dirname($path), $name );
 		}
 
-		// extract
-		$extract_args[] = PCLZIP_OPT_PATH;
-		$extract_args[] = $dest;
 
-		if( !call_user_func_array( array($archive,'extract'), $extract_args ) ){
+		// extract
+		if( $archive->extract($dest,$remove_path) ){
 			return $this->setError('Extract Failed');
 		}
 
+		//if( !call_user_func_array( array($archive,'extract'), $extract_args ) ){
+		//	return $this->setError('Extract Failed');
+		//}
+
 		return $dest;
+	}
+
+
+	/**
+	 * Return a list of root paths from an archive list
+	 * Helpful in determining if we need to create a folder for the files in the archive
+	 * @param array $list List of files in archive
+	 *
+	 */
+	protected ArchiveRoots( &$list ){
+		$root_names = array();
+		foreach($list as $file){
+			$filename = ltrim( str_replace('\\','/',$file['filename']) ,' 	/' );
+			$parts = explode('/',$filename);
+			$root_names[] = array_shift($parts);
+		}
+		return array_unique($root_names);
+	}
+
+	/**
+	 * Extract files from a tar archive using Archive_Tar.php
+	 *
+	 * @param  string  $path  archive path
+	 * @return bool
+	 */
+	protected function ExtractTar( $path ){
+
+		// create archive object
+		@ini_set('memory_limit', '256M');
+		include('Archive_Tar.php');
+		$archive = new Archive_Tar( $path );
+		$list = $archive->listContent();
+		if( !count($list) ){
+			return $this->setError('Empty Archive');
+		}
+
+		print_r( $list );
+
+
+		die('extract tar callled');
 	}
 
 	/**

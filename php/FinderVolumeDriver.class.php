@@ -3028,13 +3028,13 @@ abstract class FinderVolumeDriver {
 	 * Execute shell command
 	 *
 	 * @param  string  $command       command line
-	 * @param  array   $output        stdout strings
 	 * @param  array   $return_var    process exit code
+	 * @param  array   $output        stdout strings
 	 * @param  array   $error_output  stderr strings
 	 * @return int     exit code
 	 * @author Alexey Sukhotin
 	 **/
-	protected function procExec($command , array &$output = null, &$return_var = -1, array &$error_output = null) {
+	protected function procExec($command , &$return_var = -1, array &$output = null, array &$error_output = null) {
 
 		$descriptorspec = array(
 			0 => array("pipe", "r"),  // stdin

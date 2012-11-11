@@ -573,7 +573,6 @@ class FinderVolumeLocalFileSystem extends FinderVolumeDriver {
 			'extract' => array()
 			);
 
-
 		//.tar
 		//$arcs['create']['application/x-tar']  = array( 'function'=>'CreateTar' );
 		$arcs['extract']['application/x-tar'] = array( 'function'=>'PhpExtract', 'args'=> array('type'=> 'tar') );
@@ -598,15 +597,8 @@ class FinderVolumeLocalFileSystem extends FinderVolumeDriver {
 			$arcs['extract']['application/x-bzip2'] = array( 'function'=>'PhpExtract', 'args'=> array('type'=> 'tbz') );
 		}
 
-
-
-
-
-
-
 		$this->archivers = $arcs;
 		return;
-
 
 
 		if (!function_exists('exec')) {
@@ -614,56 +606,44 @@ class FinderVolumeLocalFileSystem extends FinderVolumeDriver {
 			return;
 		}
 
-		//exec('tar --version', $o, $ctar);
-		$this->procExec('tar --version', $o, $ctar);
-
+		$this->procExec('tar --version', $ctar);
 		if ($ctar == 0) {
 			$arcs['create']['application/x-tar']  = array('cmd' => 'tar', 'argc' => '-cf', 'ext' => 'tar');
 			$arcs['extract']['application/x-tar'] = array('cmd' => 'tar', 'argc' => '-xf', 'ext' => 'tar');
-			//$test = exec('gzip --version', $o, $c);
-			unset($o);
-			$test = $this->procExec('gzip --version', $o, $c);
 
+			$test = $this->procExec('gzip --version', $c);
 			if ($c == 0) {
 				$arcs['create']['application/x-gzip']  = array('cmd' => 'tar', 'argc' => '-czf', 'ext' => 'tgz');
 				$arcs['extract']['application/x-gzip'] = array('cmd' => 'tar', 'argc' => '-xzf', 'ext' => 'tgz');
 			}
-			unset($o);
-			//$test = exec('bzip2 --version', $o, $c);
-			$test = $this->procExec('bzip2 --version', $o, $c);
+
+			$test = $this->procExec('bzip2 --version', $c);
 			if ($c == 0) {
 				$arcs['create']['application/x-bzip2']  = array('cmd' => 'tar', 'argc' => '-cjf', 'ext' => 'tbz');
 				$arcs['extract']['application/x-bzip2'] = array('cmd' => 'tar', 'argc' => '-xjf', 'ext' => 'tbz');
 			}
 		}
-		unset($o);
-		//exec('zip --version', $o, $c);
-		$this->procExec('zip -v', $o, $c);
+		$this->procExec('zip -v', $c);
 		if ($c == 0) {
 			$arcs['create']['application/zip']  = array('cmd' => 'zip', 'argc' => '-r9', 'ext' => 'zip');
 		}
-		unset($o);
-		$this->procExec('unzip --help', $o, $c);
+
+		$this->procExec('unzip --help', $c);
 		if ($c == 0) {
 			$arcs['extract']['application/zip'] = array('cmd' => 'unzip', 'argc' => '',  'ext' => 'zip');
 		}
-		unset($o);
-		//exec('rar --version', $o, $c);
-		$this->procExec('rar --version', $o, $c);
+
+		$this->procExec('rar --version', $c);
 		if ($c == 0 || $c == 7) {
 			$arcs['create']['application/x-rar']  = array('cmd' => 'rar', 'argc' => 'a -inul', 'ext' => 'rar');
 			$arcs['extract']['application/x-rar'] = array('cmd' => 'rar', 'argc' => 'x -y',    'ext' => 'rar');
 		} else {
-			unset($o);
-			//$test = exec('unrar', $o, $c);
-			$test = $this->procExec('unrar', $o, $c);
+			$test = $this->procExec('unrar', $c);
 			if ($c==0 || $c == 7) {
 				$arcs['extract']['application/x-rar'] = array('cmd' => 'unrar', 'argc' => 'x -y', 'ext' => 'rar');
 			}
 		}
-		unset($o);
-		//exec('7za --help', $o, $c);
-		$this->procExec('7za --help', $o, $c);
+		$this->procExec('7za --help', $c);
 		if ($c == 0) {
 			$arcs['create']['application/x-7z-compressed']  = array('cmd' => '7za', 'argc' => 'a', 'ext' => '7z');
 			$arcs['extract']['application/x-7z-compressed'] = array('cmd' => '7za', 'argc' => 'e -y', 'ext' => '7z');
@@ -711,7 +691,7 @@ class FinderVolumeLocalFileSystem extends FinderVolumeDriver {
 		$dir = $this->_dirname($path);
 		chdir($dir);
 		$cmd = $arc['cmd'].' '.$arc['argc'].' '.escapeshellarg($this->_basename($path));
-		$this->procExec($cmd, $o, $c);
+		$this->procExec($cmd, $c);
 		chdir($cwd);
 	}
 
@@ -988,7 +968,7 @@ class FinderVolumeLocalFileSystem extends FinderVolumeDriver {
 		$files = array_map('escapeshellarg', $files);
 
 		$cmd = $arc['cmd'].' '.$arc['argc'].' '.escapeshellarg($name).' '.implode(' ', $files);
-		$this->procExec($cmd, $o, $c);
+		$this->procExec($cmd, $c);
 		chdir($cwd);
 
 		$path = $dir.DIRECTORY_SEPARATOR.$name;

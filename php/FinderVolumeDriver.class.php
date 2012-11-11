@@ -1794,8 +1794,6 @@ abstract class FinderVolumeDriver {
 	 **/
 	protected function setError($error) {
 
-		$this->error = array();
-
 		foreach (func_get_args() as $err) {
 			if (is_array($err)) {
 				$this->error = array_merge($this->error, $err);

@@ -68,7 +68,7 @@ class FinderVolumeLocalFileSystem extends FinderVolumeDriver {
 			&& ($test_path = str_replace( array('\\','/'), DIRECTORY_SEPARATOR, $this->options['tmbPath']))
 			&& (strpos($test_path,DIRECTORY_SEPARATOR) === false)
 			){
-				$this->options['tmbPath'] = $this->root.DIRECTORY_SEPARATOR.$this->options['tmbPath'];
+				$this->options['tmbPath'] = $this->_joinPath( $this->root, $this->options['tmbPath']);
 				$this->options['tmbPath'] = $this->_normpath($this->options['tmbPath']);
 		}
 
@@ -86,7 +86,7 @@ class FinderVolumeLocalFileSystem extends FinderVolumeDriver {
 
 		// check quarantine dir
 		if (!empty($this->options['quarantine'])) {
-			$this->quarantine = $this->root.DIRECTORY_SEPARATOR.$this->options['quarantine'];
+			$this->quarantine = $this->_joinPath( $this->root, $this->options['quarantine'] );
 			if ((!is_dir($this->quarantine) && !$this->_mkdir($this->root, $this->options['quarantine'])) || !is_writable($this->quarantine)) {
 				$this->archivers['extract'] = array();
 				$this->disabled[] = 'extract';
@@ -196,7 +196,7 @@ class FinderVolumeLocalFileSystem extends FinderVolumeDriver {
 	 * @author Dmitry (dio) Levashov
 	 **/
 	protected function _abspath($path) {
-		return $path == DIRECTORY_SEPARATOR ? $this->root : $this->root.DIRECTORY_SEPARATOR.$path;
+		return $path == DIRECTORY_SEPARATOR ? $this->root : $this->_joinPath( $this->root, $path );
 	}
 
 	/**
@@ -296,7 +296,7 @@ class FinderVolumeLocalFileSystem extends FinderVolumeDriver {
 		if (($dir = dir($path))) {
 			$dir = dir($path);
 			while (($entry = $dir->read()) !== false) {
-				$p = $dir->path.DIRECTORY_SEPARATOR.$entry;
+				$p = $this->_joinPath( $dir->path, $entry);
 				if ($entry != '.' && $entry != '..' && is_dir($p) && !$this->attr($p, 'hidden')) {
 					$dir->close();
 					return true;
@@ -337,7 +337,7 @@ class FinderVolumeLocalFileSystem extends FinderVolumeDriver {
 		}
 
 		if (substr($target, 0, 1) != DIRECTORY_SEPARATOR) {
-			$target = dirname($path).DIRECTORY_SEPARATOR.$target;
+			$target = $this->_joinPath( dirname($path), $target );
 		}
 
 		$atarget = realpath($target);
@@ -347,7 +347,7 @@ class FinderVolumeLocalFileSystem extends FinderVolumeDriver {
 		}
 
 		if( $this->_inpath($atarget, $this->aroot) ){
-			return $this->_normpath($this->root.DIRECTORY_SEPARATOR.substr($atarget, strlen($this->aroot)+1));
+			return $this->_normpath( $this->_joinPath( $this->root, substr($atarget, strlen($this->aroot)+1)) );
 		}
 
 		return false;
@@ -365,7 +365,7 @@ class FinderVolumeLocalFileSystem extends FinderVolumeDriver {
 
 		foreach (scandir($path) as $name) {
 			if ($name != '.' && $name != '..') {
-				$files[] = $path.DIRECTORY_SEPARATOR.$name;
+				$files[] = $this->_joinPath( $path, $name );
 			}
 		}
 		return $files;
@@ -405,7 +405,7 @@ class FinderVolumeLocalFileSystem extends FinderVolumeDriver {
 	 * @author Dmitry (dio) Levashov
 	 **/
 	protected function _mkdir($path, $name) {
-		$path = $path.DIRECTORY_SEPARATOR.$name;
+		$path = $this->_joinPath( $path, $name);
 
 		if (@mkdir($path)) {
 			@chmod($path, $this->options['dirMode']);
@@ -424,7 +424,7 @@ class FinderVolumeLocalFileSystem extends FinderVolumeDriver {
 	 * @author Dmitry (dio) Levashov
 	 **/
 	protected function _mkfile($path, $name) {
-		$path = $path.DIRECTORY_SEPARATOR.$name;
+		$path = $this->_joinPath( $path, $name);
 
 		if (($fp = @fopen($path, 'w'))) {
 			@fclose($fp);
@@ -444,7 +444,7 @@ class FinderVolumeLocalFileSystem extends FinderVolumeDriver {
 	 * @author Dmitry (dio) Levashov
 	 **/
 	protected function _symlink($source, $targetDir, $name) {
-		return @symlink($source, $targetDir.DIRECTORY_SEPARATOR.$name);
+		return @symlink($source, $this->_joinPath( $targetDir, $name) );
 	}
 
 	/**
@@ -457,7 +457,7 @@ class FinderVolumeLocalFileSystem extends FinderVolumeDriver {
 	 * @author Dmitry (dio) Levashov
 	 **/
 	protected function _copy($source, $targetDir, $name) {
-		return copy($source, $targetDir.DIRECTORY_SEPARATOR.$name);
+		return copy($source, $this->_joinPath( $targetDir, $name) );
 	}
 
 	/**
@@ -471,7 +471,7 @@ class FinderVolumeLocalFileSystem extends FinderVolumeDriver {
 	 * @author Dmitry (dio) Levashov
 	 **/
 	protected function _move($source, $targetDir, $name) {
-		$target = $targetDir.DIRECTORY_SEPARATOR.$name;
+		$target = $this->_joinPath( $targetDir, $name);
 		return @rename($source, $target) ? $target : false;
 	}
 
@@ -508,7 +508,7 @@ class FinderVolumeLocalFileSystem extends FinderVolumeDriver {
 	 * @author Dmitry (dio) Levashov
 	 **/
 	protected function _save($fp, $dir, $name, $mime, $w, $h) {
-		$path = $dir.DIRECTORY_SEPARATOR.$name;
+		$path = $this->_joinPath( $dir, $name );
 
 		if (!($target = @fopen($path, 'wb'))) {
 			return false;
@@ -692,7 +692,7 @@ class FinderVolumeLocalFileSystem extends FinderVolumeDriver {
 		if (is_dir($path)) {
 			foreach (scandir($path) as $name) {
 				if ($name != '.' && $name != '..') {
-					$p = $path.DIRECTORY_SEPARATOR.$name;
+					$p = $this->_joinPath( $path, $name );
 					if (is_link($p) || !$this->nameAccepted($name)) {
 						return true;
 					}
@@ -723,8 +723,8 @@ class FinderVolumeLocalFileSystem extends FinderVolumeDriver {
 	protected function _extract($path, $arc){
 
 		if ($this->quarantine) {
-			$dir     = $this->quarantine.DIRECTORY_SEPARATOR.str_replace(' ', '_', microtime()).basename($path);
-			$archive = $dir.DIRECTORY_SEPARATOR.basename($path);
+			$dir     = $this->_joinPath( $this->quarantine, str_replace(' ', '_', microtime()).basename($path) );
+			$archive = $this->_joinPath( $dir, basename($path) );
 
 			if (!@mkdir($dir)) {
 				return false;
@@ -775,7 +775,7 @@ class FinderVolumeLocalFileSystem extends FinderVolumeDriver {
 			// archive contains one item - extract in archive dir
 			if (count($ls) == 1) {
 				$this->_unpack($path, $arc);
-				$result = dirname($path).DIRECTORY_SEPARATOR.$ls[0];
+				$result = $this->_joinPath( dirname($path), $ls[0]);
 
 
 			} else {
@@ -785,13 +785,13 @@ class FinderVolumeLocalFileSystem extends FinderVolumeDriver {
 				if (preg_match('/\.((tar\.(gz|bz|bz2|z|lzo))|cpio\.gz|ps\.gz|xcf\.(gz|bz2)|[a-z0-9]{1,4})$/i', $name, $m)) {
 					$name = substr($name, 0,  strlen($name)-strlen($m[0]));
 				}
-				$test = dirname($path).DIRECTORY_SEPARATOR.$name;
+				$test = $this->_joinPath( dirname($path), $name );
 				if (file_exists($test) || is_link($test)) {
 					$name = $this->uniqueName(dirname($path), $name, '-', false);
 				}
 
-				$result  = dirname($path).DIRECTORY_SEPARATOR.$name;
-				$archive = $result.DIRECTORY_SEPARATOR.basename($path);
+				$result  = $this->_joinPath( dirname($path), $name);
+				$archive = $this->_joinPath( $result, basename($path) );
 
 				if (!$this->_mkdir(dirname($path), $name) || !copy($path, $archive)) {
 					return false;
@@ -916,14 +916,14 @@ class FinderVolumeLocalFileSystem extends FinderVolumeDriver {
 			$ext = ltrim($ext,'.').'.';
 		}
 
-		$dest = $dir.DIRECTORY_SEPARATOR.$name.$ext;
+		$dest = $this->_joinPath( $dir, $name.$ext);
 		if( !file_exists($dest) && !is_link($dest) ){
 			return $dest;
 		}
 
 		$i = 0;
 		do{
-			$dest = $dir.DIRECTORY_SEPARATOR.$name.'-'.$i.$ext;
+			$dest = $this->_joinPath( $dir, $name.'-'.$i.$ext);
 			$i++;
 		}while( file_exists($dest) || is_link($dest) );
 
@@ -943,12 +943,12 @@ class FinderVolumeLocalFileSystem extends FinderVolumeDriver {
 	protected function PhpCompress($dir, $files, $name, $archiver ){
 
 		@ini_set('memory_limit', '256M');
-		$path = $dir.DIRECTORY_SEPARATOR.$name;
+		$path = $this->_joinPath( $dir, $name );
 
 		//format the list
 		$list = array();
 		foreach($files as $file){
-			$list[] = $dir.DIRECTORY_SEPARATOR.$file;
+			$list[] = $this->_joinPath( $dir, $file );
 		}
 
 		// create archive object
@@ -998,7 +998,7 @@ class FinderVolumeLocalFileSystem extends FinderVolumeDriver {
 		$this->procExec($cmd, $c);
 		chdir($cwd);
 
-		$path = $dir.DIRECTORY_SEPARATOR.$name;
+		$path = $this->_joinPath( $dir, $name );
 		return file_exists($path) ? $path : false;
 	}
 

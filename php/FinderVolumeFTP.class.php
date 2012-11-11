@@ -741,7 +741,7 @@ class FinderVolumeFTP extends FinderVolumeDriver {
 
 		foreach (ftp_rawlist($this->connect, $path) as $str) {
 			if (($stat = $this->parseRaw($str))) {
-				$files[] = $path.DIRECTORY_SEPARATOR.$stat['name'];
+				$files[] = $this->joinPath( $path, $stat['name'] );
 			}
 		}
 
@@ -759,7 +759,7 @@ class FinderVolumeFTP extends FinderVolumeDriver {
 	protected function _fopen($path, $mode='rb') {
 
 		if ($this->tmp) {
-			$local = $this->tmp.DIRECTORY_SEPARATOR.md5($path);
+			$local = $this->_joinPath( $this->tmp, md5($path) );
 
 			if (ftp_get($this->connect, $local, $path, FTP_BINARY)) {
 				return @fopen($local, $mode);
@@ -779,7 +779,7 @@ class FinderVolumeFTP extends FinderVolumeDriver {
 	protected function _fclose($fp, $path='') {
 		@fclose($fp);
 		if ($path) {
-			@unlink($this->tmp.DIRECTORY_SEPARATOR.md5($path));
+			@unlink( $this->_joinPath( $this->tmp, md5($path)));
 		}
 	}
 
@@ -814,7 +814,7 @@ class FinderVolumeFTP extends FinderVolumeDriver {
 	protected function _mkfile($path, $name) {
 		if ($this->tmp) {
 			$path = $path.'/'.$name;
-			$local = $this->tmp.DIRECTORY_SEPARATOR.md5($path);
+			$local = $this->_joinPath( $this->tmp, md5($path) );
 			$res = touch($local) && ftp_put($this->connect, $path, $local, FTP_ASCII);
 			@unlink($local);
 			return $res ? $path : false;
@@ -847,8 +847,8 @@ class FinderVolumeFTP extends FinderVolumeDriver {
 		$res = false;
 
 		if ($this->tmp) {
-			$local  = $this->tmp.DIRECTORY_SEPARATOR.md5($source);
-			$target = $targetDir.DIRECTORY_SEPARATOR.$name;
+			$local  = $this->_joinPath( $this->tmp, md5($source) );
+			$target = $this->_joinPath( $targetDir, $name );
 
 			if (ftp_get($this->connect, $local, $source, FTP_BINARY)
 			&& ftp_put($this->connect, $target, $local, $this->ftpMode($target))) {
@@ -871,7 +871,7 @@ class FinderVolumeFTP extends FinderVolumeDriver {
 	 * @author Dmitry (dio) Levashov
 	 **/
 	protected function _move($source, $targetDir, $name) {
-		$target = $targetDir.DIRECTORY_SEPARATOR.$name;
+		$target = $this->_joinPath( $targetDir, $name );
 		return ftp_rename($this->connect, $source, $target) ? $target : false;
 	}
 
@@ -945,7 +945,7 @@ class FinderVolumeFTP extends FinderVolumeDriver {
 		$res = false;
 
 		if ($this->tmp) {
-			$local = $this->tmp.DIRECTORY_SEPARATOR.md5($path).'.txt';
+			$local = $this->_joinPath( $this->tmp, md5($path).'.txt');
 
 			if (@file_put_contents($local, $content, LOCK_EX) !== false
 			&& ($fp = @fopen($local, 'rb'))) {
@@ -999,7 +999,7 @@ class FinderVolumeFTP extends FinderVolumeDriver {
 		if (is_dir($path)) {
 			foreach (scandir($path) as $name) {
 				if ($name != '.' && $name != '..') {
-					$p = $path.DIRECTORY_SEPARATOR.$name;
+					$p = $this->_joinPath( $path, $name );
 					if (is_link($p)) {
 						return true;
 					}

@@ -2648,7 +2648,7 @@ abstract class FinderVolumeDriver {
 			}
 
 			$name = $this->tmbname($stat);
-			if (file_exists($this->tmbPath.DIRECTORY_SEPARATOR.$name)) {
+			if (file_exists( $this->_joinPath($this->tmbPath,$name) )) {
 				return $name;
 			}
 		}
@@ -2698,7 +2698,7 @@ abstract class FinderVolumeDriver {
 		}
 
 		$name = $this->tmbname($stat);
-		$tmb  = $this->tmbPath.DIRECTORY_SEPARATOR.$name;
+		$tmb  = $this->_joinPath( $this->tmbPath,$name );
 
 		// copy image into tmbPath so some drivers does not store files on local fs
 		if (($src = $this->_fopen($path, 'rb')) == false) {
@@ -3102,7 +3102,7 @@ abstract class FinderVolumeDriver {
 				$name != '.' && $name != '..' && $this->rmTmb($this->stat($p));
 			}
 		} else if (!empty($stat['tmb']) && $stat['tmb'] != "1") {
-			$tmb = $this->tmbPath.DIRECTORY_SEPARATOR.$stat['tmb'];
+			$tmb = $this->_joinPath( $this->tmbPath, $stat['tmb'] );
 			file_exists($tmb) && @unlink($tmb);
 			clearstatcache();
 		}

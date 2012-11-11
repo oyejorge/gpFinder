@@ -554,6 +554,12 @@ class FinderVolumeFTP extends FinderVolumeDriver {
 			return $stat;
 		}
 
+		//check file existence
+		$list = @ftp_nlist($this->connect, $path);
+		if( empty($list) ){
+			return false;
+		}
+
 		$stat = array();
 		$stat['size'] = ftp_size($this->connect, $path);
 		$stat['ts'] = ftp_mdtm($this->connect, $path);

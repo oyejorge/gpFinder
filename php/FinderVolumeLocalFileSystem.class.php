@@ -126,17 +126,6 @@ class FinderVolumeLocalFileSystem extends FinderVolumeDriver {
 		return basename($path);
 	}
 
-	/**
-	 * Join dir name and file name and retur full path
-	 *
-	 * @param  string  $dir
-	 * @param  string  $name
-	 * @return string
-	 * @author Dmitry (dio) Levashov
-	 **/
-	protected function _joinPath($dir, $name) {
-		return $dir.DIRECTORY_SEPARATOR.$name;
-	}
 
 	/**
 	 * Return normalized path, this works the same as os.path.normpath() in Python

@@ -1025,7 +1025,8 @@ abstract class FinderVolumeDriver {
 	 * @author Dmitry (dio) Levashov
 	 **/
 	public function dir($hash, $resolveLink=false) {
-		if (($dir = $this->file($hash)) == false) {
+		$dir = $this->file($hash);
+		if( $dir == false ){
 			return $this->setError(Finder::ERROR_DIR_NOT_FOUND);
 		}
 
@@ -1953,6 +1954,19 @@ abstract class FinderVolumeDriver {
 		return $name.md5($dir).$ext;
 	}
 
+
+	/**
+	 * Join dir name and file name and return full path.
+	 * Some drivers (db) use int as path - so we give to concat path to driver itself
+	 *
+	 * @param  string  $dir   dir path
+	 * @param  string  $name  file name
+	 * @return string
+	 * @author Dmitry (dio) Levashov
+	 **/
+	protected function _joinPath($dir, $name) {
+		return rtrim($dir,DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . ltrim($name,DIRECTORY_SEPARATOR);
+	}
 	/*********************** file stat *********************/
 
 	/**
@@ -3219,17 +3233,6 @@ abstract class FinderVolumeDriver {
 	 * @author Dmitry (dio) Levashov
 	 **/
 	abstract protected function _basename($path);
-
-	/**
-	 * Join dir name and file name and return full path.
-	 * Some drivers (db) use int as path - so we give to concat path to driver itself
-	 *
-	 * @param  string  $dir   dir path
-	 * @param  string  $name  file name
-	 * @return string
-	 * @author Dmitry (dio) Levashov
-	 **/
-	abstract protected function _joinPath($dir, $name);
 
 	/**
 	 * Return normalized path

@@ -576,13 +576,13 @@ class FinderVolumeLocalFileSystem extends FinderVolumeDriver {
 
 		//pclzip
 	    if( function_exists('gzopen') ){
-			$arcs['create']['application/zip']  = array('function'=>'CreateZip');
-			$arcs['extract']['application/zip'] = array('function'=>'ExtractZip');
+			$arcs['create']['application/zip']  = array( 'function'=>'CreateZip' );
+			$arcs['extract']['application/zip'] = array( 'function'=>'PhpExtract', 'args'=> array('type'=> 'zip') );
 		}
 
 		//tar
-		$arcs['create']['application/x-tar']  = array('function'=>'CreateTar');
-		$arcs['extract']['application/x-tar'] = array('function'=>'ExtractTar');
+		$arcs['create']['application/x-tar']  = array( 'function'=>'CreateTar' );
+		$arcs['extract']['application/x-tar'] = array( 'function'=>'PhpExtract', 'args'=> array('type'=> 'tar') );
 
 
 
@@ -829,16 +829,28 @@ class FinderVolumeLocalFileSystem extends FinderVolumeDriver {
 	}
 
 	/**
-	 * Extract files from a zip archive using pclzip.lib.php
+	 * Extract files from an archive using pclzip.lib.php or Archive_Tar.php
 	 *
 	 * @param  string  $path  archive path
 	 * @return bool
 	 */
-	protected function ExtractZip($path){
+	protected function PhpExtract( $path, $args ){
 
 		// create archive object
-		include('pclzip.lib.php');
-		$archive = new PclZip($path);
+		@ini_set('memory_limit', '256M');
+		switch( $args['type'] ){
+			case 'zip':
+				include('pclzip.lib.php');
+				$archive = new PclZip($path);
+			break;
+			case 'tar':
+				include('Archive_Tar.php');
+				$archive = new Archive_Tar( $path );
+			break;
+			default:
+			return $this->setError('Unknown archive type');
+		}
+
 		$list = $archive->listContent();
 		if( !count($list) ){
 			return $this->setError('Empty Archive');
@@ -862,13 +874,18 @@ class FinderVolumeLocalFileSystem extends FinderVolumeDriver {
 
 
 		// extract
-		if( $archive->extract($dest,$remove_path) ){
-			return $this->setError('Extract Failed');
+		switch( $args['type'] ){
+			case 'zip':
+				if( !$archive->extract($dest,$remove_path) ){
+					return $this->setError('Extract Failed');
+				}
+			break;
+			case 'tar':
+				if( !$archive->extractModify($dest,$remove_path) ){
+					return $this->setError('Extract Failed');
+				}
+			break;
 		}
-
-		//if( !call_user_func_array( array($archive,'extract'), $extract_args ) ){
-		//	return $this->setError('Extract Failed');
-		//}
 
 		return $dest;
 	}
@@ -880,7 +897,7 @@ class FinderVolumeLocalFileSystem extends FinderVolumeDriver {
 	 * @param array $list List of files in archive
 	 *
 	 */
-	protected ArchiveRoots( &$list ){
+	protected function ArchiveRoots( &$list ){
 		$root_names = array();
 		foreach($list as $file){
 			$filename = ltrim( str_replace('\\','/',$file['filename']) ,' 	/' );
@@ -890,28 +907,6 @@ class FinderVolumeLocalFileSystem extends FinderVolumeDriver {
 		return array_unique($root_names);
 	}
 
-	/**
-	 * Extract files from a tar archive using Archive_Tar.php
-	 *
-	 * @param  string  $path  archive path
-	 * @return bool
-	 */
-	protected function ExtractTar( $path ){
-
-		// create archive object
-		@ini_set('memory_limit', '256M');
-		include('Archive_Tar.php');
-		$archive = new Archive_Tar( $path );
-		$list = $archive->listContent();
-		if( !count($list) ){
-			return $this->setError('Empty Archive');
-		}
-
-		print_r( $list );
-
-
-		die('extract tar callled');
-	}
 
 	/**
 	 * Return the path an archive can be extracted to

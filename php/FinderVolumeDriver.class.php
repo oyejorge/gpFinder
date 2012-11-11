@@ -1623,7 +1623,8 @@ abstract class FinderVolumeDriver {
 		$this->clearcache();
 
 		if( isset($archiver['function']) ){
-			$path = call_user_func( array($this,$archiver['function']), $path );
+			$archiver += array('args'=>array());
+			$path = call_user_func( array($this,$archiver['function']), $path, $archiver['args'] );
 		}else{
 			$path = $this->_extract($path, $archiver);
 		}

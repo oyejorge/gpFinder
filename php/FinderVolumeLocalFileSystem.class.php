@@ -575,7 +575,7 @@ class FinderVolumeLocalFileSystem extends FinderVolumeDriver {
 
 
 		//.tar
-		//$arcs['create']['application/x-tar']  = array( 'function'=>'PhpCompress' );
+		$arcs['create']['application/x-tar']  = array( 'function'=>'PhpCompress', 'ext'=> 'tar' );
 		$arcs['extract']['application/x-tar'] = array( 'function'=>'PhpExtract', 'ext'=> 'tar' );
 
 
@@ -857,7 +857,6 @@ class FinderVolumeLocalFileSystem extends FinderVolumeDriver {
 			return $this->setError('Empty Archive');
 		}
 
-
 		// destination path .. determine if we need to create a folder for the files in the archive
 		$root_names = $this->ArchiveRoots($list);
 		$extract_args = array();
@@ -877,7 +876,7 @@ class FinderVolumeLocalFileSystem extends FinderVolumeDriver {
 		// extract
 		switch( $archiver['ext'] ){
 			case 'zip':
-				if( !$archive->extract($dest,$remove_path) ){
+				if( !$archive->extract( $dest, $remove_path ) ){
 					return $this->setError('Extract Failed');
 				}
 			break;
@@ -885,7 +884,7 @@ class FinderVolumeLocalFileSystem extends FinderVolumeDriver {
 			case 'tbz':
 			case 'tgz':
 			case 'tar':
-				if( !$archive->extractModify($dest,$remove_path) ){
+				if( !$archive->extractModify( $dest, $remove_path ) ){
 					return $this->setError('Extract Failed');
 				}
 			break;
@@ -978,6 +977,14 @@ class FinderVolumeLocalFileSystem extends FinderVolumeDriver {
 				include('pclzip.lib.php');
 				$archive = new PclZip($path);
 				if( !$archive->Create($list,'',$dir) ){
+					return $this->SetError('errArchive');
+				}
+			break;
+
+			case 'tar':
+				include('Archive_Tar.php');
+				$archive = new Archive_Tar( $path );
+				if( !$archive->createModify($list, '', $dir) ){
 					return $this->SetError('errArchive');
 				}
 			break;

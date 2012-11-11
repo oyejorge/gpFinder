@@ -546,8 +546,13 @@ class FinderVolumeFTP extends FinderVolumeDriver {
 	 * @param  string  $path    file path
 	 * @return array|false
 	 * @author Dmitry (dio) Levashov
-	 **/
+	 */
 	protected function _stat($path){
+
+		$stat = $this->MLST($path);
+		if( $stat ){
+			return $stat;
+		}
 
 		$stat = array();
 		$stat['size'] = ftp_size($this->connect, $path);
@@ -555,116 +560,116 @@ class FinderVolumeFTP extends FinderVolumeDriver {
 
 		if( $this->is_dir($path) ){
 			$stat['mime'] = 'directory';
-
 		}else{
 			$stat['mime'] = $this->mimetype($path);
 		}
 
 		return $stat;
+	}
 
-
-
+	function MLST($path){
 
 		$raw = ftp_raw($this->connect, 'MLST '.$path);
 
-		if (is_array($raw) && count($raw) > 1 && substr(trim($raw[0]), 0, 1) == 2) {
-			$parts = explode(';', trim($raw[1]));
-			array_pop($parts);
-			$parts = array_map('strtolower', $parts);
-			$stat  = array();
-			// debug($parts);
-			foreach ($parts as $part) {
+		if( !is_array($raw) || count($raw) <= 1 || substr(trim($raw[0]), 0, 1) != 2 ){
+			return false;
+		}
 
-				list($key, $val) = explode('=', $part);
 
-				switch ($key) {
-					case 'type':
-						$stat['mime'] = strpos($val, 'dir') !== false ? 'directory' : $this->mimetype($path);
-						break;
+		$parts = explode(';', trim($raw[1]));
+		array_pop($parts);
+		$parts = array_map('strtolower', $parts);
+		$stat  = array();
+		// debug($parts);
+		foreach ($parts as $part) {
 
-					case 'size':
-						$stat['size'] = $val;
-						break;
+			list($key, $val) = explode('=', $part);
 
-					case 'modify':
-						$ts = mktime(intval(substr($val, 8, 2)), intval(substr($val, 10, 2)), intval(substr($val, 12, 2)), intval(substr($val, 4, 2)), intval(substr($val, 6, 2)), substr($val, 0, 4));
-						$stat['ts'] = $ts;
-						// $stat['date'] = $this->formatDate($ts);
-						break;
+			switch ($key) {
+				case 'type':
+					$stat['mime'] = strpos($val, 'dir') !== false ? 'directory' : $this->mimetype($path);
+					break;
 
-					case 'unix.mode':
-						$stat['chmod'] = $val;
-						break;
+				case 'size':
+					$stat['size'] = $val;
+					break;
 
-					case 'perm':
-						$val = strtolower($val);
-						$stat['read']  = (int)preg_match('/e|l|r/', $val);
-						$stat['write'] = (int)preg_match('/w|m|c/', $val);
-						if (!preg_match('/f|d/', $val)) {
-							$stat['locked'] = 1;
-						}
-						break;
-				}
-			}
-			if (empty($stat['mime'])) {
-				return array();
-			}
-			if ($stat['mime'] == 'directory') {
-				$stat['size'] = 0;
-			}
+				case 'modify':
+					$ts = mktime(intval(substr($val, 8, 2)), intval(substr($val, 10, 2)), intval(substr($val, 12, 2)), intval(substr($val, 4, 2)), intval(substr($val, 6, 2)), substr($val, 0, 4));
+					$stat['ts'] = $ts;
+					// $stat['date'] = $this->formatDate($ts);
+					break;
 
-			if (isset($stat['chmod'])) {
-				$stat['perm'] = '';
-				if ($stat['chmod'][0] == 0) {
-					$stat['chmod'] = substr($stat['chmod'], 1);
-				}
+				case 'unix.mode':
+					$stat['chmod'] = $val;
+					break;
 
-				for ($i = 0; $i <= 2; $i++) {
-					$perm[$i] = array(false, false, false);
-					$n = isset($stat['chmod'][$i]) ? $stat['chmod'][$i] : 0;
-
-					if ($n - 4 >= 0) {
-						$perm[$i][0] = true;
-						$n = $n - 4;
-						$stat['perm'] .= 'r';
-					} else {
-						$stat['perm'] .= '-';
+				case 'perm':
+					$val = strtolower($val);
+					$stat['read']  = (int)preg_match('/e|l|r/', $val);
+					$stat['write'] = (int)preg_match('/w|m|c/', $val);
+					if (!preg_match('/f|d/', $val)) {
+						$stat['locked'] = 1;
 					}
+					break;
+			}
+		}
+		if (empty($stat['mime'])) {
+			return false;
+		}
+		if ($stat['mime'] == 'directory') {
+			$stat['size'] = 0;
+		}
 
-					if ($n - 2 >= 0) {
-						$perm[$i][1] = true;
-						$n = $n - 2;
-						$stat['perm'] .= 'w';
-					} else {
-						$stat['perm'] .= '-';
-					}
+		if (isset($stat['chmod'])) {
+			$stat['perm'] = '';
+			if ($stat['chmod'][0] == 0) {
+				$stat['chmod'] = substr($stat['chmod'], 1);
+			}
 
-					if ($n - 1 == 0) {
-						$perm[$i][2] = true;
-						$stat['perm'] .= 'x';
-					} else {
-						$stat['perm'] .= '-';
-					}
+			for ($i = 0; $i <= 2; $i++) {
+				$perm[$i] = array(false, false, false);
+				$n = isset($stat['chmod'][$i]) ? $stat['chmod'][$i] : 0;
 
-					$stat['perm'] .= ' ';
+				if ($n - 4 >= 0) {
+					$perm[$i][0] = true;
+					$n = $n - 4;
+					$stat['perm'] .= 'r';
+				} else {
+					$stat['perm'] .= '-';
 				}
 
-				$stat['perm'] = trim($stat['perm']);
+				if ($n - 2 >= 0) {
+					$perm[$i][1] = true;
+					$n = $n - 2;
+					$stat['perm'] .= 'w';
+				} else {
+					$stat['perm'] .= '-';
+				}
 
-				$owner = $this->options['owner'];
-				$read = ($owner && $perm[0][0]) || $perm[1][0] || $perm[2][0];
+				if ($n - 1 == 0) {
+					$perm[$i][2] = true;
+					$stat['perm'] .= 'x';
+				} else {
+					$stat['perm'] .= '-';
+				}
 
-				$stat['read']  = $stat['mime'] == 'directory' ? $read && (($owner && $perm[0][2]) || $perm[1][2] || $perm[2][2]) : $read;
-				$stat['write'] = ($owner && $perm[0][1]) || $perm[1][1] || $perm[2][1];
-				unset($stat['chmod']);
-
+				$stat['perm'] .= ' ';
 			}
 
-			return $stat;
+			$stat['perm'] = trim($stat['perm']);
+
+			$owner = $this->options['owner'];
+			$read = ($owner && $perm[0][0]) || $perm[1][0] || $perm[2][0];
+
+			$stat['read']  = $stat['mime'] == 'directory' ? $read && (($owner && $perm[0][2]) || $perm[1][2] || $perm[2][2]) : $read;
+			$stat['write'] = ($owner && $perm[0][1]) || $perm[1][1] || $perm[2][1];
+			unset($stat['chmod']);
 
 		}
 
-		return array();
+		return $stat;
+
 	}
 
 	/**

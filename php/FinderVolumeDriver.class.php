@@ -1603,17 +1603,16 @@ abstract class FinderVolumeDriver {
 			return $this->setError(Finder::ERROR_PERM_DENIED);
 		}
 
-		if (($file = $this->file($hash)) == false) {
+		$file = $this->file($hash);
+		if( $file == false ){
 			return $this->setError(Finder::ERROR_FILE_NOT_FOUND);
 		}
 
-		$archiver = isset($this->archivers['extract'][$file['mime']])
-			? $this->archivers['extract'][$file['mime']]
-			: false;
-
-		if (!$archiver) {
+		if( !isset($this->archivers['extract'][$file['mime']]) ){
 			return $this->setError(Finder::ERROR_NOT_ARCHIVE);
 		}
+
+		$archiver = $this->archivers['extract'][$file['mime']];
 
 		$path   = $this->decode($hash);
 		$parent = $this->stat($this->_dirname($path));
@@ -1622,7 +1621,17 @@ abstract class FinderVolumeDriver {
 			return $this->setError(Finder::ERROR_PERM_DENIED);
 		}
 		$this->clearcache();
-		return ($path = $this->_extract($path, $archiver)) ? $this->stat($path) : false;
+
+		if( isset($archiver['function']) ){
+			$path = call_user_func( array($this,$archiver['function']), $path );
+		}else{
+			$path = $this->_extract($path, $archiver);
+		}
+		if( !$path ){
+			return $this->setError(Finder::ERROR_PERM_DENIED);
+		}
+
+		return $this->stat($path);
 	}
 
 	/**

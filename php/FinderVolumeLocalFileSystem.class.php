@@ -565,8 +565,20 @@ class FinderVolumeLocalFileSystem extends FinderVolumeDriver {
 	 * Detect available archivers
 	 *
 	 * @return void
-	 **/
+	 */
 	protected function _checkArchivers() {
+
+
+		//pclzip
+	    if( function_exists('gzopen') ){
+			$arcs['create']['application/zip']  = array('function'=>'CreateZip');
+			$arcs['extract']['application/zip'] = array('function'=>'ExtractZip');
+		}
+		$this->archivers = $arcs;
+		return;
+
+
+
 		if (!function_exists('exec')) {
 			$this->options['archivers'] = $this->options['archive'] = array();
 			return;
@@ -720,7 +732,7 @@ class FinderVolumeLocalFileSystem extends FinderVolumeDriver {
 	 * @author Dmitry (dio) Levashov,
 	 * @author Alexey Sukhotin
 	 **/
-	protected function _extract($path, $arc) {
+	protected function _extract($path, $arc){
 
 		if ($this->quarantine) {
 			$dir     = $this->quarantine.DIRECTORY_SEPARATOR.str_replace(' ', '_', microtime()).basename($path);
@@ -804,6 +816,97 @@ class FinderVolumeLocalFileSystem extends FinderVolumeDriver {
 			return file_exists($result) ? $result : false;
 		}
 	}
+
+	/**
+	 * Extract files from zip archive
+	 *
+	 * @param  string  $path  archive path
+	 * @return bool
+	 */
+	protected function ExtractZip($path){
+
+		include('pclzip.lib.php');
+		$archive = new PclZip($path);
+
+		$list = $archive->listContent();
+		if( !count($list) ){
+			return $this->setError('Empty Archive');
+		}
+
+		// determine if we need to create a folder for the files in the archive
+		$root_names = array();
+		foreach($list as $file){
+			$filename = ltrim( str_replace('\\','/',$file['filename']) ,' 	/' );
+			$parts = explode('/',$filename);
+			$root_names[] = array_shift($parts);
+		}
+		$root_names = array_unique($root_names);
+
+		// destination path
+		$extract_args = array();
+		if( count($root_names) > 1 ){
+			$dest = $this->ArchiveDestination( $path );
+		}elseif( count($list) == 1 ){
+			//$dest = dirname($path);
+			$dest = $this->ArchiveDestination( $path );//not ideal, but the listing is updated this way
+		}else{
+			$name = array_shift($root_names);
+			$extract_args[] = PCLZIP_OPT_REMOVE_PATH;
+			$extract_args[] = $name;
+			$dest = $this->IncrementName( dirname($path), $name );
+		}
+
+		// extract
+		$extract_args[] = PCLZIP_OPT_PATH;
+		$extract_args[] = $dest;
+
+		if( !call_user_func_array( array($archive,'extract'), $extract_args ) ){
+			return $this->setError('Extract Failed');
+		}
+
+		return $dest;
+	}
+
+	/**
+	 * Return the path an archive can be extracted to
+	 * @param string $path
+	 */
+	protected function ArchiveDestination( $path ){
+
+		$name = basename($path);
+		$parts = explode('.',$name);
+		$extension = array_pop($parts);
+		$name = implode('.',$parts);
+
+		return $this->IncrementName( dirname($path), $name );
+	}
+
+	/**
+	 * Create a unique filename by incrementing if needed
+	 * @param string $dir
+	 * @param string $name
+	 * @param string $ext
+	 */
+	function IncrementName( $dir, $name, $ext = false ){
+		if( $ext ){
+			$ext = ltrim($ext,'.').'.';
+		}
+
+		$dest = $dir.DIRECTORY_SEPARATOR.$name.$ext;
+		if( !file_exists($dest) && !is_link($dest) ){
+			return $dest;
+		}
+
+		$i = 0;
+		do{
+			$dest = $dir.DIRECTORY_SEPARATOR.$name.'-'.$i.$ext;
+			$i++;
+		}while( file_exists($dest) || is_link($dest) );
+
+		return $dest;
+	}
+
+
 
 	/**
 	 * Create archive and return its path

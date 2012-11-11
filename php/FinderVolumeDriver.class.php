@@ -1009,16 +1009,11 @@ abstract class FinderVolumeDriver {
 	 **/
 	public function file($hash) {
 		$path = $this->decode($hash);
-
-		return ($file = $this->stat($path)) ? $file : $this->setError(Finder::ERROR_FILE_NOT_FOUND);
-
-		if (($file = $this->stat($path)) != false) {
-			if ($realpath) {
-				$file['realpath'] = $path;
-			}
-			return $file;
+		$file = $this->stat($path);
+		if( !$file ){
+			return $this->setError(Finder::ERROR_FILE_NOT_FOUND);
 		}
-		return $this->setError(Finder::ERROR_FILE_NOT_FOUND);
+		return $file;
 	}
 
 	/**

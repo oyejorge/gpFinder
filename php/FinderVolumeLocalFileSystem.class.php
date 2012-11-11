@@ -587,14 +587,14 @@ class FinderVolumeLocalFileSystem extends FinderVolumeDriver {
 
 
 			// .tar.gz
-			//$arcs['create']['application/x-gzip']  = array( 'function'=>'PhpCompress' );
+			$arcs['create']['application/x-gzip']  = array( 'function'=>'PhpCompress', 'ext'=>'tgz' );
 			$arcs['extract']['application/x-gzip'] = array( 'function'=>'PhpExtract', 'ext'=> 'tgz' );
 
 		}
 
 		// .tar.bz
 		if( function_exists('bzopen') ){
-			//$arcs['create']['application/x-bzip2']  = array( 'function'=>'PhpCompress' );
+			$arcs['create']['application/x-bzip2']  = array( 'function'=>'PhpCompress', 'ext'=>'tbz' );
 			$arcs['extract']['application/x-bzip2'] = array( 'function'=>'PhpExtract', 'ext'=> 'tbz' );
 		}
 
@@ -962,6 +962,7 @@ class FinderVolumeLocalFileSystem extends FinderVolumeDriver {
 	 */
 	protected function PhpCompress($dir, $files, $name, $archiver ){
 
+		@ini_set('memory_limit', '256M');
 		$path = $dir.DIRECTORY_SEPARATOR.$name;
 
 		//format the list
@@ -971,7 +972,6 @@ class FinderVolumeLocalFileSystem extends FinderVolumeDriver {
 		}
 
 		// create archive object
-		@ini_set('memory_limit', '256M');
 		switch( $archiver['ext'] ){
 			case 'zip':
 				include('pclzip.lib.php');
@@ -981,6 +981,8 @@ class FinderVolumeLocalFileSystem extends FinderVolumeDriver {
 				}
 			break;
 
+			case 'tgz':
+			case 'tbz':
 			case 'tar':
 				include('Archive_Tar.php');
 				$archive = new Archive_Tar( $path );

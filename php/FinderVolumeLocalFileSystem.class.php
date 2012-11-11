@@ -573,18 +573,24 @@ class FinderVolumeLocalFileSystem extends FinderVolumeDriver {
 			'extract' => array()
 			);
 
+		$has_gz = function_exists('gzopen');
+
 
 		//pclzip
-	    if( function_exists('gzopen') ){
-			$arcs['create']['application/zip']  = array( 'function'=>'CreateZip' );
+	    if( $has_gz ){
+			//$arcs['create']['application/zip']  = array( 'function'=>'CreateZip' );
 			$arcs['extract']['application/zip'] = array( 'function'=>'PhpExtract', 'args'=> array('type'=> 'zip') );
 		}
 
 		//tar
-		$arcs['create']['application/x-tar']  = array( 'function'=>'CreateTar' );
+		//$arcs['create']['application/x-tar']  = array( 'function'=>'CreateTar' );
 		$arcs['extract']['application/x-tar'] = array( 'function'=>'PhpExtract', 'args'=> array('type'=> 'tar') );
 
-
+		//tgz
+		if( $has_gz ){
+			//$arcs['create']['application/x-gzip']  = array( 'function'=>'CreateTar' );
+			$arcs['extract']['application/x-gzip'] = array( 'function'=>'PhpExtract', 'args'=> array('type'=> 'tgz') );
+		}
 
 
 
@@ -843,6 +849,8 @@ class FinderVolumeLocalFileSystem extends FinderVolumeDriver {
 				include('pclzip.lib.php');
 				$archive = new PclZip($path);
 			break;
+
+			case 'tgz':
 			case 'tar':
 				include('Archive_Tar.php');
 				$archive = new Archive_Tar( $path );
@@ -880,6 +888,8 @@ class FinderVolumeLocalFileSystem extends FinderVolumeDriver {
 					return $this->setError('Extract Failed');
 				}
 			break;
+
+			case 'tgz':
 			case 'tar':
 				if( !$archive->extractModify($dest,$remove_path) ){
 					return $this->setError('Extract Failed');

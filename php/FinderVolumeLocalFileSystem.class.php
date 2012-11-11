@@ -573,32 +573,34 @@ class FinderVolumeLocalFileSystem extends FinderVolumeDriver {
 			'extract' => array()
 			);
 
+
 		//.tar
 		//$arcs['create']['application/x-tar']  = array( 'function'=>'PhpCompress' );
-		$arcs['extract']['application/x-tar'] = array( 'function'=>'PhpExtract', 'type'=> 'tar' );
+		$arcs['extract']['application/x-tar'] = array( 'function'=>'PhpExtract', 'ext'=> 'tar' );
 
 
 	    if( function_exists('gzopen') ){
 
 			//.zip
-			$arcs['create']['application/zip']  = array( 'function'=>'PhpCompress' );
-			$arcs['extract']['application/zip'] = array( 'function'=>'PhpExtract', 'type'=> 'zip' );
+			$arcs['create']['application/zip']  = array( 'function'=>'PhpCompress', 'ext'=> 'zip' );
+			$arcs['extract']['application/zip'] = array( 'function'=>'PhpExtract', 'ext'=> 'zip' );
 
 
 			// .tar.gz
 			//$arcs['create']['application/x-gzip']  = array( 'function'=>'PhpCompress' );
-			$arcs['extract']['application/x-gzip'] = array( 'function'=>'PhpExtract', 'type'=> 'tgz' );
+			$arcs['extract']['application/x-gzip'] = array( 'function'=>'PhpExtract', 'ext'=> 'tgz' );
 
 		}
 
 		// .tar.bz
 		if( function_exists('bzopen') ){
 			//$arcs['create']['application/x-bzip2']  = array( 'function'=>'PhpCompress' );
-			$arcs['extract']['application/x-bzip2'] = array( 'function'=>'PhpExtract', 'type'=> 'tbz' );
+			$arcs['extract']['application/x-bzip2'] = array( 'function'=>'PhpExtract', 'ext'=> 'tbz' );
 		}
 
 		$this->archivers = $arcs;
 		return;
+
 
 
 		if (!function_exists('exec')) {
@@ -834,7 +836,7 @@ class FinderVolumeLocalFileSystem extends FinderVolumeDriver {
 
 		// create archive object
 		@ini_set('memory_limit', '256M');
-		switch( $archiver['type'] ){
+		switch( $archiver['ext'] ){
 			case 'zip':
 				include('pclzip.lib.php');
 				$archive = new PclZip($path);
@@ -873,7 +875,7 @@ class FinderVolumeLocalFileSystem extends FinderVolumeDriver {
 
 
 		// extract
-		switch( $archiver['type'] ){
+		switch( $archiver['ext'] ){
 			case 'zip':
 				if( !$archive->extract($dest,$remove_path) ){
 					return $this->setError('Extract Failed');
@@ -953,8 +955,28 @@ class FinderVolumeLocalFileSystem extends FinderVolumeDriver {
 	/**
 	 * Create archive using php function and return the path
 	 *
+	 * @param  string  $dir    target dir
+	 * @param  array   $files  files names list
+	 * @param  string  $name   archive name
+	 * @param  array   $arc    archiver options
+	 * @return string|bool
 	 */
-	protected function PhpCompress($dir, $files, $name ){
+	protected function PhpCompress($dir, $files, $name, $archiver ){
+
+		// create archive object
+		@ini_set('memory_limit', '256M');
+		switch( $archiver['ext'] ){
+			case 'zip':
+				include('pclzip.lib.php');
+				$archive = new PclZip();
+			break;
+		}
+
+
+
+		$args = func_get_args();
+		print_r($args);
+		die('php compress');
 
 
 	}

@@ -963,21 +963,28 @@ class FinderVolumeLocalFileSystem extends FinderVolumeDriver {
 	 */
 	protected function PhpCompress($dir, $files, $name, $archiver ){
 
+		$path = $dir.DIRECTORY_SEPARATOR.$name;
+
+		//format the list
+		$list = array();
+		foreach($files as $file){
+			$list[] = $dir.DIRECTORY_SEPARATOR.$file;
+		}
+
 		// create archive object
 		@ini_set('memory_limit', '256M');
 		switch( $archiver['ext'] ){
 			case 'zip':
 				include('pclzip.lib.php');
-				$archive = new PclZip();
+				$archive = new PclZip($path);
+				if( !$archive->Create($list,'',$dir) ){
+					return $this->SetError('errArchive');
+				}
 			break;
 		}
 
 
-
-		$args = func_get_args();
-		print_r($args);
-		die('php compress');
-
+		return $path;
 
 	}
 

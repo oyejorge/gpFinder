@@ -3362,16 +3362,6 @@ abstract class FinderVolumeDriver {
 
 
 	/**
-	 * Return true if $path is children of $parent
-	 *
-	 * @param  string  $path    path to check
-	 * @param  string  $parent  parent path
-	 * @return bool
-	 * @author Dmitry (dio) Levashov
-	 **/
-	abstract protected function _inpath($path, $parent);
-
-	/**
 	 * Return stat for given path.
 	 * Stat contains following fields:
 	 * - (int)    size    file size in b. required

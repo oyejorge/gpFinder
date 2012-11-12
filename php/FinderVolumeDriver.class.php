@@ -3299,10 +3299,6 @@ abstract class FinderVolumeDriver {
 	}
 
 
-	/**==================================* abstract methods *====================================**/
-
-
-
 	/**
 	 * Return file path related to root dir
 	 *
@@ -3310,7 +3306,20 @@ abstract class FinderVolumeDriver {
 	 * @return string
 	 * @author Dmitry (dio) Levashov
 	 **/
-	abstract protected function _relpath($path);
+	protected function _relpath($path) {
+		if( $path == $this->root ){
+			return '';
+		}
+		if( $this->root == DIRECTORY_SEPARATOR ){
+			return substr($path,1);
+		}
+		return substr($path, strlen($this->root)+1);
+	}
+
+
+	/**==================================* abstract methods *====================================**/
+
+
 
 	/**
 	 * Convert path related to root dir into real path

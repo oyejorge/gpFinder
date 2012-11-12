@@ -3235,9 +3235,6 @@ abstract class FinderVolumeDriver {
 		return dirname($path);
 	}
 
-
-	/**==================================* abstract methods *====================================**/
-
 	/**
 	 * Return file name
 	 *
@@ -3245,7 +3242,14 @@ abstract class FinderVolumeDriver {
 	 * @return string
 	 * @author Dmitry (dio) Levashov
 	 **/
-	abstract protected function _basename($path);
+	protected function _basename($path) {
+		return basename($path);
+	}
+
+
+
+	/**==================================* abstract methods *====================================**/
+
 
 	/**
 	 * Return normalized path

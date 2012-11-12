@@ -104,16 +104,6 @@ class FinderVolumeLocalFileSystem extends FinderVolumeDriver {
 
 	/*********************** paths/urls *************************/
 
-	/**
-	 * Return file name
-	 *
-	 * @param  string  $path  file path
-	 * @return string
-	 * @author Dmitry (dio) Levashov
-	 **/
-	protected function _basename($path) {
-		return basename($path);
-	}
 
 
 	/**

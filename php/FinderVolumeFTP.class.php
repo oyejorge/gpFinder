@@ -396,20 +396,7 @@ class FinderVolumeFTP extends FinderVolumeDriver {
 		return strpos($this->mimetype($path), 'text/') === 0 ? FTP_ASCII : FTP_BINARY;
 	}
 
-	/*********************** paths/urls *************************/
 
-
-	/**
-	 * Return true if $path is children of $parent
-	 *
-	 * @param  string  $path    path to check
-	 * @param  string  $parent  parent path
-	 * @return bool
-	 * @author Dmitry (dio) Levashov
-	 **/
-	protected function _inpath($path, $parent) {
-		return $path == $parent || strpos($path, $this->_joinPath($parent,DIRECTORY_SEPARATOR) ) === 0;
-	}
 
 	/***************** file stat ********************/
 	/**

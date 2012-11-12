@@ -102,22 +102,6 @@ class FinderVolumeLocalFileSystem extends FinderVolumeDriver {
 	/*                               FS API                              */
 	/*********************************************************************/
 
-	/*********************** paths/urls *************************/
-
-
-	/**
-	 * Return true if $path is children of $parent
-	 *
-	 * @param  string  $path    path to check
-	 * @param  string  $parent  parent path
-	 * @return bool
-	 * @author Dmitry (dio) Levashov
-	 **/
-	protected function _inpath($path, $parent) {
-		return $path == $parent || strpos($path, $parent.DIRECTORY_SEPARATOR) === 0;
-	}
-
-
 
 	/***************** file stat ********************/
 

@@ -402,17 +402,6 @@ class FinderVolumeFTP extends FinderVolumeDriver {
 
 
 	/**
-	 * Convert path related to root dir into real path
-	 *
-	 * @param  string  $path  file path
-	 * @return string
-	 * @author Dmitry (dio) Levashov
-	 **/
-	protected function _abspath($path) {
-		return $path == $this->separator ? $this->root : $this->_joinPath($this->root,$path);
-	}
-
-	/**
 	 * Return fake path started from root dir
 	 *
 	 * @param  string  $path  file path

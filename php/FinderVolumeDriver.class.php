@@ -1870,7 +1870,7 @@ abstract class FinderVolumeDriver {
 			// TODO uncrypt hash and return path
 			$path = $this->uncrypt($h);
 			// append ROOT to path after it was cut in encode
-			return $this->_abspath($path);//$this->root.($path == DIRECTORY_SEPARATOR ? '' : DIRECTORY_SEPARATOR.$path);
+			return $this->_abspath($path);
 		}
 	}
 
@@ -3317,18 +3317,19 @@ abstract class FinderVolumeDriver {
 	}
 
 
-	/**==================================* abstract methods *====================================**/
-
-
-
 	/**
 	 * Convert path related to root dir into real path
 	 *
-	 * @param  string  $path  rel file path
+	 * @param  string  $path  file path
 	 * @return string
 	 * @author Dmitry (dio) Levashov
 	 **/
-	abstract protected function _abspath($path);
+	protected function _abspath($path) {
+		return $path == $this->separator ? $this->root : $this->_joinPath($this->root,$path);
+	}
+
+	/**==================================* abstract methods *====================================**/
+
 
 	/**
 	 * Return fake path started from root dir.

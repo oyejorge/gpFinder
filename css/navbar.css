@@ -21,12 +21,23 @@
 
 
 /* ltr/rtl enviroment */
-.finder-ltr .finder-navbar { float:left;  border-left:0 solid; }
-.finder-rtl .finder-navbar { float:right; border-right:0 solid; }
-.finder-ltr .ui-resizable-e { margin-left:10px; }
+.finder-ltr .finder-navbar {
+	float:left;
+	border-left:0 solid;
+	padding-right:13px;
+	}
+.finder-rtl .finder-navbar {
+	float:right;
+	border-right:0 solid;
+	padding-left:13px;
+	}
 
 /* folders tree container */
-.finder-tree { display:table; width:100%; margin: 0 0 .5em 0; }
+.finder-tree {
+	display:table;
+	width:100%;
+	margin: 0 0 .5em 0;
+	}
 
 /* one folder wrapper */
 .finder-navbar-wrapper, .finder-place-wrapper { }
@@ -130,7 +141,16 @@
 .finder-rtl .finder-navbar .finder-symlink { right: 8px; }
 
 /* resizable */
-.finder-navbar .ui-resizable-handle { width:12px; background:transparent url('../img/resize.png') center center no-repeat; left:0; }
+.finder-navbar .ui-resizable-handle {
+	width:12px;
+	background:transparent url('../img/resize.png') center center no-repeat;
+	right:1px;
+	}
+.finder-rtl .finder-navbar .ui-resizable-handle {
+	left:1px;
+	}
+
+
 .finder-nav-handle-icon {
 	position:absolute;
 	top:50%;

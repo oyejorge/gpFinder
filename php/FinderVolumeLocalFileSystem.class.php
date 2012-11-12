@@ -185,7 +185,13 @@ class FinderVolumeLocalFileSystem extends FinderVolumeDriver {
 	 * @author Dmitry (dio) Levashov
 	 **/
 	protected function _relpath($path) {
-		return $path == $this->root ? '' : substr($path, strlen($this->root)+1);
+		if( $path == $this->root ){
+			return '';
+		}
+		if( $this->root == DIRECTORY_SEPARATOR ){
+			return substr($path,1);
+		}
+		return substr($path, strlen($this->root)+1);
 	}
 
 	/**

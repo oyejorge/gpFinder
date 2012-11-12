@@ -1995,12 +1995,8 @@ abstract class FinderVolumeDriver {
 			}
 		}
 
-		if ($this->separator != '/') {
-			$path = str_replace($this->separator, '/', $this->_relpath($path));
-		} else {
-			$path = $this->_relpath($path);
-		}
-
+		$path = $this->_relpath($path);
+		$path = str_replace($this->separator, '/', $path);
 		$path = '/'.$path;
 
 		for ($i = 0, $c = count($this->attributes); $i < $c; $i++) {

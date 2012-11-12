@@ -55,12 +55,17 @@ function debug(){
 
 
 	$args = func_get_args();
-	$content = print_r($args,true)."\n-----------------------------------------------------------------------------------\n\n";
+	if( count($args) == 1 ){
+		$args = array_shift($args);
+	}
+	//$content = print_r($args,true)."\n-----------------------------------------------------------------------------------\n\n";
+	$content = print_r($args,true)."\n";
 	$fp = fopen($file, 'a');
 	if( $fp ){
 		fwrite($fp, $content);
 		fclose($fp);
 	}
+	return true;
 }
 
 function logger_before( $cmd, $args, $finder ){

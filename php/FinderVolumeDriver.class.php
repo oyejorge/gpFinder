@@ -3328,18 +3328,25 @@ abstract class FinderVolumeDriver {
 		return $path == $this->separator ? $this->root : $this->_joinPath($this->root,$path);
 	}
 
-	/**==================================* abstract methods *====================================**/
 
 
 	/**
-	 * Return fake path started from root dir.
-	 * Required to show path on client side.
+	 * Return fake path started from root dir
 	 *
 	 * @param  string  $path  file path
 	 * @return string
 	 * @author Dmitry (dio) Levashov
 	 **/
-	abstract protected function _path($path);
+	protected function _path($path) {
+		if( $path == $this->root ){
+			return $this->rootName;
+		}
+		return $this->_joinPath( $this->rootName, $this->_relpath($path) );
+	}
+
+
+	/**==================================* abstract methods *====================================**/
+
 
 	/**
 	 * Return true if $path is children of $parent

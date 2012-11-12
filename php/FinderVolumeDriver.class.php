@@ -3246,19 +3246,62 @@ abstract class FinderVolumeDriver {
 		return basename($path);
 	}
 
+	/**
+	 * Return normalized path, this works the same as os.path.normpath() in Python
+	 *
+	 * @param  string  $path  path
+	 * @return string
+	 * @author Troex Nevelin
+	 **/
+	protected function _normpath($path) {
+		if (empty($path)) {
+			$path = '.';
+		}
+		// path must be start with /
+		$path = preg_replace('|^\.\/?|', '/', $path);
+		$path = preg_replace('/^([^\/])/', "/$1", $path);
+
+		if (strpos($path, '/') === 0) {
+			$initial_slashes = true;
+		} else {
+			$initial_slashes = false;
+		}
+
+		if (($initial_slashes)
+		&& (strpos($path, '//') === 0)
+		&& (strpos($path, '///') === false)) {
+			$initial_slashes = 2;
+		}
+
+		$initial_slashes = (int) $initial_slashes;
+
+		$comps = explode('/', $path);
+		$new_comps = array();
+		foreach ($comps as $comp) {
+			if (in_array($comp, array('', '.'))) {
+				continue;
+			}
+
+			if (($comp != '..')
+			|| (!$initial_slashes && !$new_comps)
+			|| ($new_comps && (end($new_comps) == '..'))) {
+				array_push($new_comps, $comp);
+			} elseif ($new_comps) {
+				array_pop($new_comps);
+			}
+		}
+		$comps = $new_comps;
+		$path = implode('/', $comps);
+		if ($initial_slashes) {
+			$path = str_repeat('/', $initial_slashes) . $path;
+		}
+
+		return $path ? $path : '.';
+	}
 
 
 	/**==================================* abstract methods *====================================**/
 
-
-	/**
-	 * Return normalized path
-	 *
-	 * @param  string  $path  file path
-	 * @return string
-	 * @author Dmitry (dio) Levashov
-	 **/
-	abstract protected function _normpath($path);
 
 	/**
 	 * Return file path related to root dir

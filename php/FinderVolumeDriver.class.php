@@ -3221,7 +3221,6 @@ abstract class FinderVolumeDriver {
 		return stripos($haystack , $needle , $offset);
 	}
 
-	/**==================================* abstract methods *====================================**/
 
 	/*********************** paths/urls *************************/
 
@@ -3232,7 +3231,12 @@ abstract class FinderVolumeDriver {
 	 * @return string
 	 * @author Dmitry (dio) Levashov
 	 **/
-	abstract protected function _dirname($path);
+	protected function _dirname($path){
+		return dirname($path);
+	}
+
+
+	/**==================================* abstract methods *====================================**/
 
 	/**
 	 * Return file name

@@ -619,7 +619,9 @@ class FinderVolumeFTP extends FinderVolumeDriver {
 			return true;
 		}
 
-		if( ftp_chdir($this->connect, $path ) ){
+
+
+		if( @ftp_chdir($this->connect, $path ) ){
 			$new_pwd = @ftp_pwd($this->connect);
 			if( $pwd != $new_pwd ){
 				return true;
@@ -652,7 +654,7 @@ class FinderVolumeFTP extends FinderVolumeDriver {
 	protected function _subdirs($path) {
 
 		$pwd = ftp_pwd($this->connect);
-		ftp_chdir($this->connect, $path);
+		@ftp_chdir($this->connect, $path);
 
 
 		/*

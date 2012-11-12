@@ -1047,7 +1047,8 @@ abstract class FinderVolumeDriver {
 	 * @author Dmitry (dio) Levashov
 	 **/
 	public function scandir($hash) {
-		if (($dir = $this->dir($hash)) == false) {
+		$dir = $this->dir($hash);
+		if( $dir == false) {
 			return false;
 		}
 
@@ -1172,9 +1173,10 @@ abstract class FinderVolumeDriver {
 	 * @return Resource
 	 * @author Dmitry (dio) Levashov
 	 **/
-	public function open($hash) {
-		if (($file = $this->file($hash)) == false
-		|| $file['mime'] == 'directory') {
+	public function open($hash){
+		$file = $this->file($hash);
+
+		if( $file == false || $file['mime'] == 'directory' ){
 			return false;
 		}
 
@@ -2052,9 +2054,12 @@ abstract class FinderVolumeDriver {
 	 * @author Dmitry (dio) Levashov
 	 **/
 	protected function stat($path) {
-		return isset($this->cache[$path])
-			? $this->cache[$path]
-			: $this->updateCache($path, $this->_stat($path));
+		if( isset($this->cache[$path]) ){
+			return $this->cache[$path];
+		}
+
+		$stat = $this->_stat($path);
+		return $this->updateCache($path, $stat );
 	}
 
 	/**
@@ -2139,13 +2144,17 @@ abstract class FinderVolumeDriver {
 							unset($stat['dirs']);
 						}
 					} elseif (!empty($stat['alias']) && !empty($stat['target'])) {
-						$stat['dirs'] = isset($this->cache[$stat['target']])
-							? intval(isset($this->cache[$stat['target']]['dirs']))
-							: $this->_subdirs($stat['target']);
 
-					} elseif ($this->_subdirs($path)) {
+						if( isset($this->cache[$stat['target']]) ){
+							$stat['dirs'] = intval(isset($this->cache[$stat['target']]['dirs']));
+						}else{
+							$stat['dirs'] = $this->_subdirs($stat['target']);
+						}
+
+					} elseif( $this->_subdirs($path)) {
 						$stat['dirs'] = 1;
 					}
+
 				} else {
 					$stat['dirs'] = 1;
 				}

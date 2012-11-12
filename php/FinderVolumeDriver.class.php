@@ -3246,6 +3246,7 @@ abstract class FinderVolumeDriver {
 		return basename($path);
 	}
 
+
 	/**
 	 * Return normalized path, this works the same as os.path.normpath() in Python
 	 *
@@ -3255,11 +3256,8 @@ abstract class FinderVolumeDriver {
 	 **/
 	protected function _normpath($path) {
 		if (empty($path)) {
-			$path = '.';
+			return '.';
 		}
-		// path must be start with /
-		$path = preg_replace('|^\.\/?|', '/', $path);
-		$path = preg_replace('/^([^\/])/', "/$1", $path);
 
 		if (strpos($path, '/') === 0) {
 			$initial_slashes = true;
@@ -3296,11 +3294,13 @@ abstract class FinderVolumeDriver {
 			$path = str_repeat('/', $initial_slashes) . $path;
 		}
 
+
 		return $path ? $path : '.';
 	}
 
 
 	/**==================================* abstract methods *====================================**/
+
 
 
 	/**

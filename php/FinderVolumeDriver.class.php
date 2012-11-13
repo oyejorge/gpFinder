@@ -1986,7 +1986,6 @@ abstract class FinderVolumeDriver {
 
 		for ($i = 0, $c = count($this->attributes); $i < $c; $i++) {
 			$attrs = $this->attributes[$i];
-			trigger_error($attrs['pattern']);
 			if( isset($attrs[$name]) && isset($attrs['pattern']) && preg_match($attrs['pattern'], $path) ){
 				$perm = $attrs[$name];
 			}
@@ -3296,7 +3295,8 @@ abstract class FinderVolumeDriver {
 	 * @return string
 	 * @author Dmitry (dio) Levashov
 	 **/
-	protected function _relpath($path) {
+	protected function _relpath($path){
+		$path = $this->_separator( $path );
 		if( $path == $this->root ){
 			return '';
 		}
@@ -3315,6 +3315,7 @@ abstract class FinderVolumeDriver {
 	 * @author Dmitry (dio) Levashov
 	 **/
 	protected function _abspath($path) {
+		$path = $this->_separator( $path );
 		return $path == $this->separator ? $this->root : $this->_joinPath($this->root,$path);
 	}
 
@@ -3344,6 +3345,8 @@ abstract class FinderVolumeDriver {
 	 * @author Dmitry (dio) Levashov
 	 **/
 	protected function _inpath($path, $parent) {
+		$path = $this->_separator( $path );
+		$parent = $this->_separator( $parent );
 		return $path == $parent || strpos($path, $this->_joinPath($parent,$this->separator) ) === 0;
 	}
 

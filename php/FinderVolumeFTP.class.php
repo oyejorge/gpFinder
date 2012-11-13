@@ -603,24 +603,6 @@ class FinderVolumeFTP extends FinderVolumeDriver {
 		$pwd = ftp_pwd($this->connect);
 		@ftp_chdir($this->connect, $path);
 
-
-		/*
-		if (preg_match('/\s|\'|\"/', $path)) {
-			debug('nlist');
-			$list = ftp_nlist($this->connect, $path);
-			foreach( $list as $p ){
-				$stat = $this->stat($path.'/'.$p);
-				if( $stat && $stat['mime'] == 'directory' ){
-					debug('return true');
-					return true;
-				}
-			}
-			debug('return false');
-			return false;
-		}
-		*/
-
-
 		$list = ftp_rawlist($this->connect, '.');
 		foreach( $list as $str ){
 			$stat = $this->parseRaw($str,$path);

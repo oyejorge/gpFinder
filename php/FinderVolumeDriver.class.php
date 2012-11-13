@@ -712,10 +712,10 @@ abstract class FinderVolumeDriver {
 			$file = false;
 			if (!empty($this->options['mimefile']) && file_exists($this->options['mimefile'])) {
 				$file = $this->options['mimefile'];
-			} elseif (file_exists(dirname(__FILE__).DIRECTORY_SEPARATOR.'mime.types')) {
-				$file = dirname(__FILE__).DIRECTORY_SEPARATOR.'mime.types';
-			} elseif (file_exists(dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR.'mime.types')) {
-				$file = dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR.'mime.types';
+			} elseif (file_exists(dirname(__FILE__).'/mime.types')) {
+				$file = dirname(__FILE__).'/mime.types';
+			} elseif (file_exists(dirname(dirname(__FILE__)).'/mime.types')) {
+				$file = dirname(dirname(__FILE__)).'/mime.types';
 			}
 
 			if ($file && file_exists($file)) {
@@ -1838,7 +1838,7 @@ abstract class FinderVolumeDriver {
 			$p = $this->_relpath($path);
 			// if reqesting root dir $path will be empty, then assign '/' as we cannot leave it blank for crypt
 			if ($p === '')	{
-				$p = DIRECTORY_SEPARATOR;
+				$p = $this->separator;
 			}
 
 			// TODO crypt path and return hash
@@ -1967,7 +1967,7 @@ abstract class FinderVolumeDriver {
 	 * @author Dmitry (dio) Levashov
 	 **/
 	protected function _joinPath($dir, $name) {
-		return rtrim($dir,DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . ltrim($name,DIRECTORY_SEPARATOR);
+		return rtrim($dir,$this->separator) . $this->separator . ltrim($name,$this->separator);
 	}
 	/*********************** file stat *********************/
 
@@ -3306,7 +3306,7 @@ abstract class FinderVolumeDriver {
 		if( $path == $this->root ){
 			return '';
 		}
-		if( $this->root == DIRECTORY_SEPARATOR ){
+		if( $this->root == $this->separator ){
 			return substr($path,1);
 		}
 		return substr($path, strlen($this->root)+1);
@@ -3350,7 +3350,7 @@ abstract class FinderVolumeDriver {
 	 * @author Dmitry (dio) Levashov
 	 **/
 	protected function _inpath($path, $parent) {
-		return $path == $parent || strpos($path, $this->_joinPath($parent,DIRECTORY_SEPARATOR) ) === 0;
+		return $path == $parent || strpos($path, $this->_joinPath($parent,$this->separator) ) === 0;
 	}
 
 

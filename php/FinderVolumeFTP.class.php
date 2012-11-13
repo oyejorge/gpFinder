@@ -294,7 +294,7 @@ class FinderVolumeFTP extends FinderVolumeDriver {
 				$name_parts = explode('->',$stat['name']);
 				$stat['name'] = trim($name_parts[0]);
 				$target = trim($name_parts[1]);
-				if( $target[0] != DIRECTORY_SEPARATOR ){
+				if( $target[0] != $this->separator ){
 					$target = $this->_joinPath($path,$target);
 				}
 				$target = $this->_normpath($target);

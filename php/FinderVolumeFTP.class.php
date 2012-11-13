@@ -326,6 +326,39 @@ class FinderVolumeFTP extends FinderVolumeDriver {
 	}
 
 	/**
+	 * Wrapper for ftp_rawlist
+	 *
+	 * @param string $path
+	 * @return array The parsed results of ftp_rawlist( $path )
+	 */
+	protected function RawList($path){
+		static $cache = array();
+
+		if( isset($cache[$path]) ){
+			return $cache[$path];
+		}
+
+		$pwd = ftp_pwd($this->connect);
+		@ftp_chdir($this->connect, $path);
+		$list = ftp_rawlist($this->connect, '.');
+		ftp_chdir($this->connect, $pwd);
+
+		if( !$list ){
+			return $list;
+		}
+
+		$cache[$path] = array();
+		foreach($list as $raw){
+			$stat = $this->parseRaw($raw,$path);
+			if( $stat ){
+				$cache[$path][] = $stat;
+			}
+		}
+		return $cache[$path];
+	}
+
+
+	/**
 	 * Parse permissions string. Return array(read => true/false, write => true/false)
 	 *
 	 * @param  string  $perm  permissions string
@@ -358,28 +391,11 @@ class FinderVolumeFTP extends FinderVolumeDriver {
 	protected function cacheDir($path) {
 		$this->dirsCache[$path] = array();
 
-		if( preg_match('/\s|\'|\"/', $path) ){
-			$list = ftp_nlist($this->connect, $path);
-			foreach($list as $p) {
-				$p = $this->_joinPath($path,$p);
-				if (($stat = $this->_stat($p)) && empty($stat['hidden'])) {
-					// $files[] = $stat;
-					$this->dirsCache[$path][] = $p;
-				}
-			}
-			return;
-		}
-
-		$list = ftp_rawlist($this->connect, $path);
-		foreach($list as $raw) {
-			$stat = $this->parseRaw($raw,$path);
-			if( !$stat ){
-				continue;
-			}
+		$list = $this->RawList($path);
+		foreach($list as $stat){
 			$p    = $this->_joinPath($path,$stat['name']);
 			$stat = $this->updateCache($p, $stat);
-			if (empty($stat['hidden'])) {
-				// $files[] = $stat;
+			if( empty($stat['hidden']) ){
 				$this->dirsCache[$path][] = $p;
 			}
 		}
@@ -600,19 +616,12 @@ class FinderVolumeFTP extends FinderVolumeDriver {
 	 **/
 	protected function _subdirs($path) {
 
-		$pwd = ftp_pwd($this->connect);
-		@ftp_chdir($this->connect, $path);
-
-		$list = ftp_rawlist($this->connect, '.');
-		foreach( $list as $str ){
-			$stat = $this->parseRaw($str,$path);
+		$list = $this->RawList($path);
+		foreach($list as $stat){
 			if( $stat && $stat['mime'] == 'directory' ){
-				ftp_chdir($this->connect, $pwd);
 				return true;
 			}
 		}
-
-		ftp_chdir($this->connect, $pwd);
 		return false;
 	}
 
@@ -640,14 +649,10 @@ class FinderVolumeFTP extends FinderVolumeDriver {
 	 * @author Cem (DiscoFever)
 	 **/
 	protected function _scandir($path) {
-		$files = array();
-
-		foreach (ftp_rawlist($this->connect, $path) as $str) {
-			if (($stat = $this->parseRaw($str,$path))) {
-				$files[] = $this->_joinPath( $path, $stat['name'] );
-			}
+		$list = $this->RawList($path);
+		foreach($list as $stat){
+			$files[] = $this->_joinPath( $path, $stat['name'] );
 		}
-
 		return $files;
 	}
 
@@ -949,5 +954,7 @@ class FinderVolumeFTP extends FinderVolumeDriver {
 		die('Not yet implemented. (_archive)');
 		return false;
 	}
+
+
 
 } // END class

@@ -2167,8 +2167,9 @@ abstract class FinderVolumeDriver {
 	protected function cacheDir($path) {
 		$this->dirsCache[$path] = array();
 
-		foreach ($this->_scandir($path) as $p) {
-			if (($stat = $this->stat($p)) && empty($stat['hidden'])) {
+		foreach( $this->_scandir($path) as $p ){
+			$stat = $this->stat($p);
+			if( $stat && empty($stat['hidden']) ){
 				$this->dirsCache[$path][] = $p;
 			}
 		}
@@ -2347,8 +2348,9 @@ abstract class FinderVolumeDriver {
 
 		!isset($this->dirsCache[$path]) && $this->cacheDir($path);
 
-		foreach ($this->dirsCache[$path] as $p) {
-			if (($stat = $this->stat($p)) && empty($stat['hidden'])) {
+		foreach( $this->dirsCache[$path] as $p ){
+			$stat = $this->stat($p);
+			if( $stat && empty($stat['hidden']) ){
 				$files[] = $stat;
 			}
 		}

@@ -229,7 +229,8 @@ class FinderVolumeLocalFileSystem extends FinderVolumeDriver {
 		}
 
 		if( $this->_inpath($atarget, $this->aroot) ){
-			return $this->_normpath( $this->_joinPath( $this->root, substr($atarget, strlen($this->aroot)+1)) );
+			$arelative = substr( $atarget, strlen($this->aroot) );
+			return $this->_joinPath($this->root, $arelative );
 		}
 
 		return false;

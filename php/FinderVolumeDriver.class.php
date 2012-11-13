@@ -1957,18 +1957,6 @@ abstract class FinderVolumeDriver {
 	}
 
 
-	/**
-	 * Join dir name and file name and return full path.
-	 * Some drivers (db) use int as path - so we give to concat path to driver itself
-	 *
-	 * @param  string  $dir   dir path
-	 * @param  string  $name  file name
-	 * @return string
-	 * @author Dmitry (dio) Levashov
-	 **/
-	protected function _joinPath($dir, $name) {
-		return rtrim($dir,$this->separator) . $this->separator . ltrim($name,$this->separator);
-	}
 	/*********************** file stat *********************/
 
 	/**
@@ -3241,32 +3229,46 @@ abstract class FinderVolumeDriver {
 
 
 	/**
+	 * Join dir name and file name and return full path.
+	 * Some drivers (db) use int as path - so we give to concat path to driver itself
+	 *
+	 * @param  string  $dir   dir path
+	 * @param  string  $name  file name
+	 * @return string
+	 * @author Dmitry (dio) Levashov
+	 **/
+	protected function _joinPath($dir, $name){
+		$dir = $this->_separator($dir);
+		$name = $this->_separator($name);
+		return rtrim($dir,$this->separator) . $this->separator . ltrim($name,$this->separator);
+	}
+
+
+	/**
 	 * Return normalized path, this works the same as os.path.normpath() in Python
 	 *
 	 * @param  string  $path  path
 	 * @return string
 	 * @author Troex Nevelin
 	 **/
-	protected function _normpath($path) {
-		if (empty($path)) {
+	protected function _normpath( $path ){
+		$path = $this->_separator( $path );
+		if( empty($path) ){
 			return '.';
 		}
 
-		if (strpos($path, '/') === 0) {
-			$initial_slashes = true;
-		} else {
-			$initial_slashes = false;
+		$initial_slashes = 0;
+		if( strpos($path, $this->separator) === 0 ){
+			$initial_slashes = 1;
 		}
 
-		if (($initial_slashes)
-		&& (strpos($path, '//') === 0)
-		&& (strpos($path, '///') === false)) {
-			$initial_slashes = 2;
+		if( $initial_slashes
+			&& (strpos($path, $this->separator.$this->separator ) === 0)
+			&& (strpos($path, $this->separator.$this->separator.$this->separator) === false) ){
+				$initial_slashes = 2;
 		}
 
-		$initial_slashes = (int) $initial_slashes;
-
-		$comps = explode('/', $path);
+		$comps = explode($this->separator, $path);
 		$new_comps = array();
 		foreach ($comps as $comp) {
 			if (in_array($comp, array('', '.'))) {
@@ -3281,12 +3283,7 @@ abstract class FinderVolumeDriver {
 				array_pop($new_comps);
 			}
 		}
-		$comps = $new_comps;
-		$path = implode('/', $comps);
-		if ($initial_slashes) {
-			$path = str_repeat('/', $initial_slashes) . $path;
-		}
-
+		$path = str_repeat($this->separator, $initial_slashes) . implode($this->separator, $new_comps);
 
 		return $path ? $path : '.';
 	}

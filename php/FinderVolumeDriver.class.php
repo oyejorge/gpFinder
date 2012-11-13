@@ -3351,6 +3351,15 @@ abstract class FinderVolumeDriver {
 	}
 
 
+	/**
+	 * Make sure the path is using the correct separator
+	 *
+	 */
+	protected function _separator($path){
+		return str_replace( array('/','\\'), $this->separator, $path);
+	}
+
+
 	/**==================================* abstract methods *====================================**/
 
 

@@ -211,17 +211,20 @@ class FinderVolumeLocalFileSystem extends FinderVolumeDriver {
 	 * @author Dmitry (dio) Levashov
 	 **/
 	protected function readlink($path) {
-		if (!($target = @readlink($path))) {
+		$target = @readlink($path);
+		if( !$target ){
 			return false;
 		}
 
-		if (substr($target, 0, 1) != DIRECTORY_SEPARATOR) {
+		$target = $this->_separator($target);
+
+		if( $target[0] != $this->separator ){
 			$target = $this->_joinPath( dirname($path), $target );
 		}
 
 		$atarget = realpath($target);
 
-		if (!$atarget) {
+		if( !$atarget ){
 			return false;
 		}
 

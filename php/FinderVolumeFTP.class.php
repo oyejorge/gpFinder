@@ -332,29 +332,15 @@ class FinderVolumeFTP extends FinderVolumeDriver {
 	 * @return array The parsed results of ftp_rawlist( $path )
 	 */
 	protected function RawList($path){
-		static $cache = array();
-
-		if( isset($cache[$path]) ){
-			return $cache[$path];
-		}
 
 		$pwd = ftp_pwd($this->connect);
 		@ftp_chdir($this->connect, $path);
 		$list = ftp_rawlist($this->connect, '.');
-		ftp_chdir($this->connect, $pwd);
-
-		if( !$list ){
-			return $list;
+		if( $pwd ){
+			ftp_chdir($this->connect, $pwd);
 		}
 
-		$cache[$path] = array();
-		foreach($list as $raw){
-			$stat = $this->parseRaw($raw,$path);
-			if( $stat ){
-				$cache[$path][] = $stat;
-			}
-		}
-		return $cache[$path];
+		return $list;
 	}
 
 
@@ -392,10 +378,15 @@ class FinderVolumeFTP extends FinderVolumeDriver {
 		$this->dirsCache[$path] = array();
 
 		$list = $this->RawList($path);
-		foreach($list as $stat){
-			$p    = $this->_joinPath($path,$stat['name']);
-			$stat = $this->updateCache($p, $stat);
-			if( empty($stat['hidden']) ){
+		if( !$list ){
+			return;
+		}
+
+		foreach($list as $raw){
+			$stat = $this->parseRaw($raw,$path);
+			if( $stat && empty($stat['hidden']) ){
+				$p = $this->_joinPath($path,$stat['name']);
+				$this->updateCache( $p, $stat );
 				$this->dirsCache[$path][] = $p;
 			}
 		}
@@ -606,24 +597,6 @@ class FinderVolumeFTP extends FinderVolumeDriver {
 		return $this->is_dir($path);
 	}
 
-
-	/**
-	 * Return true if path is dir and has at least one childs directory
-	 *
-	 * @param  string  $path  dir path
-	 * @return bool
-	 * @author Dmitry (dio) Levashov
-	 **/
-	protected function _subdirs($path) {
-
-		$list = $this->RawList($path);
-		foreach($list as $stat){
-			if( $stat && $stat['mime'] == 'directory' ){
-				return true;
-			}
-		}
-		return false;
-	}
 
 	/**
 	 * Return object width and height

@@ -602,17 +602,6 @@ class FinderVolumeMySQL extends FinderVolumeDriver {
 	}
 
 	/**
-	 * Return true if path is dir and has at least one childs directory
-	 *
-	 * @param  string  $path  dir path
-	 * @return bool
-	 * @author Dmitry (dio) Levashov
-	 **/
-	protected function _subdirs($path) {
-		return ($stat = $this->stat($path)) && isset($stat['dirs']) ? $stat['dirs'] : false;
-	}
-
-	/**
 	 * Return object width and height
 	 * Usualy used for images, but can be realize for video etc...
 	 *

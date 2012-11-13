@@ -165,29 +165,6 @@ class FinderVolumeLocalFileSystem extends FinderVolumeDriver {
 
 
 	/**
-	 * Return true if path is dir and has at least one childs directory
-	 *
-	 * @param  string  $path  dir path
-	 * @return bool
-	 * @author Dmitry (dio) Levashov
-	 **/
-	protected function _subdirs($path) {
-
-		if (($dir = dir($path))) {
-			$dir = dir($path);
-			while (($entry = $dir->read()) !== false) {
-				$p = $this->_joinPath( $dir->path, $entry);
-				if ($entry != '.' && $entry != '..' && is_dir($p) && !$this->attr($p, 'hidden')) {
-					$dir->close();
-					return true;
-				}
-			}
-			$dir->close();
-		}
-		return false;
-	}
-
-	/**
 	 * Return object width and height
 	 * Ususaly used for images, but can be realize for video etc...
 	 *

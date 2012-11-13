@@ -459,6 +459,13 @@ abstract class FinderVolumeDriver {
 	 **/
 	protected $dirsCache = array();
 
+	/**
+	 * Cache storing which directories have subdirectories
+	 *
+	 */
+	protected $subdirCache = array();
+
+
 	/*********************************************************************/
 	/*                            INITIALIZATION                         */
 	/*********************************************************************/
@@ -2111,41 +2118,12 @@ abstract class FinderVolumeDriver {
 			unset($stat['hidden']);
 		}
 
-		if ($stat['read'] && empty($stat['hidden'])) {
-
-			if ($stat['mime'] == 'directory') {
-				// for dir - check for subdirs
-
-				if ($this->options['checkSubfolders']) {
-					if (isset($stat['dirs'])) {
-						if ($stat['dirs']) {
-							$stat['dirs'] = 1;
-						} else {
-							unset($stat['dirs']);
-						}
-					} elseif (!empty($stat['alias']) && !empty($stat['target'])) {
-
-						if( isset($this->cache[$stat['target']]) ){
-							$stat['dirs'] = intval(isset($this->cache[$stat['target']]['dirs']));
-						}else{
-							$stat['dirs'] = $this->_subdirs($stat['target']);
-						}
-
-					} elseif( $this->_subdirs($path)) {
-						$stat['dirs'] = 1;
-					}
-
-				} else {
-					$stat['dirs'] = 1;
-				}
-			} else {
-				// for files - check for thumbnails
-				$p = isset($stat['target']) ? $stat['target'] : $path;
-				if ($this->tmbURL && !isset($stat['tmb']) && $this->canCreateTmb($p, $stat)) {
-					$tmb = $this->gettmb($p, $stat);
-					$stat['tmb'] = $tmb ? $tmb : 1;
-				}
-
+		// for files - check for thumbnails
+		if( $stat['read'] && empty($stat['hidden']) && ($stat['mime'] != 'directory') ){
+			$p = isset($stat['target']) ? $stat['target'] : $path;
+			if ($this->tmbURL && !isset($stat['tmb']) && $this->canCreateTmb($p, $stat)) {
+				$tmb = $this->gettmb($p, $stat);
+				$stat['tmb'] = $tmb ? $tmb : 1;
 			}
 		}
 
@@ -2182,7 +2160,7 @@ abstract class FinderVolumeDriver {
 	 * @author Dmitry (dio) Levashov
 	 **/
 	protected function clearcache() {
-		$this->cache = $this->dirsCache = array();
+		$this->cache = $this->dirsCache = $this->subdirCache = array();
 	}
 
 	/**
@@ -2351,11 +2329,37 @@ abstract class FinderVolumeDriver {
 		foreach( $this->dirsCache[$path] as $p ){
 			$stat = $this->stat($p);
 			if( $stat && empty($stat['hidden']) ){
-				$files[] = $stat;
+				$files[$p] = $stat;
 			}
 		}
 
 		return $files;
+	}
+
+	/**
+	 * Return true if the directory given by path has subdirectories
+	 *
+	 */
+	protected function HasSubdirs( $path ){
+
+		if( isset($this->subdirCache[ $path ]) ){
+			return $this->subdirCache[ $path ];
+		}
+
+		if( $this->options['checkSubfolders'] ){
+			return false;
+		}
+
+
+		$list = $this->getScandir($path);
+		foreach($list as $path => $stat){
+			if( $stat['mime'] == 'directory' ){
+				$this->subdirCache[ $path ] = true;
+				return true;
+			}
+		}
+		$this->subdirCache[ $path ] = false;
+		return false;
 	}
 
 
@@ -2375,11 +2379,13 @@ abstract class FinderVolumeDriver {
 		foreach ($this->dirsCache[$path] as $p) {
 			$stat = $this->stat($p);
 
-			if ($stat && empty($stat['hidden']) && $p != $exclude && $stat['mime'] == 'directory') {
-				$dirs[] = $stat;
-				if ($deep > 0 && !empty($stat['dirs'])) {
-					$dirs = array_merge($dirs, $this->gettree($p, $deep-1));
-				}
+			if( !$stat || empty($stat['hidden']) || $stat['mime'] !== 'directory' || $p == $exclude ){
+				continue;
+			}
+
+			$dirs[] = $stat;
+			if( $deep > 0 && $this->HasSubdirs($p) ){
+				$dirs = array_merge($dirs, $this->gettree($p, $deep-1));
 			}
 		}
 
@@ -3390,14 +3396,6 @@ abstract class FinderVolumeDriver {
 	/***************** file stat ********************/
 
 
-	/**
-	 * Return true if path is dir and has at least one childs directory
-	 *
-	 * @param  string  $path  dir path
-	 * @return bool
-	 * @author Dmitry (dio) Levashov
-	 **/
-	abstract protected function _subdirs($path);
 
 	/**
 	 * Return object width and height

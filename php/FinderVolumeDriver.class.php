@@ -614,7 +614,7 @@ abstract class FinderVolumeDriver {
 
 		// root attributes
 		$this->attributes[] = array(
-			'pattern' => '~^'.preg_quote(DIRECTORY_SEPARATOR).'$~',
+			'pattern' => '~^'.preg_quote($this->separator).'$~',
 			'locked'  => true,
 			'hidden'  => false
 		);
@@ -1985,7 +1985,6 @@ abstract class FinderVolumeDriver {
 			return false;
 		}
 
-
 		$perm = null;
 
 		if( $this->access ){
@@ -1995,14 +1994,12 @@ abstract class FinderVolumeDriver {
 			}
 		}
 
-		$path = $this->_relpath($path);
-		$path = str_replace($this->separator, '/', $path);
-		$path = '/'.$path;
+		$path = $this->separator.$this->_relpath($path);
 
 		for ($i = 0, $c = count($this->attributes); $i < $c; $i++) {
 			$attrs = $this->attributes[$i];
-
-			if (isset($attrs[$name]) && isset($attrs['pattern']) && preg_match($attrs['pattern'], $path)) {
+			trigger_error($attrs['pattern']);
+			if( isset($attrs[$name]) && isset($attrs['pattern']) && preg_match($attrs['pattern'], $path) ){
 				$perm = $attrs[$name];
 			}
 		}

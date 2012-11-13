@@ -250,7 +250,7 @@ class FinderVolumeMySQL extends FinderVolumeDriver {
 	 * @author Dmitry (dio) Levashov
 	 **/
 	protected function tmpname($path) {
-		return $this->tmpPath.DIRECTORY_SEPARATOR.md5($path);
+		return parent::_joinPath($this->tmpPath,md5($path));
 	}
 
 	/**

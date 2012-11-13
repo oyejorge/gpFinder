@@ -55,7 +55,7 @@ class FinderVolumeLocalFileSystem extends FinderVolumeDriver {
 
 		if ($this->options['quarantine']) {
 			$this->attributes[] = array(
-				'pattern' => '~^'.preg_quote(DIRECTORY_SEPARATOR.$this->options['quarantine']).'$~',
+				'pattern' => '~^'.preg_quote($this->separator.$this->options['quarantine']).'$~',
 				'read'    => false,
 				'write'   => false,
 				'locked'  => true,
@@ -65,8 +65,8 @@ class FinderVolumeLocalFileSystem extends FinderVolumeDriver {
 
 		// check thumbnails path
 		if( $this->options['tmbPath']
-			&& ($test_path = str_replace( array('\\','/'), DIRECTORY_SEPARATOR, $this->options['tmbPath']))
-			&& (strpos($test_path,DIRECTORY_SEPARATOR) === false)
+			&& ($test_path = $this->_separator($this->options['tmbPath']))
+			&& (strpos($test_path,$this->separator) === false)
 			){
 				$this->options['tmbPath'] = $this->_joinPath( $this->root, $this->options['tmbPath']);
 				$this->options['tmbPath'] = $this->_normpath($this->options['tmbPath']);
@@ -77,7 +77,8 @@ class FinderVolumeLocalFileSystem extends FinderVolumeDriver {
 		// if no thumbnails url - try detect it
 		if ($root['read'] && !$this->tmbURL && $this->URL) {
 			if (strpos($this->tmbPath, $this->root) === 0) {
-				$this->tmbURL = $this->URL.str_replace(DIRECTORY_SEPARATOR, '/', substr($this->tmbPath, strlen($this->root)+1));
+				$temp = substr($this->tmbPath, strlen($this->root)+1);
+				$this->tmbURL = $this->URL . str_replace($this->separator, '/', $temp );
 				if (preg_match("|[^/?&=]$|", $this->tmbURL)) {
 					$this->tmbURL .= '/';
 				}

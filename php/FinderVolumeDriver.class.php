@@ -2399,10 +2399,8 @@ abstract class FinderVolumeDriver {
 	protected function gettree($path, $deep, $exclude='') {
 		$dirs = array();
 
-		!isset($this->dirsCache[$path]) && $this->cacheDir($path);
-
-		foreach ($this->dirsCache[$path] as $p) {
-			$stat = $this->stat($p);
+		$list = $this->getScandir($path);
+		foreach($list as $p => $stat){
 
 			if( !$stat || !empty($stat['hidden']) || $stat['mime'] !== 'directory' || $p == $exclude ){
 				continue;

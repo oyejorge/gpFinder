@@ -7,6 +7,25 @@ include_once( dirname(__FILE__).'/Finder.class.php' );
 
 
 /**
+ * Functions for saving and returning data used by the finder
+ *
+ */
+if( session_id() == '' ){
+	session_start();
+}
+function SaveFinderData($data){
+	$_SESSION['finder_data'] = $data;
+}
+function ReturnFinderData(){
+	if( isset($_SESSION['finder_data']) ){
+		return $_SESSION['finder_data'];
+	}
+	return false;
+}
+
+
+
+/**
  * Simple function to demonstrate how to control file access using "accessControl" callback.
  * This method will disable accessing files/folders starting from '.' (dot)
  *
@@ -25,6 +44,8 @@ function access($attr, $path, $data, $volume) {
 // https://github.com/oyejorge/gpFinder/wiki/Connector-configuration-options
 $opts = array(
 	// 'debug' => true,
+	'saveData' => 'SaveFinderData',
+	'returnData' => 'ReturnFinderData',
 	'roots' => array(
 		array(
 			'driver'        => 'LocalFileSystem',   // driver for accessing file system (REQUIRED)

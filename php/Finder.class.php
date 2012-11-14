@@ -756,8 +756,8 @@ class Finder {
 			return array('error' => $this->error(self::ERROR_OPEN, $cwd['name'], $volume->error()));
 		}
 
-		foreach ($ls as $file) {
-			if (!in_array($file, $files)) {
+		foreach( $ls as $file ){
+			if( !in_array($file, $files) ){
 				$files[] = $file;
 			}
 		}
@@ -786,11 +786,16 @@ class Finder {
 	 **/
 	protected function ls($args) {
 		$target = $args['target'];
-
-		if (($volume = $this->volume($target)) == false
-		|| ($list = $volume->ls($target)) === false) {
+		$volume = $this->volume($target);
+		if( $volume == false ){
 			return array('error' => $this->error(self::ERROR_OPEN, '#'.$target));
 		}
+
+		$list = $volume->ls($target);
+		if( $list == false ){
+			return array('error' => $this->error(self::ERROR_OPEN, '#'.$target));
+		}
+
 		return array('list' => $list);
 	}
 
@@ -804,8 +809,13 @@ class Finder {
 	protected function tree($args) {
 		$target = $args['target'];
 
-		if (($volume = $this->volume($target)) == false
-		|| ($tree = $volume->tree($target)) == false) {
+		$volume = $this->volume($target);
+		if( $volume == false ){
+			return array('error' => $this->error(self::ERROR_OPEN, '#'.$target));
+		}
+
+		$tree = $volume->tree($target);
+		if( $tree == false ){
 			return array('error' => $this->error(self::ERROR_OPEN, '#'.$target));
 		}
 
@@ -822,8 +832,13 @@ class Finder {
 	protected function parents($args) {
 		$target = $args['target'];
 
-		if (($volume = $this->volume($target)) == false
-		|| ($tree = $volume->parents($target)) == false) {
+		$volume = $this->volume($target);
+		if( $volume == false ){
+			return array('error' => $this->error(self::ERROR_OPEN, '#'.$target));
+		}
+
+		$tree = $volume->parents($target);
+		if( $tree == false ){
 			return array('error' => $this->error(self::ERROR_OPEN, '#'.$target));
 		}
 

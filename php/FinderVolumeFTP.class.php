@@ -311,16 +311,10 @@ class FinderVolumeFTP extends FinderVolumeDriver {
 					$stat['size']  = 0;
 					$stat['alias'] = $this->_relpath($target);
 
-				}elseif( $this->file_exists($target) ){
+				}else{
 					$stat['mime']  = $this->mimetype($target);
 					$stat['size']  = $info[4];
 					$stat['alias'] = $this->_relpath($target);
-
-				}else{
-					$stat['mime']  = 'symlink-broken';
-					$stat['read']  = false;
-					$stat['write'] = false;
-					$stat['size']  = 0;
 				}
 
 				return $stat;
@@ -437,32 +431,29 @@ class FinderVolumeFTP extends FinderVolumeDriver {
 	 */
 	protected function _stat($path){
 
-		//check file existence
-		if( !$this->file_exists($path) ){
-			return false;
-		}
-
 		//use MLST if available
 		$stat = $this->MLST($path);
 		if( $stat ){
 			return $stat;
 		}
 
-		$pwd = ftp_pwd($this->connect);
-		ftp_chdir($this->connect, $path);
-		$cwd = ftp_pwd($this->connect);
-
+		//directories
 		$stat = array();
-		$stat['size'] = ftp_size($this->connect, '.');
-		$stat['ts'] = ftp_mdtm($this->connect, '.');
-
 		if( $this->is_dir($path) ){
 			$stat['mime'] = 'directory';
-		}else{
-			$stat['mime'] = $this->mimetype($path);
+			$stat['size'] = 0;
+			return $stat;
 		}
 
-		ftp_chdir($this->connect, $pwd);
+		//files
+		$size = ftp_size($this->connect, $path);
+		if( !$size ){
+			return false;
+		}
+
+		$stat['mime'] = $this->mimetype($path);
+		$stat['size'] = $size;
+		$stat['ts'] = ftp_mdtm($this->connect, $path);
 
 		return $stat;
 	}
@@ -590,19 +581,6 @@ class FinderVolumeFTP extends FinderVolumeDriver {
 			}
 		}
 		return false;
-	}
-
-	/**
-	 * Return true if the $path exists
-	 *
-	 */
-	function file_exists($path){
-		$list = @ftp_nlist($this->connect, $path);
-		if( !empty($list) ){
-			return true;
-		}
-
-		return $this->is_dir($path);
 	}
 
 

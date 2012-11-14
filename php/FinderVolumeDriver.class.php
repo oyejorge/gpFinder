@@ -1031,8 +1031,9 @@ abstract class FinderVolumeDriver {
 	 * @return array|false
 	 * @author Dmitry (dio) Levashov
 	 **/
-	public function dir($hash, $resolveLink=false) {
-		$dir = $this->file($hash);
+	public function dir( $hash, $resolveLink=false ){
+		$path = $this->decode($hash);
+		$dir = $this->stat($path);
 		if( $dir == false ){
 			return $this->setError(Finder::ERROR_DIR_NOT_FOUND);
 		}
@@ -1041,9 +1042,12 @@ abstract class FinderVolumeDriver {
 			$dir = $this->file($dir['thash']);
 		}
 
-		return $dir && $dir['mime'] == 'directory' && empty($dir['hidden'])
-			? $dir
-			: $this->setError(Finder::ERROR_NOT_DIR);
+		if( !$dir || $dir['mime'] != 'directory' || !empty($dir['hidden']) ){
+			return $this->setError(Finder::ERROR_NOT_DIR);
+		}
+
+		$dir = $this->HasSubdirs($path,$dir);
+		return $dir;
 	}
 
 	/**
@@ -2142,7 +2146,8 @@ abstract class FinderVolumeDriver {
 			unset($stat['target']);
 		}
 
-		return $this->cache[$path] = $stat;
+		$this->cache[$path] = $stat;
+		return $stat;
 	}
 
 
@@ -2359,14 +2364,14 @@ abstract class FinderVolumeDriver {
 	 * Return true if the directory given by path has subdirectories
 	 *
 	 */
-	protected function HasSubdirs( $path ){
+	protected function HasSubdirs( $path, $stat ){
 
-		if( isset($this->subdirCache[ $path ]) ){
-			return $this->subdirCache[ $path ];
+		if( isset($stat['dirs']) ){
+			return $stat;
 		}
 
 		if( !$this->options['checkSubfolders'] ){
-			return 0;
+			return $stat;
 		}
 
 
@@ -2374,12 +2379,12 @@ abstract class FinderVolumeDriver {
 
 		foreach($list as $p => $s){
 			if( $s['mime'] == 'directory' ){
-				$this->subdirCache[ $path ] = 1;
-				return 1;
+				$stat['dirs'] = 1;
+				return $this->updateCache($path, $stat );
 			}
 		}
-		$this->subdirCache[ $path ] = 0;
-		return 0;
+		$stat['dirs'] = 0;
+		return $this->updateCache($path, $stat );
 	}
 
 
@@ -2403,47 +2408,15 @@ abstract class FinderVolumeDriver {
 				continue;
 			}
 
-			$has_subdirs = $this->HasSubdirs($p);
-			$stat['dirs'] = 0;
-			if( $has_subdirs ){
-				$stat['dirs'] = 1;
-			}
-			$this->updateCache($p, $stat );
+			$stat = $this->HasSubdirs($p,$stat);
 			$dirs[] = $stat;
-			if( $deep > 0 && $has_subdirs ){
+			if( $deep > 0 && $stat['dirs'] ){
 				$dirs = array_merge($dirs, $this->gettree($p, $deep-1));
 			}
 		}
 
 		return $dirs;
 	}
-
-	/**
-	 * Return subdirs tree
-	 *
-	 * @param  string  $path  parent dir path
-	 * @param  int     $deep  tree deep
-	 * @return array
-	 * @author Dmitry (dio) Levashov
-	protected function gettree($path, $deep, $exclude='') {
-		$dirs = array();
-
-		!isset($this->dirsCache[$path]) && $this->cacheDir($path);
-
-		foreach ($this->dirsCache[$path] as $p) {
-			$stat = $this->stat($p);
-
-			if ($stat && empty($stat['hidden']) && $p != $exclude && $stat['mime'] == 'directory') {
-				$dirs[] = $stat;
-				if ($deep > 0 && !empty($stat['dirs'])) {
-					$dirs = array_merge($dirs, $this->gettree($p, $deep-1));
-				}
-			}
-		}
-
-		return $dirs;
-	}
-	 **/
 
 
 	/**

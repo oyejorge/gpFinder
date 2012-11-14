@@ -224,7 +224,7 @@ class FinderVolumeLocalFileSystem extends FinderVolumeDriver {
 	protected function _scandir($path) {
 		$files = array();
 
-		foreach (scandir($path) as $name) {
+		foreach(scandir($path) as $name) {
 			if ($name != '.' && $name != '..') {
 				$files[] = $this->_joinPath( $path, $name );
 			}

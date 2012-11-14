@@ -149,8 +149,8 @@
 			$('#finder').finder({
 				requestType : 'post',
 
-				// url : 'php/connector.php',
-				url : 'php/connector.php',
+				// url : 'php/connector.src.php',
+				url : 'php/connector.src.php',
 				debug : true, //['error', 'warning', 'event-destroy'],
 				handlers : {
                     select : function(event, FinderInstance) {
@@ -230,7 +230,7 @@
 
 			$('#dialog').click(function() {
 				var fm = $('<div/>').dialogfinder({
-					url : 'php/connector.php',
+					url : 'php/connector.src.php',
 					lang : 'en',
 					width : 840,
 					destroyOnClose : true,

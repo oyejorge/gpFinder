@@ -24,7 +24,7 @@ $.fn.findernavbar = function(fm, opts) {
 				})
 				.bind('resize scroll', function() {
 					handle.css({
-						top  : parseInt(nav.scrollTop())+'px',
+						top  : parseInt(nav.scrollTop())+'px'
 					})
 				})
 				.find('.ui-resizable-handle').zIndex(nav.zIndex() + 10);

@@ -614,22 +614,6 @@ class FinderVolumeFTP extends FinderVolumeDriver {
 	/******************** file/dir content *********************/
 
 	/**
-	 * Return files list in directory.
-	 *
-	 * @param  string  $path  dir path
-	 * @return array
-	 * @author Dmitry (dio) Levashov
-	 * @author Cem (DiscoFever)
-	 **/
-	protected function _scandir($path) {
-		$list = $this->RawList($path);
-		foreach($list as $stat){
-			$files[] = $this->_joinPath( $path, $stat['name'] );
-		}
-		return $files;
-	}
-
-	/**
 	 * Open file and return file pointer
 	 *
 	 * @param  string  $path  file path

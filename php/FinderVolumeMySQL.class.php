@@ -617,19 +617,6 @@ class FinderVolumeMySQL extends FinderVolumeDriver {
 	/******************** file/dir content *********************/
 
 	/**
-	 * Return files list in directory.
-	 *
-	 * @param  string  $path  dir path
-	 * @return array
-	 * @author Dmitry (dio) Levashov
-	 **/
-	protected function _scandir($path) {
-		return isset($this->dirsCache[$path])
-			? $this->dirsCache[$path]
-			: $this->cacheDir($path);
-	}
-
-	/**
 	 * Open file and return file pointer
 	 *
 	 * @param  string  $path  file path

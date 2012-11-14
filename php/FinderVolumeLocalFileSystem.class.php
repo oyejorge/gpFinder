@@ -215,22 +215,24 @@ class FinderVolumeLocalFileSystem extends FinderVolumeDriver {
 	}
 
 	/**
-	 * Return files list in directory.
+	 * Get stat for folder content and put in cache
 	 *
-	 * @param  string  $path  dir path
-	 * @return array
-	 * @author Dmitry (dio) Levashov
-	 **/
-	protected function _scandir($path) {
-		$files = array();
+	 * @param  string  $path
+	 * @return void
+	 */
+	protected function cacheDir($path){
+		$this->dirsCache[$path] = array();
 
-		foreach(scandir($path) as $name) {
-			if ($name != '.' && $name != '..') {
-				$files[] = $this->_joinPath( $path, $name );
+		$list = scandir($path);
+		foreach($list as $file){
+			if( $file == '.' || $file == '..' ){
+				continue;
 			}
+			$p = $this->_joinPath( $path, $file );
+			$this->dirsCache[$path][] = $p;
 		}
-		return $files;
 	}
+
 
 	/**
 	 * Open file and return file pointer

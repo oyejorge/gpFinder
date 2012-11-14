@@ -2175,23 +2175,6 @@ abstract class FinderVolumeDriver {
 	}
 
 
-	/**
-	 * Get stat for folder content and put in cache
-	 *
-	 * @param  string  $path
-	 * @return void
-	 * @author Dmitry (dio) Levashov
-	 **/
-	protected function cacheDir($path) {
-		$this->dirsCache[$path] = array();
-
-		foreach( $this->_scandir($path) as $p ){
-			$stat = $this->stat($p);
-			if( $stat && empty($stat['hidden']) ){
-				$this->dirsCache[$path][] = $p;
-			}
-		}
-	}
 
 	/**
 	 * Clean cache
@@ -3428,6 +3411,16 @@ abstract class FinderVolumeDriver {
 	abstract protected function _stat($path);
 
 
+	/**
+	 * Get stat for folder content and put in cache
+	 *
+	 * @param  string  $path
+	 * @return void
+	 */
+	abstract protected function cacheDir($path);
+
+
+
 	/***************** file stat ********************/
 
 
@@ -3444,15 +3437,6 @@ abstract class FinderVolumeDriver {
 	abstract protected function _dimensions($path, $mime);
 
 	/******************** file/dir content *********************/
-
-	/**
-	 * Return files list in directory
-	 *
-	 * @param  string  $path  dir path
-	 * @return array
-	 * @author Dmitry (dio) Levashov
-	 **/
-	abstract protected function _scandir($path);
 
 	/**
 	 * Open file and return file pointer

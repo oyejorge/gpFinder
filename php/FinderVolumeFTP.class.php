@@ -248,7 +248,6 @@ class FinderVolumeFTP extends FinderVolumeDriver {
 				$stat['size'] = $info[7];
 			}
 
-
 		//unix
 		}elseif( !$is_windows && $info = preg_split('/[ ]/', $line, 9, PREG_SPLIT_NO_EMPTY) ){
 			$lcount = count($info);
@@ -286,10 +285,12 @@ class FinderVolumeFTP extends FinderVolumeDriver {
 			if( $info[0]{0} === 'd' ){
 				$stat['mime'] = 'directory';
 				$stat['size'] = 0;
+				return $stat;
+			}
+
 
 			//symlink
-			}elseif( $info[0]{0} === 'l' ){
-
+			if( $info[0]{0} === 'l' ){
 
 				$name_parts = explode('->',$stat['name']);
 				$stat['name'] = trim($name_parts[0]);
@@ -299,15 +300,22 @@ class FinderVolumeFTP extends FinderVolumeDriver {
 				}
 				$target = $this->_normpath($target);
 
-				if( $this->_inpath($target, $this->root) && $this->file_exists($target) ){
-					if( $this->is_dir($target) ){
-						$stat['mime']  = 'directory';
-						$stat['size']  = 0;
-					}else{
-						$stat['mime']  = $this->mimetype($target);
-						$stat['size']  = $info[4];
-					}
+				if( !$this->_inpath($target, $this->root) ){
+					$stat['mime']  = 'symlink-broken';
+					$stat['read']  = false;
+					$stat['write'] = false;
+					$stat['size']  = 0;
+
+				}elseif( $this->is_dir($target) ){
+					$stat['mime']  = 'directory';
+					$stat['size']  = 0;
 					$stat['alias'] = $this->_relpath($target);
+
+				}elseif( $this->file_exists($target) ){
+					$stat['mime']  = $this->mimetype($target);
+					$stat['size']  = $info[4];
+					$stat['alias'] = $this->_relpath($target);
+
 				}else{
 					$stat['mime']  = 'symlink-broken';
 					$stat['read']  = false;
@@ -315,11 +323,13 @@ class FinderVolumeFTP extends FinderVolumeDriver {
 					$stat['size']  = 0;
 				}
 
-			//file
-			}else{
-				$stat['mime'] = $this->mimetype($stat['name']);
-				$stat['size'] = $info[4];
+				return $stat;
 			}
+
+
+			//file
+			$stat['mime'] = $this->mimetype($stat['name']);
+			$stat['size'] = $info[4];
 		}
 
 		return $stat;
@@ -572,8 +582,6 @@ class FinderVolumeFTP extends FinderVolumeDriver {
 		if( $path == $pwd ){
 			return true;
 		}
-
-
 
 		if( @ftp_chdir($this->connect, $path ) ){
 			$new_pwd = @ftp_pwd($this->connect);

@@ -8,4 +8,4 @@ chars-test
 .quarantine
 .easymin
 finder.src.html
-connector.php
+connector.src.php

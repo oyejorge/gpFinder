@@ -2,6 +2,9 @@
 	* Tar & Zip archive without exec()
 	* Ftp without MLST
 	* netmount returns open information instead of prompting sync
+	* Don't check for subdirs in stat() functions
+	* Using getScandir() instead of _scandir()
+	* Using $volume->separator exlusively instead of DIRECTORY_SEPARATOR
 
 2012-11-02  gpFinder 2.0rc1
 	* Added saveData and returnData configuration options

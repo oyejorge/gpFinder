@@ -1115,6 +1115,7 @@ abstract class FinderVolumeDriver {
 		if( $dir == false || $dir['mime'] != 'directory' ){
 			return false;
 		}
+		$dir = $this->HasSubdirs($path,$dir);
 
 		$this->options['treeDeep'] = $this->options['treeDeep'] > 0 ? (int)$this->options['treeDeep'] : 1;
 

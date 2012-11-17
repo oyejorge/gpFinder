@@ -1681,7 +1681,8 @@ window.Finder = function(node, opts) {
 	// attach events to document
 	$(document)
 		// disable finder on click outside finder
-		.bind('click.'+this.namespace, function(e) { enabled && !$(e.target).closest(node).length && self.disable(); })
+		//.bind('click.'+this.namespace, function(e) { enabled && !$(e.target).closest(node).length && self.disable(); })
+
 		// exec shortcuts
 		.bind(keydown+' '+keypress, execShortcut);
 

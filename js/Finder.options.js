@@ -227,15 +227,14 @@ Finder.prototype._options = {
 			['home', 'netmount'],
 			['mkdir', 'mkfile', 'upload'],
 			['open', 'download', 'getfile'],
-			['info'],
-			['quicklook'],
+			['info','quicklook'],
 			['copy', 'cut', 'paste'],
 			['rm'],
 			['duplicate', 'rename', 'edit', 'resize'],
 			['extract', 'archive'],
-			['search'],
 			['view', 'sort'],
-			['help']
+			['help'],
+			['search']
 		],
 		// directories tree options
 		tree : {

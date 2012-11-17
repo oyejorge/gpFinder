@@ -28,7 +28,6 @@ Finder.prototype.commands.help = function() {
 		about = function() {
 			html.push('<div id="about" class="ui-tabs-panel ui-widget-content ui-corner-bottom">')
 			html.push('<h3>gpFinder</h3>');
-			html.push('<div class="'+prim+'">An adaptation of <a href="http://elfinder.org/">Finder</a></div>');
 			html.push('<div class="'+prim+'">'+fm.i18n('webfm')+'</div>');
 			html.push('<div class="'+sec+'">'+fm.i18n('ver')+': '+fm.version+', '+fm.i18n('protocolver')+': <span id="apiver"></span></div>');
 			html.push('<div class="'+sec+'">jQuery/jQuery UI: '+$().jquery+'/'+$.ui.version+'</div>');
@@ -39,6 +38,7 @@ Finder.prototype.commands.help = function() {
 			html.push(linktpl[r](url, 'https://github.com/oyejorge/gpFinder/wiki')[r](link, fm.i18n('docs')));
 			html.push(linktpl[r](url, 'https://github.com/oyejorge/gpFinder/issues')[r](link, 'Issues'));
 			html.push(linktpl[r](url, 'https://github.com/oyejorge/gpFinder')[r](link, fm.i18n('github')));
+			html.push(linktpl[r](url, 'https://elfinder.org')[r](link, 'gpFinder is an adaptation of elFinder'));
 			//html.push(linktpl[r](url, 'http://twitter.com/elrte_elfinder')[r](link, fm.i18n('twitter')));
 
 			html.push(sep);
@@ -85,7 +85,7 @@ Finder.prototype.commands.help = function() {
 		help = function() {
 			// help tab
 			html.push('<div id="help" class="ui-tabs-panel ui-widget-content ui-corner-bottom">');
-			html.push('<a href="http://elfinder.org/forum/" target="_blank" class="finder-dont-panic"><span>DON\'T PANIC</span></a>');
+			html.push('<a href="https://github.com/oyejorge/gpFinder/issues" target="_blank" class="finder-dont-panic"><span>DON\'T PANIC</span></a>');
 			html.push('</div>');
 			// end help
 		},

@@ -652,6 +652,7 @@ class Finder {
 
 		$netVolumes        = $this->getNetVolumes();
 		$options['driver'] = $driver;
+		$options['netmount'] = true;
 		$netVolumes[]      = $options;
 		$netVolumes        = array_unique($netVolumes);
 		$this->saveNetVolumes($netVolumes);

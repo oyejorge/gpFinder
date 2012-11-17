@@ -1117,6 +1117,10 @@ abstract class FinderVolumeDriver {
 		}
 		$dir = $this->HasSubdirs($path,$dir);
 
+		if( $this->options['netmount'] ){
+			$dir['net'] = 1;
+		}
+
 		$this->options['treeDeep'] = $this->options['treeDeep'] > 0 ? (int)$this->options['treeDeep'] : 1;
 
 		$dirs = $this->gettree($path, $deep > 0 ? $deep -1 : $this->options['treeDeep']-1, $exclude ? $this->decode($exclude) : null);

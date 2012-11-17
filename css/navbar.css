@@ -104,6 +104,11 @@
 .finder-tree   .finder-navbar-root .finder-navbar-icon { background-position:0 0; }
 .finder-places .finder-navbar-root .finder-navbar-icon { background-position:0 -48px; }
 
+/* netmount */
+.finder-tree   .finder-navbar-net .finder-navbar-icon { background-position: 0 -656px; }
+
+
+
 /* icon in active/hove/dropactive state */
 .ui-state-active           .finder-navbar-icon,
 .finder-droppable-active .finder-navbar-icon,

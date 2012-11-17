@@ -223,10 +223,8 @@ Finder.prototype._options = {
 	uiOptions : {
 		// toolbar configuration
 		toolbar : [
-			['back', 'forward'],
-			['netmount'],
-			// ['reload'],
-			// ['home', 'up'],
+			['back', 'forward','up','reload'],
+			['home', 'netmount'],
 			['mkdir', 'mkfile', 'upload'],
 			['open', 'download', 'getfile'],
 			['info'],

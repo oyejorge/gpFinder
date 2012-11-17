@@ -1,3 +1,9 @@
+2012-11-11  gpFinder 2.0rc3
+	* Enable more features in net-mounted ftp volumes (copy, paste...)
+	* Unique icon for netmount
+	* Show all icons in toolbar by default
+	* Fix ftp_size usage
+
 2012-11-11  gpFinder 2.0rc2
 	* Tar & Zip archive without exec()
 	* Ftp without MLST

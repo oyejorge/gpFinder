@@ -1461,26 +1461,26 @@ abstract class FinderVolumeDriver {
 	/**
 	 * Paste files
 	 *
-	 * @param  Object  $volume  source volume
+	 * @param  Object  $src_volume  source volume
 	 * @param  string  $source  file hash
 	 * @param  string  $dst     destination dir hash
 	 * @param  bool    $rmSrc   remove source after copy?
 	 * @return array|false
 	 * @author Dmitry (dio) Levashov
 	 **/
-	public function paste($volume, $src, $dst, $rmSrc = false) {
+	public function paste($src_volume, $src, $dst, $rmSrc = false) {
 		$err = $rmSrc ? Finder::ERROR_MOVE : Finder::ERROR_COPY;
 
 		if ($this->commandDisabled('paste')) {
 			return $this->setError($err, '#'.$src, Finder::ERROR_PERM_DENIED);
 		}
 
-		if (($file = $volume->file($src, $rmSrc)) == false) {
+		if (($file = $src_volume->file($src, $rmSrc)) == false) {
 			return $this->setError($err, '#'.$src, Finder::ERROR_FILE_NOT_FOUND);
 		}
 
 		$name = $file['name'];
-		$errpath = $volume->path($src);
+		$errpath = $src_volume->path($src);
 
 		if (($dir = $this->dir($dst)) == false) {
 			return $this->setError($err, $errpath, Finder::ERROR_TRGDIR_NOT_FOUND, '#'.$dst);
@@ -1492,9 +1492,9 @@ abstract class FinderVolumeDriver {
 
 		$destination = $this->decode($dst);
 
-		if (($test = $volume->closest($src, $rmSrc ? 'locked' : 'read', $rmSrc))) {
+		if (($test = $src_volume->closest($src, $rmSrc ? 'locked' : 'read', $rmSrc))) {
 			return $rmSrc
-				? $this->setError($err, $errpath, Finder::ERROR_LOCKED, $volume->path($test))
+				? $this->setError($err, $errpath, Finder::ERROR_LOCKED, $src_volume->path($test))
 				: $this->setError($err, $errpath, Finder::ERROR_PERM_DENIED);
 		}
 
@@ -1516,7 +1516,7 @@ abstract class FinderVolumeDriver {
 					return $this->setError(Finder::ERROR_LOCKED, $this->_path($locked));
 				}
 				// target is entity file of alias
-				if ($volume == $this && ($test == @$file['target'] || $test == $this->decode($src))) {
+				if ($src_volume == $this && ($test == @$file['target'] || $test == $this->decode($src))) {
 					return $this->setError(Finder::ERROR_REPLACE, $errpath);
 				}
 				// remove existed file
@@ -1529,7 +1529,7 @@ abstract class FinderVolumeDriver {
 		}
 
 		// copy/move inside current volume
-		if ($volume == $this) {
+		if ($src_volume == $this) {
 			$source = $this->decode($src);
 			// do not copy into itself
 			if ($this->_inpath($destination, $source)) {
@@ -1540,16 +1540,16 @@ abstract class FinderVolumeDriver {
 		}
 
 		// copy/move from another volume
-		if (!$this->options['copyTo'] || !$volume->copyFromAllowed()) {
+		if (!$this->options['copyTo'] || !$src_volume->copyFromAllowed()) {
 			return $this->setError(Finder::ERROR_COPY, $errpath, Finder::ERROR_PERM_DENIED);
 		}
 
-		if (($path = $this->copyFrom($volume, $src, $destination, $name)) == false) {
+		if (($path = $this->copyFrom($src_volume, $src, $destination, $name)) == false) {
 			return false;
 		}
 
 		if ($rmSrc) {
-			if ($volume->rm($src)) {
+			if ($src_volume->rm($src)) {
 				$this->removed[] = $file;
 			} else {
 				return $this->setError(Finder::ERROR_MOVE, $errpath, Finder::ERROR_RM_SRC);

@@ -48,8 +48,9 @@ Finder.prototype.commands.info = function() {
 		});
 	}
 
-	this.getstate = function() {
-		return 0;
+	this.getstate = function(sel) {
+		var sel = this.files(sel);
+		return sel.length ? 0 : -1;
 	}
 
 	this.exec = function(hashes) {

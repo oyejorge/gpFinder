@@ -1471,18 +1471,20 @@ abstract class FinderVolumeDriver {
 	public function paste($src_volume, $src, $dst, $rmSrc = false) {
 		$err = $rmSrc ? Finder::ERROR_MOVE : Finder::ERROR_COPY;
 
-		if ($this->commandDisabled('paste')) {
+		if( $this->commandDisabled('paste') ){
 			return $this->setError($err, '#'.$src, Finder::ERROR_PERM_DENIED);
 		}
 
-		if (($file = $src_volume->file($src, $rmSrc)) == false) {
+		$file = $src_volume->file($src, $rmSrc);
+		if( $file == false ){
 			return $this->setError($err, '#'.$src, Finder::ERROR_FILE_NOT_FOUND);
 		}
 
 		$name = $file['name'];
 		$errpath = $src_volume->path($src);
 
-		if (($dir = $this->dir($dst)) == false) {
+		$dir = $this->dir($dst);
+		if( $dir == false ){
 			return $this->setError($err, $errpath, Finder::ERROR_TRGDIR_NOT_FOUND, '#'.$dst);
 		}
 
@@ -1492,7 +1494,8 @@ abstract class FinderVolumeDriver {
 
 		$destination = $this->decode($dst);
 
-		if (($test = $src_volume->closest($src, $rmSrc ? 'locked' : 'read', $rmSrc))) {
+		$test = $src_volume->closest($src, $rmSrc ? 'locked' : 'read', $rmSrc);
+		if( $test ){
 			return $rmSrc
 				? $this->setError($err, $errpath, Finder::ERROR_LOCKED, $src_volume->path($test))
 				: $this->setError($err, $errpath, Finder::ERROR_PERM_DENIED);
@@ -1544,7 +1547,8 @@ abstract class FinderVolumeDriver {
 			return $this->setError(Finder::ERROR_COPY, $errpath, Finder::ERROR_PERM_DENIED);
 		}
 
-		if (($path = $this->copyFrom($src_volume, $src, $destination, $name)) == false) {
+		$path = $this->copyFrom($src_volume, $src, $destination, $name);
+		if( $path == false) {
 			return false;
 		}
 
@@ -2530,7 +2534,8 @@ abstract class FinderVolumeDriver {
 	 **/
 	protected function copyFrom($volume, $src, $destination, $name) {
 
-		if (($source = $volume->file($src)) == false) {
+		$source = $volume->file($src);
+		if( $source == false ){
 			return $this->setError(Finder::ERROR_COPY, '#'.$src, $volume->error());
 		}
 
@@ -2544,6 +2549,7 @@ abstract class FinderVolumeDriver {
 			return $this->setError(Finder::ERROR_COPY, $errpath, Finder::ERROR_PERM_DENIED);
 		}
 
+		//directory
 		if ($source['mime'] == 'directory') {
 			$stat = $this->stat($this->_joinPath($destination, $name));
 			$this->clearcache();
@@ -2559,22 +2565,24 @@ abstract class FinderVolumeDriver {
 				}
 			}
 
-		} else {
-			$mime = $source['mime'];
-			$w = $h = 0;
-			if (strpos($mime, 'image') === 0 && ($dim = $volume->dimensions($src))) {
-				$s = explode('x', $dim);
-				$w = $s[0];
-				$h = $s[1];
-			}
-
-			if (($fp = $volume->open($src)) == false
-			|| ($path = $this->_save($fp, $destination, $name, $mime, $w, $h, $source)) == false) {
-				$fp && $volume->close($fp, $src);
-				return $this->setError(Finder::ERROR_COPY, $errpath);
-			}
-			$volume->close($fp, $src);
+			return $path;
 		}
+
+		//file
+		$mime = $source['mime'];
+		$w = $h = 0;
+		if (strpos($mime, 'image') === 0 && ($dim = $volume->dimensions($src))) {
+			$s = explode('x', $dim);
+			$w = $s[0];
+			$h = $s[1];
+		}
+
+		if (($fp = $volume->open($src)) == false
+		|| ($path = $this->_save($fp, $destination, $name, $mime, $w, $h, $source)) == false) {
+			$fp && $volume->close($fp, $src);
+			return $this->setError(Finder::ERROR_COPY, $errpath);
+		}
+		$volume->close($fp, $src);
 
 		return $path;
 	}

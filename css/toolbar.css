@@ -111,6 +111,7 @@
 .finder-button-icon-sort      { background-position: 0 -577px; }
 .finder-button-icon-rotate-r  { background-position: 0 -625px; }
 .finder-button-icon-rotate-l  { background-position: 0 -641px; }
+.finder-button-icon-netmount  { background-position: 0 -656px; }
 
 /* button with dropdown menu*/
 .finder .finder-menubutton { overflow:visible; }

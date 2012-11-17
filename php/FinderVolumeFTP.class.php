@@ -447,7 +447,7 @@ class FinderVolumeFTP extends FinderVolumeDriver {
 
 		//files
 		$size = ftp_size($this->connect, $path);
-		if( $size >= 0 ){
+		if( $size < 0 ){
 			return false;
 		}
 

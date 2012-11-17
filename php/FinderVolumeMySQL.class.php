@@ -266,21 +266,21 @@ class FinderVolumeMySQL extends FinderVolumeDriver {
 	 **/
 	public function resize($hash, $width, $height, $x, $y, $mode = 'resize', $bg = '', $degree = 0) {
 		if ($this->commandDisabled('resize')) {
-			return $this->setError(Finder::ERROR_PERM_DENIED);
+			return $this->setError('errPerm');
 		}
 
 		if (($file = $this->file($hash)) == false) {
-			return $this->setError(Finder::ERROR_FILE_NOT_FOUND);
+			return $this->setError('errFileNotFound');
 		}
 
 		if (!$file['write'] || !$file['read']) {
-			return $this->setError(Finder::ERROR_PERM_DENIED);
+			return $this->setError('errPerm');
 		}
 
 		$path = $this->decode($hash);
 
 		if (!$this->canResize($path, $file)) {
-			return $this->setError(Finder::ERROR_UNSUPPORT_TYPE);
+			return $this->setError('errUsupportType');
 		}
 
 		$img = $this->tmpname($path);

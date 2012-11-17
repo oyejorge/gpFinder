@@ -140,19 +140,11 @@ class Finder {
 	public $saveDataMethod = false;
 
 
-	// Errors messages
-	const ERROR_UNKNOWN           = 'errUnknown';
-	const ERROR_UNKNOWN_CMD       = 'errUnknownCmd';
-	const ERROR_CONF              = 'errConf';
-	const ERROR_CONF_NO_JSON      = 'errJSON';
-	const ERROR_CONF_NO_VOL       = 'errNoVolumes';
-	const ERROR_INV_PARAMS        = 'errCmdParams';
-	const ERROR_OPEN              = 'errOpen';
-	const ERROR_DIR_NOT_FOUND     = 'errFolderNotFound';
-	const ERROR_FILE_NOT_FOUND    = 'errFileNotFound';     // 'File not found.'
-	const ERROR_TRGDIR_NOT_FOUND  = 'errTrgFolderNotFound'; // 'Target folder "$1" not found.'
-	const ERROR_NOT_DIR           = 'errNotFolder';
-	const ERROR_NOT_FILE          = 'errNotFile';
+	/**
+	 * Errors message constants
+	 * @deprecated
+	 *
+	 */
 	const ERROR_PERM_DENIED       = 'errPerm';
 	const ERROR_LOCKED            = 'errLocked';        // '"$1" is locked and can not be renamed, moved or removed.'
 	const ERROR_EXISTS            = 'errExists';        // 'File named "$1" already exists.'
@@ -161,10 +153,8 @@ class Finder {
 	const ERROR_MKFILE            = 'errMkfile';
 	const ERROR_RENAME            = 'errRename';
 	const ERROR_COPY              = 'errCopy';
-	const ERROR_MOVE              = 'errMove';
-	const ERROR_COPY_FROM         = 'errCopyFrom';
-	const ERROR_COPY_TO           = 'errCopyTo';
 	const ERROR_COPY_ITSELF       = 'errCopyInItself';
+	const ERROR_MOVE              = 'errMove';
 	const ERROR_REPLACE           = 'errReplace';          // 'Unable to replace "$1".'
 	const ERROR_RM                = 'errRm';               // 'Unable to remove "$1".'
 	const ERROR_RM_SRC            = 'errRmSrc';            // 'Unable remove source file(s)'
@@ -179,9 +169,9 @@ class Finder {
 	const ERROR_NOT_REPLACE       = 'errNotReplace';       // Object "$1" already exists at this location and can not be replaced with object of another type.
 	const ERROR_SAVE              = 'errSave';
 	const ERROR_EXTRACT           = 'errExtract';
+	const ERROR_ARCHIVE_TYPE      = 'errArcType';
 	const ERROR_ARCHIVE           = 'errArchive';
 	const ERROR_NOT_ARCHIVE       = 'errNoArchive';
-	const ERROR_ARCHIVE_TYPE      = 'errArcType';
 	const ERROR_ARC_SYMLINKS      = 'errArcSymlinks';
 	const ERROR_ARC_MAXSIZE       = 'errArcMaxSize';
 	const ERROR_RESIZE            = 'errResize';
@@ -189,7 +179,12 @@ class Finder {
 	const ERROR_NOT_UTF8_CONTENT  = 'errNotUTF8Content';
 	const ERROR_NETMOUNT          = 'errNetMount';
 	const ERROR_NETMOUNT_NO_DRIVER = 'errNetMountNoDriver';
-	const ERROR_NETMOUNT_FAILED       = 'errNetMountFailed';
+
+	//not used ... may still be used in javascript
+	//const ERROR_NETMOUNT_FAILED       = 'errNetMountFailed';
+	//const ERROR_COPY_FROM         = 'errCopyFrom';
+	//const ERROR_COPY_TO           = 'errCopyTo';
+
 
 	/**
 	 * Constructor
@@ -266,22 +261,22 @@ class Finder {
 		$args   = array();
 
 		if (!function_exists('json_encode')) {
-			$error = $this->error(Finder::ERROR_CONF, Finder::ERROR_CONF_NO_JSON);
+			$error = $this->error('errConf', 'errJSON');
 			$this->output(array('error' => '{"error":["'.implode('","', $error).'"]}', 'raw' => true));
 		}
 
 		if (!$this->loaded()) {
-			$this->output(array('error' => $this->error(Finder::ERROR_CONF, Finder::ERROR_CONF_NO_VOL), 'debug' => $this->mountErrors));
+			$this->output(array('error' => $this->error('errConf', 'errNoVolumes'), 'debug' => $this->mountErrors));
 		}
 
 		// telepat_mode: on
 		if (!$cmd && $isPost) {
-			$this->output(array('error' => $this->error(Finder::ERROR_UPLOAD, Finder::ERROR_UPLOAD_TOTAL_SIZE), 'header' => 'Content-Type: text/html'));
+			$this->output(array('error' => $this->error('errUpload', 'errUploadTotalSize'), 'header' => 'Content-Type: text/html'));
 		}
 		// telepat_mode: off
 
 		if (!$this->commandExists($cmd)) {
-			$this->output(array('error' => $this->error(Finder::ERROR_UNKNOWN_CMD)));
+			$this->output(array('error' => $this->error('errUnknownCmd')));
 		}
 
 		// collect required arguments to exec command
@@ -294,7 +289,7 @@ class Finder {
 				$arg = trim($arg);
 			}
 			if ($req && (!isset($arg) || $arg === '')) {
-				$this->output(array('error' => $this->error(Finder::ERROR_INV_PARAMS, $cmd)));
+				$this->output(array('error' => $this->error('errCmdParams', $cmd)));
 			}
 			$args[$name] = $arg;
 		}
@@ -475,11 +470,11 @@ class Finder {
 	public function exec($cmd, $args) {
 
 		if( !$this->loaded ){
-			return array('error' => $this->error(self::ERROR_CONF, self::ERROR_CONF_NO_VOL));
+			return array('error' => $this->error('errConf', 'errNoVolumes'));
 		}
 
 		if( !$this->commandExists($cmd) ){
-			return array('error' => $this->error(self::ERROR_UNKNOWN_CMD));
+			return array('error' => $this->error('errUnknownCmd'));
 		}
 
 		if( !empty($args['mimes']) && is_array($args['mimes']) ){
@@ -619,7 +614,7 @@ class Finder {
 			}
 		}
 
-		return count($errors) ? $errors : array(self::ERROR_UNKNOWN);
+		return count($errors) ? $errors : array('errUnknown');
 	}
 
 	protected function netmount($args) {
@@ -628,7 +623,7 @@ class Finder {
 		$driver   = isset(self::$netDrivers[$protocol]) ? self::$netDrivers[$protocol] : '';
 
 		if( !$driver ){
-			return array('error' => $this->error(self::ERROR_NETMOUNT, $args['host'], self::ERROR_NETMOUNT_NO_DRIVER));
+			return array('error' => $this->error('errNetMount', $args['host'], 'errNetMountNoDriver'));
 		}
 
 		if( !$args['path'] ){
@@ -648,11 +643,11 @@ class Finder {
 		}
 
 		if( !$this->MountVolume( $volume, $driver, $options ) ){
-			return array('error' => $this->error(self::ERROR_NETMOUNT, $args['host'], implode(' ', $volume->error())));
+			return array('error' => $this->error('errNetMount', $args['host'], implode(' ', $volume->error())));
 		}
 
 		if( !$volume->connect() ){
-			return array('error' => $this->error(self::ERROR_NETMOUNT, $args['host'], implode(' ', $volume->error())));
+			return array('error' => $this->error('errNetMount', $args['host'], implode(' ', $volume->error())));
 		}
 
 		$netVolumes        = $this->getNetVolumes();
@@ -731,10 +726,10 @@ class Finder {
 		}
 
 		if (!$cwd) {
-			return array('error' => $this->error(self::ERROR_OPEN, $hash, self::ERROR_DIR_NOT_FOUND));
+			return array('error' => $this->error('errOpen', $hash, 'errFolderNotFound'));
 		}
 		if (!$cwd['read']) {
-			return array('error' => $this->error(self::ERROR_OPEN, $hash, self::ERROR_PERM_DENIED));
+			return array('error' => $this->error('errOpen', $hash, 'errPerm'));
 		}
 
 		$files = array($cwd);
@@ -753,7 +748,7 @@ class Finder {
 		// get current working directory files list and add to $files if not exists in it
 		$ls = $volume->scandir($cwd['hash']);
 		if( $ls === false) {
-			return array('error' => $this->error(self::ERROR_OPEN, $cwd['name'], $volume->error()));
+			return array('error' => $this->error('errOpen', $cwd['name'], $volume->error()));
 		}
 
 		foreach( $ls as $file ){
@@ -788,12 +783,12 @@ class Finder {
 		$target = $args['target'];
 		$volume = $this->volume($target);
 		if( $volume == false ){
-			return array('error' => $this->error(self::ERROR_OPEN, '#'.$target));
+			return array('error' => $this->error('errOpen', '#'.$target));
 		}
 
 		$list = $volume->ls($target);
 		if( $list == false ){
-			return array('error' => $this->error(self::ERROR_OPEN, '#'.$target));
+			return array('error' => $this->error('errOpen', '#'.$target));
 		}
 
 		return array('list' => $list);
@@ -811,12 +806,12 @@ class Finder {
 
 		$volume = $this->volume($target);
 		if( $volume == false ){
-			return array('error' => $this->error(self::ERROR_OPEN, '#'.$target));
+			return array('error' => $this->error('errOpen', '#'.$target));
 		}
 
 		$tree = $volume->tree($target);
 		if( $tree == false ){
-			return array('error' => $this->error(self::ERROR_OPEN, '#'.$target));
+			return array('error' => $this->error('errOpen', '#'.$target));
 		}
 
 		return array('tree' => $tree);
@@ -834,12 +829,12 @@ class Finder {
 
 		$volume = $this->volume($target);
 		if( $volume == false ){
-			return array('error' => $this->error(self::ERROR_OPEN, '#'.$target));
+			return array('error' => $this->error('errOpen', '#'.$target));
 		}
 
 		$tree = $volume->parents($target);
 		if( $tree == false ){
-			return array('error' => $this->error(self::ERROR_OPEN, '#'.$target));
+			return array('error' => $this->error('errOpen', '#'.$target));
 		}
 
 		return array('tree' => $tree);
@@ -950,7 +945,7 @@ class Finder {
 			if (($volume = $this->volume($target)) == false
 			|| ($file = $volume->file($target)) == false
 			|| !$file['read']) {
-				return array('error' => $this->error(self::ERROR_OPEN, '#'.$target));
+				return array('error' => $this->error('errOpen', '#'.$target));
 			}
 
 			$size += $volume->size($target);
@@ -970,11 +965,11 @@ class Finder {
 		$name   = $args['name'];
 
 		if (($volume = $this->volume($target)) == false) {
-			return array('error' => $this->error(self::ERROR_MKDIR, $name, self::ERROR_TRGDIR_NOT_FOUND, '#'.$target));
+			return array('error' => $this->error('errMkdir', $name, 'errTrgFolderNotFound', '#'.$target));
 		}
 
 		return ($dir = $volume->mkdir($target, $name)) == false
-			? array('error' => $this->error(self::ERROR_MKDIR, $name, $volume->error()))
+			? array('error' => $this->error('errMkdir', $name, $volume->error()))
 			: array('added' => array($dir));
 	}
 
@@ -990,11 +985,11 @@ class Finder {
 		$name   = $args['name'];
 
 		if (($volume = $this->volume($target)) == false) {
-			return array('error' => $this->error(self::ERROR_MKFILE, $name, self::ERROR_TRGDIR_NOT_FOUND, '#'.$target));
+			return array('error' => $this->error('errMkfile', $name, 'errTrgFolderNotFound', '#'.$target));
 		}
 
 		return ($file = $volume->mkfile($target, $args['name'])) == false
-			? array('error' => $this->error(self::ERROR_MKFILE, $name, $volume->error()))
+			? array('error' => $this->error('errMkfile', $name, $volume->error()))
 			: array('added' => array($file));
 	}
 
@@ -1011,12 +1006,12 @@ class Finder {
 
 		if (($volume = $this->volume($target)) == false
 		||  ($rm  = $volume->file($target)) == false) {
-			return array('error' => $this->error(self::ERROR_RENAME, '#'.$target, self::ERROR_FILE_NOT_FOUND));
+			return array('error' => $this->error('errRename', '#'.$target, 'errFileNotFound'));
 		}
 		$rm['realpath'] = $volume->realpath($target);
 
 		return ($file = $volume->rename($target, $name)) == false
-			? array('error' => $this->error(self::ERROR_RENAME, $rm['name'], $volume->error()))
+			? array('error' => $this->error('errRename', $rm['name'], $volume->error()))
 			: array('added' => array($file), 'removed' => array($rm));
 	}
 
@@ -1035,7 +1030,7 @@ class Finder {
 		foreach ($targets as $target) {
 			if (($volume = $this->volume($target)) == false
 			|| ($src = $volume->file($target)) == false) {
-				$result['warning'] = $this->error(self::ERROR_COPY, '#'.$target, self::ERROR_FILE_NOT_FOUND);
+				$result['warning'] = $this->error('errCopy', '#'.$target, 'errFileNotFound');
 				break;
 			}
 
@@ -1063,7 +1058,7 @@ class Finder {
 
 		foreach ($targets as $target) {
 			if (($volume = $this->volume($target)) == false) {
-				$result['warning'] = $this->error(self::ERROR_RM, '#'.$target, self::ERROR_FILE_NOT_FOUND);
+				$result['warning'] = $this->error('errRm', '#'.$target, 'errFileNotFound');
 				return $result;
 			}
 			if (!$volume->rm($target)) {
@@ -1089,17 +1084,17 @@ class Finder {
 		$result = array('added' => array(), 'header' => empty($args['html']) ? false : 'Content-Type: text/html; charset=utf-8');
 
 		if( !is_array($files) || empty($files) ){
-			return array('error' => $this->error(self::ERROR_UPLOAD, self::ERROR_UPLOAD_NO_FILES), 'header' => $header);
+			return array('error' => $this->error('errUpload', 'errUploadNoFiles'), 'header' => $header);
 		}
 
 		if( !$volume ){
-			return array('error' => $this->error(self::ERROR_UPLOAD, self::ERROR_TRGDIR_NOT_FOUND, '#'.$target), 'header' => $header);
+			return array('error' => $this->error('errUpload', 'errTrgFolderNotFound', '#'.$target), 'header' => $header);
 		}
 
 		foreach( $files['name'] as $i => $name ){
 			$error = $files['error'][$i];
 			if( $error > 0 ){
-				$result['warning'] = $this->error(self::ERROR_UPLOAD_FILE, $name, $error == UPLOAD_ERR_INI_SIZE || $error == UPLOAD_ERR_FORM_SIZE ? self::ERROR_UPLOAD_FILE_SIZE : self::ERROR_UPLOAD_TRANSFER);
+				$result['warning'] = $this->error('errUploadFile', $name, $error == UPLOAD_ERR_INI_SIZE || $error == UPLOAD_ERR_FORM_SIZE ? 'errUploadFileSize' : 'errUploadTransfer');
 				$this->uploadDebug = 'Upload error code: '.$error;
 				break;
 			}
@@ -1108,21 +1103,21 @@ class Finder {
 
 			//make sure it's an uploaded file
 			if( !is_uploaded_file($tmpname) ){
-				$result['warning'] = $this->error(self::ERROR_UPLOAD_FILE, $name, self::ERROR_UPLOAD_TRANSFER);
+				$result['warning'] = $this->error('errUploadFile', $name, 'errUploadTransfer');
 				$this->uploadDebug = 'Upload error: not an uploaded file';
 				break;
 			}
 
 			$fp = fopen($tmpname, 'rb');
 			if( $fp === false ){
-				$result['warning'] = $this->error(self::ERROR_UPLOAD_FILE, $name, self::ERROR_UPLOAD_TRANSFER);
+				$result['warning'] = $this->error('errUploadFile', $name, 'errUploadTransfer');
 				$this->uploadDebug = 'Upload error: unable open tmp file';
 				break;
 			}
 
 			$file = $volume->upload($fp, $target, $name, $tmpname);
 			if( $file === false ){
-				$result['warning'] = $this->error(self::ERROR_UPLOAD_FILE, $name, $volume->error());
+				$result['warning'] = $this->error('errUploadFile', $name, $volume->error());
 				fclose($fp);
 				break;
 			}
@@ -1145,16 +1140,16 @@ class Finder {
 		$dst     = $args['dst'];
 		$targets = is_array($args['targets']) ? $args['targets'] : array();
 		$cut     = !empty($args['cut']);
-		$error   = $cut ? self::ERROR_MOVE : self::ERROR_COPY;
+		$error   = $cut ? 'errMove' : 'errCopy';
 		$result  = array('added' => array(), 'removed' => array());
 
 		if (($dstVolume = $this->volume($dst)) == false) {
-			return array('error' => $this->error($error, '#'.$targets[0], self::ERROR_TRGDIR_NOT_FOUND, '#'.$dst));
+			return array('error' => $this->error($error, '#'.$targets[0], 'errTrgFolderNotFound', '#'.$dst));
 		}
 
 		foreach ($targets as $target) {
 			if (($srcVolume = $this->volume($target)) == false) {
-				$result['warning'] = $this->error($error, '#'.$target, self::ERROR_FILE_NOT_FOUND);
+				$result['warning'] = $this->error($error, '#'.$target, 'errFileNotFound');
 				break;
 			}
 
@@ -1180,17 +1175,17 @@ class Finder {
 		$volume = $this->volume($target);
 
 		if (!$volume || ($file = $volume->file($target)) == false) {
-			return array('error' => $this->error(self::ERROR_OPEN, '#'.$target, self::ERROR_FILE_NOT_FOUND));
+			return array('error' => $this->error('errOpen', '#'.$target, 'errFileNotFound'));
 		}
 
 		if (($content = $volume->getContents($target)) === false) {
-			return array('error' => $this->error(self::ERROR_OPEN, $volume->path($target), $volume->error()));
+			return array('error' => $this->error('errOpen', $volume->path($target), $volume->error()));
 		}
 
 		$json = json_encode($content);
 
 		if ($json == 'null' && strlen($json) < strlen($content)) {
-			return array('error' => $this->error(self::ERROR_NOT_UTF8_CONTENT, $volume->path($target)));
+			return array('error' => $this->error('errNotUTF8Content', $volume->path($target)));
 		}
 
 		return array('content' => $content);
@@ -1207,11 +1202,11 @@ class Finder {
 
 		if (($volume = $this->volume($target)) == false
 		|| ($file = $volume->file($target)) == false) {
-			return array('error' => $this->error(self::ERROR_SAVE, '#'.$target, self::ERROR_FILE_NOT_FOUND));
+			return array('error' => $this->error('errSave', '#'.$target, 'errFileNotFound'));
 		}
 
 		if (($file = $volume->putContents($target, $args['content'])) == false) {
-			return array('error' => $this->error(self::ERROR_SAVE, $volume->path($target), $volume->error()));
+			return array('error' => $this->error('errSave', $volume->path($target), $volume->error()));
 		}
 
 		return array('changed' => array($file));
@@ -1228,16 +1223,16 @@ class Finder {
 	protected function extract($args) {
 		$target = $args['target'];
 		$mimes  = !empty($args['mimes']) && is_array($args['mimes']) ? $args['mimes'] : array();
-		$error  = array(self::ERROR_EXTRACT, '#'.$target);
+		$error  = array('errExtract', '#'.$target);
 
 		if (($volume = $this->volume($target)) == false
 		|| ($file = $volume->file($target)) == false) {
-			return array('error' => $this->error(self::ERROR_EXTRACT, '#'.$target, self::ERROR_FILE_NOT_FOUND));
+			return array('error' => $this->error('errExtract', '#'.$target, 'errFileNotFound'));
 		}
 
 		return ($file = $volume->extract($target))
 			? array('added' => array($file))
-			: array('error' => $this->error(self::ERROR_EXTRACT, $volume->path($target), $volume->error()));
+			: array('error' => $this->error('errExtract', $volume->path($target), $volume->error()));
 	}
 
 	/**
@@ -1253,12 +1248,12 @@ class Finder {
 		$targets = isset($args['targets']) && is_array($args['targets']) ? $args['targets'] : array();
 
 		if (($volume = $this->volume($targets[0])) == false) {
-			return $this->error(self::ERROR_ARCHIVE, self::ERROR_TRGDIR_NOT_FOUND);
+			return $this->error('errArchive', 'errTrgFolderNotFound');
 		}
 
 		return ($file = $volume->archive($targets, $args['type']))
 			? array('added' => array($file))
-			: array('error' => $this->error(self::ERROR_ARCHIVE, $volume->error()));
+			: array('error' => $this->error('errArchive', $volume->error()));
 	}
 
 	/**
@@ -1338,12 +1333,12 @@ class Finder {
 
 		if (($volume = $this->volume($target)) == false
 		|| ($file = $volume->file($target)) == false) {
-			return array('error' => $this->error(self::ERROR_RESIZE, '#'.$target, self::ERROR_FILE_NOT_FOUND));
+			return array('error' => $this->error('errResize', '#'.$target, 'errFileNotFound'));
 		}
 
 		return ($file = $volume->resize($target, $width, $height, $x, $y, $mode, $bg, $degree))
 			? array('changed' => array($file))
-			: array('error' => $this->error(self::ERROR_RESIZE, $volume->path($target), $volume->error()));
+			: array('error' => $this->error('errResize', $volume->path($target), $volume->error()));
 	}
 
 	/***************************************************************************/

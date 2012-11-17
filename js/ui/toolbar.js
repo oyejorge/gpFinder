@@ -26,7 +26,7 @@ $.fn.findertoolbar = function(fm, opts) {
 				}
 
 				panel.children().length && self.prepend(panel);
-				panel.children(':not(:last),:not(:first):not(:last)').after('<span class="ui-widget-content finder-toolbar-button-separator"/>');
+				panel.children(':gt(0)').before('<span class="ui-widget-content finder-toolbar-button-separator"/>');
 
 			}
 		}

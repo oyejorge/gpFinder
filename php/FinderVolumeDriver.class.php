@@ -2577,9 +2577,14 @@ abstract class FinderVolumeDriver {
 			$h = $s[1];
 		}
 
-		if (($fp = $volume->open($src)) == false
-		|| ($path = $this->_save($fp, $destination, $name, $mime, $w, $h, $source)) == false) {
-			$fp && $volume->close($fp, $src);
+		$fp = $volume->open($src);
+		if( !$fp ){
+			return $this->setError('errCopy', $errpath);
+		}
+
+		$path = $this->_save($fp, $destination, $name, $mime, $w, $h, $source);
+		if( !$path ){
+			$volume->close($fp, $src);
 			return $this->setError('errCopy', $errpath);
 		}
 		$volume->close($fp, $src);

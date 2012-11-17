@@ -18,8 +18,13 @@ Finder.prototype.commands.reload = function() {
 	}
 
 	this.exec = function() {
+
+		// this would reload the contents of the folder, but wouldn't update the tree
+		// return this.fm.exec('open', this.fm.cwd().hash );
+
 		var fm      = this.fm,
 			dfrd    = fm.sync(),
+
 			timeout = setTimeout(function() {
 				fm.notify({type : 'reload', cnt : 1, hideCnt : true});
 				dfrd.always(function() { fm.notify({type : 'reload', cnt  : -1}); });

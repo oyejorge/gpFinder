@@ -1607,10 +1607,7 @@ window.Finder = function(node, opts) {
 	});
 
 	// prepare node
-	node.addClass(this.cssClass)
-		.bind(mousedown, function() {
-			!enabled && self.enable();
-		});
+	node.addClass(this.cssClass);
 
 	/**
 	 * UI nodes
@@ -1678,13 +1675,8 @@ window.Finder = function(node, opts) {
 	// update size
 	self.resize(width, height);
 
-	// attach events to document
-	$(document)
-		// disable finder on click outside finder
-		//.bind('click.'+this.namespace, function(e) { enabled && !$(e.target).closest(node).length && self.disable(); })
-
-		// exec shortcuts
-		.bind(keydown+' '+keypress, execShortcut);
+	// // exec shortcuts
+	$(document).bind(keydown+' '+keypress, execShortcut);
 
 	// send initial request and start to pray >_<
 	this.trigger('init')

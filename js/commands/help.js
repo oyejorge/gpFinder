@@ -85,7 +85,7 @@ Finder.prototype.commands.help = function() {
 		help = function() {
 			// help tab
 			html.push('<div id="help" class="ui-tabs-panel ui-widget-content ui-corner-bottom">');
-			html.push('<a href="https://github.com/oyejorge/gpFinder/issues" target="_blank" class="finder-dont-panic"><span>DON\'T PANIC</span></a>');
+			html.push('<a href="http://gpfinder.org/index.php/Forum" target="_blank" class="finder-dont-panic"><span>DON\'T PANIC</span></a>');
 			html.push('</div>');
 			// end help
 		},

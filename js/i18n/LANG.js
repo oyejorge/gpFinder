@@ -139,7 +139,7 @@ if (Finder && Finder.prototype && typeof(Finder.prototype.i18) == 'object') {
 			'ntfarchive'  : 'Creating archive',
 			'ntfextract'  : 'Extracting files from archive',
 			'ntfsearch'   : 'Searching files',
-			'ntfsmth'     : 'Doing something >_<',
+			'ntfsmth'     : 'Loading',
 			'ntfloadimg'  : 'Loading image',
 			'ntfnetmount' : 'Mounting network volume', // added 18.04.2012
 

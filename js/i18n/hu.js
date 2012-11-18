@@ -118,7 +118,7 @@ if (Finder && Finder.prototype && typeof(Finder.prototype.i18) == 'object') {
 			'ntfarchive'  : 'Archívum létrehozása',
 			'ntfextract'  : 'Kibontás archívumból',
 			'ntfsearch'   : 'Fájlok keresése',
-			'ntfsmth'     : 'Doing something >_<',
+			'ntfsmth'     : 'Loading',
 
 			/************************************ dates **********************************/
 			'dateUnknown' : 'Ismeretlen',

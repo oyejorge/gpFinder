@@ -32,11 +32,11 @@ Finder.prototype.commands.unmount = function() {
 		}).done(function(error){
 			dfrd.resolve();
 
-			//select different tree
-			var $first = $('.finder-navbar-wrapper:first span:first').click();
-
 			//remove the tree
 			var span = $('#nav-'+target).closest('.finder-navbar-wrapper').detach();
+
+			//select different tree
+			var $first = $('.finder-navbar-wrapper:first span:first').click();
 
 		});
 	}

@@ -618,33 +618,33 @@ class Finder {
 		return count($errors) ? $errors : array('errUnknown');
 	}
 
+	/**
+	 * Delete a net mounted volume
+	 *
+	 */
 	protected function unmount($args){
+
+		// get volume info
 		$netVolumes	= $this->getNetVolumes();
 		$hash_parts = explode('_',$args['target']);
 		$volume_id = array_shift($hash_parts).'_';
 
 		// remove from array
+		$removed = false;
 		foreach($netVolumes as $id => $v){
 			if( $id == $volume_id ){
 				unset($netVolumes[$volume_id]);
 				unset($this->volumes[$volume_id]);
+				$removed = true;
 			}
 		}
 		$this->saveNetVolumes($netVolumes);
 
+		if( $removed ){
+			return array('unmount'=>true);
+		}
 
-		// sync
-		$result = array();
-		$result['sync'] = true;
-		return $result;
-
-
-		$args = array();
-		$args['cmd'] = 'open';
-		$args['init'] = 1;
-		$args['target'] = $volume_id;
-		$args['tree'] = 1;
-		return $this->open($args);
+		return array('error' => $this->error('errNetMount', 'Not Found'));
 	}
 
 	protected function netmount($args) {
@@ -675,7 +675,7 @@ class Finder {
 		}
 
 		//generate an id
-		$options['id'] = base_convert(10,36,time());
+		$options['id'] = base_convert(time(),10,36);
 		$options['driver'] = $driver;
 		$options['netmount'] = true;
 

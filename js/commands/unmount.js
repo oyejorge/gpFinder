@@ -21,11 +21,25 @@ Finder.prototype.commands.unmount = function() {
 	}
 
 	this.exec = function(hashes){
+		var target	= hashes[0],
+			dfrd	= $.Deferred();
+
 		return fm.request({
-			data : {cmd : 'unmount', target : hashes[0] },
+			data : {cmd : 'unmount', target : target },
+			notify : {type : 'unmount', cnt : 1}
+		}).fail(function(error){
+			dfrd.reject(error);
+		}).done(function(error){
+			dfrd.resolve();
+
+			//select different tree
+			var $first = $('.finder-navbar-wrapper:first span:first').click();
+
+			//remove the tree
+			var span = $('#nav-'+target).closest('.finder-navbar-wrapper').detach();
+
 		});
 	}
-
 
 
 }

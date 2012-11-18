@@ -138,7 +138,7 @@ $opts = array(
 		'upload-before' => 'upload_check'
 		// 'mkdir mkfile rename duplicate upload rm paste' => 'logger'
 	),
-	'debug' => true,
+	//'debug' => true,
 	'saveData' => 'SaveFinderData',
 	'returnData' => 'ReturnFinderData',
 

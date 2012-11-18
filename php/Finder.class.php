@@ -676,6 +676,9 @@ class Finder {
 
 		//generate an id
 		$options['id'] = base_convert(10,36,time());
+		$options['driver'] = $driver;
+		$options['netmount'] = true;
+
 
 		if( !$this->MountVolume( $volume, $driver, $options ) ){
 			return array('error' => $this->error('errNetMount', $args['host'], implode(' ', $volume->error())));
@@ -691,8 +694,6 @@ class Finder {
 
 
 		//save net volumes
-		$options['driver'] = $driver;
-		$options['netmount'] = true;
 		$netVolumes[$id]     = $options;
 		$netVolumes        = array_unique($netVolumes);
 		$this->saveNetVolumes($netVolumes);

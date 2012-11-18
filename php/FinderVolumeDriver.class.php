@@ -1117,10 +1117,6 @@ abstract class FinderVolumeDriver {
 		}
 		$dir = $this->HasSubdirs($path,$dir);
 
-		if( $this->options['netmount'] ){
-			$dir['net'] = 1;
-		}
-
 		$this->options['treeDeep'] = $this->options['treeDeep'] > 0 ? (int)$this->options['treeDeep'] : 1;
 
 		$dirs = $this->gettree($path, $deep > 0 ? $deep -1 : $this->options['treeDeep']-1, $exclude ? $this->decode($exclude) : null);
@@ -2085,6 +2081,7 @@ abstract class FinderVolumeDriver {
 			return $this->cache[$path] = array();
 		}
 
+
 		$stat['hash'] = $this->encode($path);
 
 		$root = $path == $this->root;
@@ -2094,6 +2091,11 @@ abstract class FinderVolumeDriver {
 			if ($this->rootName) {
 				$stat['name'] = $this->rootName;
 			}
+
+			if( isset($this->options['netmount']) && $this->options['netmount'] ){
+				$stat['net'] = 1;
+			}
+
 		} else {
 			if (!isset($stat['name']) || !strlen($stat['name'])) {
 				$stat['name'] = $this->_basename($path);

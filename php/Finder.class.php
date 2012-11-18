@@ -74,7 +74,8 @@ class Finder {
 		'info'      => array('targets' => true),
 		'dim'       => array('target' => true),
 		'resize'    => array('target' => true, 'width' => true, 'height' => true, 'mode' => false, 'x' => false, 'y' => false, 'degree' => false),
-		'netmount'  => array('protocol' => true, 'host' => true, 'path' => false, 'port' => false, 'user' => true, 'pass' => true, 'alias' => false, 'options' => false)
+		'netmount'  => array('protocol' => true, 'host' => true, 'path' => false, 'port' => false, 'user' => true, 'pass' => true, 'alias' => false, 'options' => false),
+		'unmount'   => array('target' => true)
 	);
 
 	/**
@@ -617,10 +618,41 @@ class Finder {
 		return count($errors) ? $errors : array('errUnknown');
 	}
 
+	protected function unmount($args){
+		$netVolumes	= $this->getNetVolumes();
+		$hash_parts = explode('_',$args['target']);
+		$volume_id = array_shift($hash_parts).'_';
+
+		// remove from array
+		foreach($netVolumes as $id => $v){
+			if( $id == $volume_id ){
+				unset($netVolumes[$volume_id]);
+				unset($this->volumes[$volume_id]);
+			}
+		}
+		$this->saveNetVolumes($netVolumes);
+
+
+		// sync
+		$result = array();
+		$result['sync'] = true;
+		return $result;
+
+
+		$args = array();
+		$args['cmd'] = 'open';
+		$args['init'] = 1;
+		$args['target'] = $volume_id;
+		$args['tree'] = 1;
+		return $this->open($args);
+	}
+
 	protected function netmount($args) {
 		$options  = array();
 		$protocol = $args['protocol'];
 		$driver   = isset(self::$netDrivers[$protocol]) ? self::$netDrivers[$protocol] : '';
+		$netVolumes = $this->getNetVolumes();
+
 
 		if( !$driver ){
 			return array('error' => $this->error('errNetMount', $args['host'], 'errNetMountNoDriver'));
@@ -642,6 +674,9 @@ class Finder {
 			}
 		}
 
+		//generate an id
+		$options['id'] = base_convert(10,36,time());
+
 		if( !$this->MountVolume( $volume, $driver, $options ) ){
 			return array('error' => $this->error('errNetMount', $args['host'], implode(' ', $volume->error())));
 		}
@@ -650,17 +685,19 @@ class Finder {
 			return array('error' => $this->error('errNetMount', $args['host'], implode(' ', $volume->error())));
 		}
 
-		$netVolumes        = $this->getNetVolumes();
+		//add to list of volumes
+		$id = $volume->id();
+		$this->volumes[$id] = $volume;
+
+
+		//save net volumes
 		$options['driver'] = $driver;
 		$options['netmount'] = true;
-		$netVolumes[]      = $options;
+		$netVolumes[$id]     = $options;
 		$netVolumes        = array_unique($netVolumes);
 		$this->saveNetVolumes($netVolumes);
 
 
-		//add to list of volumes
-		$id = $volume->id();
-		$this->volumes[$id] = $volume;
 
 
 		// simulate open request send open data

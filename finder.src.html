@@ -82,6 +82,7 @@
 	<script src="js/commands/resize.js"></script>
 	<script src="js/commands/sort.js"></script>
 	<script src="js/commands/netmount.js"></script>
+	<script src="js/commands/unmount.js"></script>
 
 	<!-- Finder languages -->
 	<script src="js/i18n/ar.js"></script>
@@ -247,6 +248,27 @@
 			});
 
 		});
+
+
+
+		var logi = 0;
+		function debug(obj){
+			var a = '';
+			for(var i in obj){
+				try{
+					try{
+						a += '<br/><b>'+i+ "</b> = " + obj[i].toString().replace(/</g,'&lt;') + "\n";
+					}catch(m){
+						a += '<br/><b>'+i+ "</b> = " + obj[i] + "\n";
+					}
+				}catch(m){
+					a += '<br/><b>'+i+"</b> -- not allowed -- \n";
+				}
+			}
+			$('<div style="padding:20px;position:absolute;top:0;left:0;padding:5px;font-size:12px;max-width:400px;background:#fff;border:1px solid #ccc;"/>').html(logi+' :: '+ a).appendTo('body');
+			logi++;
+		}
+
 	</script>
 </head>
 <body>

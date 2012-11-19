@@ -207,18 +207,23 @@ $.fn.findercwd = function(fm, options) {
 					selector = prev ? 'first:' : 'last',
 					s, n, sib, top, left;
 
-				function sibling(n, direction) {
+				function firstSibling(n, direction) {
 					return n[direction+'All']('[id]:not(.'+clDisabled+'):not(.finder-cwd-parent):first');
 				}
 
+				function FirstLast(n,which){
+					return n.siblings('[id]:not(.'+clDisabled+'):not(.finder-cwd-parent):'+which);
+				}
 
 				if (sel.length) {
 					s = sel.filter(prev ? ':first' : ':last');
-					sib = sibling(s, prev ? 'prev' : 'next');
+					sib = firstSibling(s, prev ? 'prev' : 'next');
+
 
 					if (!sib.length) {
-						// there is no sibling on required side - do not move selection
-						n = s;
+						// there is no sibling on required side - move to opposite end
+						n = FirstLast(s, prev ? 'last' : 'first' );
+
 					} else if (list || keyCode == code.LEFT || keyCode == code.RIGHT) {
 						// find real prevoius file
 						n = sib;
@@ -234,7 +239,7 @@ $.fn.findercwd = function(fm, options) {
 							} while (n.length && !(n.position().top < top && n.position().left <= left));
 
 							if (n.is('.'+clDisabled)) {
-								n = sibling(n, 'next');
+								n = firstSibling(n, 'next');
 							}
 						} else {
 							do {
@@ -242,7 +247,7 @@ $.fn.findercwd = function(fm, options) {
 							} while (n.length && !(n.position().top > top && n.position().left >= left));
 
 							if (n.is('.'+clDisabled)) {
-								n = sibling(n, 'prev');
+								n = firstSibling(n, 'prev');
 							}
 							// there is row before last one - select last file
 							if (!n.length) {

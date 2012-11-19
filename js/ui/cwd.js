@@ -211,10 +211,6 @@ $.fn.findercwd = function(fm, options) {
 					return n[direction+'All']('[id]:not(.'+clDisabled+'):not(.finder-cwd-parent):first');
 				}
 
-				function FirstLast(n,which){
-					return n.siblings('[id]:not(.'+clDisabled+'):not(.finder-cwd-parent):'+which);
-				}
-
 				if (sel.length) {
 					s = sel.filter(prev ? ':first' : ':last');
 					sib = firstSibling(s, prev ? 'prev' : 'next');
@@ -222,7 +218,8 @@ $.fn.findercwd = function(fm, options) {
 
 					if (!sib.length) {
 						// there is no sibling on required side - move to opposite end
-						n = FirstLast(s, prev ? 'last' : 'first' );
+						var which = prev ? 'last' : 'first';
+						n = s.siblings('[id]:not(.'+clDisabled+'):not(.finder-cwd-parent):'+which);
 
 					} else if (list || keyCode == code.LEFT || keyCode == code.RIGHT) {
 						// find real prevoius file

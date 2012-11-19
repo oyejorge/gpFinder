@@ -211,6 +211,7 @@ $.fn.findercwd = function(fm, options) {
 					return n[direction+'All']('[id]:not(.'+clDisabled+'):not(.finder-cwd-parent):first');
 				}
 
+
 				if (sel.length) {
 					s = sel.filter(prev ? ':first' : ':last');
 					sib = sibling(s, prev ? 'prev' : 'next');
@@ -252,7 +253,7 @@ $.fn.findercwd = function(fm, options) {
 							}
 						}
 					}
-					!append && unselectAll();
+					//!append && unselectAll(); /* breaks quicklook by firing handlers.select() */
 				} else {
 					// there are no selected file - select first/last one
 					n = cwd.find('[id]:not(.'+clDisabled+'):not(.finder-cwd-parent):'+(prev ? 'last' : 'first'))

@@ -2060,6 +2060,10 @@ abstract class FinderVolumeDriver {
 	 * @author Dmitry (dio) Levashov
 	 **/
 	protected function stat($path) {
+		
+		$path = $this->_separator( $path );
+		$path = rtrim($path,$this->separator);
+		
 		if( isset($this->cache[$path]) ){
 			return $this->cache[$path];
 		}
@@ -2077,10 +2081,10 @@ abstract class FinderVolumeDriver {
 	 * @author Dmitry (dio) Levashov
 	 **/
 	protected function updateCache($path, $stat) {
+		
 		if (empty($stat) || !is_array($stat)) {
 			return $this->cache[$path] = array();
 		}
-
 
 		$stat['hash'] = $this->encode($path);
 
@@ -2367,8 +2371,9 @@ abstract class FinderVolumeDriver {
 		if( !$this->options['checkSubfolders'] ){
 			return $stat;
 		}
-
-
+		
+		$path = $this->_separator( $path );
+		$path = rtrim($path,$this->separator);
 		$list = $this->getScandir($path);
 
 		foreach($list as $p => $s){

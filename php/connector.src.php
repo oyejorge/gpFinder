@@ -144,9 +144,15 @@ $opts = array(
 
 	'roots' => array(
 		array(
-			'driver'     => 'LocalFileSystem',
-			'path'       => '../files/',
-			'startPath'  => '../files/test/',
+			'driver'		=> 'LocalFileSystem',
+
+			'path'			=> dirname(dirname(__FILE__)).'/files',
+			'separator'		=> '/',
+
+			//'path'       => '../files/',
+			//'startPath'  => '../files/test/',
+
+
 			'URL'        => dirname($_SERVER['PHP_SELF']) . '/../files/',
 			// 'treeDeep'   => 3,
 			// 'alias'      => 'File system',

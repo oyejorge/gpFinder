@@ -2778,7 +2778,7 @@ abstract class FinderVolumeDriver {
 				}
 
     		} else {
-        		$result = $this->imgResize($tmb, $tmbSize, $tmbSize, true, true, $this->imgLib, 'png');
+        		$result = $this->imgResize($tmb, $tmbSize, $tmbSize, true, true, 'png');
         		$result = $this->imgSquareFit($tmb, $tmbSize, $tmbSize, 'center', 'middle', $this->options['tmbBgColor'], 'png' );
       		}
 

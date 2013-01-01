@@ -1146,7 +1146,7 @@ abstract class FinderVolumeDriver {
 		while( $path && $path != $this->root ){
 			$path = $this->_dirname($path);
 			$stat = $this->stat($path);
-			if (!empty($stat['hidden']) || !$stat['read']) {
+			if (!empty($stat['hidden']) || empty($stat['read']) || !$stat['read']) {
 				return false;
 			}
 

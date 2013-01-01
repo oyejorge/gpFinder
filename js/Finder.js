@@ -905,6 +905,10 @@ window.Finder = function(node, opts) {
 			 * @return void
 			 **/
 			success = function(response) {
+				//if (raw) {
+				//	return dfrd.resolve(response);
+				//}
+
 				if (!response) {
 					return dfrd.reject(['errResponse', 'errDataEmpty'], xhr);
 				} else if (!$.isPlainObject(response)) {
@@ -915,6 +919,7 @@ window.Finder = function(node, opts) {
 					return dfrd.reject('errResponse', xhr);
 				}
 
+				//response = self.normalize(response);
 
 				if (!self.api) {
 					self.api    = response.api || 1;
@@ -973,7 +978,7 @@ window.Finder = function(node, opts) {
 		// quiet abort not completed "open" requests
 		if (cmd == 'open') {
 			while ((_xhr = queue.pop())) {
-				if( (_xhr.state() != 'resolved') && (_xhr.state() != 'rejected') ){
+				if (_xhr.state() == 'pending') {
 					_xhr.quiet = true;
 					_xhr.abort();
 				}
@@ -1082,7 +1087,6 @@ window.Finder = function(node, opts) {
 				data           : {cmd : 'parents', target : cwd},
 				preventDefault : true
 			};
-
 
 		$.when(
 			this.request(opts1),
@@ -1675,8 +1679,20 @@ window.Finder = function(node, opts) {
 	// update size
 	self.resize(width, height);
 
-	// // exec shortcuts
-	$(document).bind(keydown+' '+keypress, execShortcut);
+	// attach events to document
+	$(document)
+		// disable finder on click outside finder
+		// not using the self.disable() call so icons don't "flicker"
+		.bind('click.'+this.namespace, function(e) {
+			if( enabled && !$(e.target).closest(node).length ){
+				prevEnabled = enabled;
+				enabled = false;
+				//self.disable();
+			}
+
+		})
+		// exec shortcuts
+		.bind(keydown+' '+keypress, execShortcut);
 
 	// send initial request and start to pray >_<
 	this.trigger('init')
@@ -1797,6 +1813,7 @@ Finder.prototype = {
 		if (!this.validResponse('upload', data)) {
 			return {error : ['errResponse']};
 		}
+		//data = this.normalize(data);
 		data.removed = $.map(data.added||[], function(f) { return f.hash; })
 		return data;
 

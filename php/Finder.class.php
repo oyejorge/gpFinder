@@ -3,8 +3,6 @@
 
 require('FinderVolumeDriver.class.php');
 
-ob_start();
-
 
 /**
  * Core class.

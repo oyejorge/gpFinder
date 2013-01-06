@@ -53,6 +53,13 @@ class FinderVolumeMySQL extends FinderVolumeDriver {
 	protected $dbError = '';
 
 	/**
+	 * Which methods can be used for mime detection
+	 *
+	 * @var array
+	 */
+	protected $mime_detection = array('internal');
+
+	/**
 	 * Constructor
 	 * Extend options with required fields
 	 *
@@ -72,7 +79,6 @@ class FinderVolumeMySQL extends FinderVolumeDriver {
 			'tmpPath'       => ''
 		);
 		$this->options = array_merge($this->options, $opts);
-		$this->options['mimeDetect'] = 'internal';
 	}
 
 	/*********************************************************************/
@@ -133,8 +139,6 @@ class FinderVolumeMySQL extends FinderVolumeDriver {
 	 **/
 	protected function configure() {
 		parent::configure();
-
-		$this->mimeDetect = 'internal';
 	}
 
 	/**

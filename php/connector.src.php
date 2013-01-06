@@ -94,22 +94,15 @@ function upload_check( $event, $args, $finder ){
 	logger_before( $event, $args, $finder );
 
 	$files =& $args['FILES']['upload'];
-	if( !is_array($files) || empty($files) ){
+	if( is_array($files) ){
 		return $args;
 	}
 
-	$new_files = array();
 	foreach( $files['name'] as $i => $name ){
-		if( stripos($name,'php') !== false ){
-			unset($files['name'][$i]);
-			unset($files['type'][$i]);
-			unset($files['tmp_name'][$i]);
-			unset($files['error'][$i]);
-			unset($files['size'][$i]);
+		if( stripos($name,'.php') !== false ){
+			return false;
 		}
 	}
-
-
 	return $args;
 }
 

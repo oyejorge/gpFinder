@@ -1,7 +1,8 @@
-2012-11-18  gpFinder 2.1
+2012-01-07  gpFinder 2.1
 	* Fix return key bug
 	* Simplified mimetype detection
 	* Clear buffers before fpassthru
+	* Fix disabled regression
 
 2012-11-18  gpFinder 2.0
 	* Bugfixes

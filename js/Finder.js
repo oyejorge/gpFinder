@@ -1611,7 +1611,11 @@ window.Finder = function(node, opts) {
 	});
 
 	// prepare node
-	node.addClass(this.cssClass);
+	node.addClass(this.cssClass)
+		.bind(mousedown, function() {
+			!enabled && self.enable();
+		});
+
 
 	/**
 	 * UI nodes
@@ -1682,14 +1686,10 @@ window.Finder = function(node, opts) {
 	// attach events to document
 	$(document)
 		// disable finder on click outside finder
-		// not using the self.disable() call so icons don't "flicker"
 		.bind('click.'+this.namespace, function(e) {
 			if( enabled && !$(e.target).closest(node).length ){
-				prevEnabled = enabled;
-				enabled = false;
-				//self.disable();
+				self.disable();
 			}
-
 		})
 		// exec shortcuts
 		.bind(keydown+' '+keypress, execShortcut);

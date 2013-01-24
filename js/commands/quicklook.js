@@ -179,7 +179,13 @@ Finder.prototype.commands.quicklook = function() {
 						e.stopPropagation();
 					});
 				}
-				navbar.attr('style', '').draggable(full ? 'destroy' : {});
+				navbar.attr('style', '');
+				if( full ){
+					navbar.filter(':ui-draggable').draggable('destroy');
+				}else{
+					navbar.draggable({});
+				}
+
 				win.toggleClass(fullscreen);
 				$(this).toggleClass(navicon+'-fullscreen-off');
 				$.fn.resizable && parent.add(win).resizable(full ? 'enable' : 'disable').removeClass('ui-state-disabled');

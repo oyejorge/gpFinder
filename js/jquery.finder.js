@@ -22,7 +22,7 @@ $.fn.finder = function(o) {
 				this.finder.show();
 				break;
 
-			case'destroy':
+			case 'destroy':
 				this.finder.destroy();
 				break;
 		}

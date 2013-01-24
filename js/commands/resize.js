@@ -365,10 +365,9 @@ Finder.prototype.commands.resize = function() {
 					resizable = function(destroy) {
 						if ($.fn.resizable) {
 							if (destroy) {
-								rhandle.resizable('destroy');
+								rhandle.filter(':ui-resizable').resizable('destroy');
 								rhandle.hide();
-							}
-							else {
+							}else {
 								rhandle.show();
 								rhandle.resizable({
 									alsoResize  : img,
@@ -382,8 +381,8 @@ Finder.prototype.commands.resize = function() {
 					croppable = function(destroy) {
 						if ($.fn.draggable && $.fn.resizable) {
 							if (destroy) {
-								rhandlec.resizable('destroy');
-								rhandlec.draggable('destroy');
+								rhandlec.filter(':ui-resizable').resizable('destroy');
+								rhandlec.filter(':ui-draggable').draggable('destroy');
 								basec.hide();
 							}
 							else {

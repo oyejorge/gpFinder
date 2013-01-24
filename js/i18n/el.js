@@ -1,17 +1,10 @@
 /**
- * elFinder translation template
- * use this file to create new translation
- * submit new translation via https://github.com/Studio-42/elFinder/issues
- * or make a pull request
- */
-
-/**
  * Greek translation
  * @author yawd <info@yawd.eu>
  * @version 2012-09-12
  */
-if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object') {
-	elFinder.prototype.i18.el = {
+if (Finder && Finder.prototype && typeof(Finder.prototype.i18) == 'object') {
+	Finder.prototype.i18.el = {
 		translator : 'yawd &lt;ingo@yawd.eu&gt;',
 		language   : 'Ελληνικά',
 		direction  : 'ltr',
@@ -24,8 +17,8 @@ if (elFinder && elFinder.prototype && typeof(elFinder.prototype.i18) == 'object'
 			'errUnknown'           : 'Άγνωστο πρόβλημα.',
 			'errUnknownCmd'        : 'Άγνωστη εντολή.',
 			'errJqui'              : 'Μη έγκυρη ρύθμιση του jQuery UI. Τα components "selectable", "draggable" και "droppable" πρέπει να περιληφούν.',
-			'errNode'              : 'το elFinder χρειάζεται να έχει δημιουργηθεί το DOM Element.',
-			'errURL'               : 'Μη έγκυρες ρυθμίσεις για το elFinder! η επιλογή URL δεν έχει οριστεί.',
+			'errNode'              : 'το Finder χρειάζεται να έχει δημιουργηθεί το DOM Element.',
+			'errURL'               : 'Μη έγκυρες ρυθμίσεις για το Finder! η επιλογή URL δεν έχει οριστεί.',
 			'errAccess'            : 'Απαγορεύεται η πρόσβαση.',
 			'errConnect'           : 'Δεν ήταν δυνατή η σύνδεση με το backend.',
 			'errAbort'             : 'Η σύνδεση εγκαταλείφθηκε.',

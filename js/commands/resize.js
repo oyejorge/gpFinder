@@ -666,7 +666,7 @@ Finder.prototype.commands.resize = function() {
 
 	$.fn.rotate = function(val) {
 		if (typeof val == 'undefined') {
-			if (fm.UA.opera) {
+			if (!!window.opera) {
 				var r = this.css('transform').match(/rotate\((.*?)\)/);
 				return  ( r && r[1])?
 					Math.round(parseFloat(r[1]) * 180 / Math.PI) : 0;
@@ -688,7 +688,7 @@ Finder.prototype.commands.resize = function() {
 		$(fx.elem).rotate(fx.now);
 	};
 
-	if( fm.UA.ltIE8 ){
+	if (typeof window.addEventListener == "undefined" && typeof document.getElementsByClassName == "undefined") { // IE & IE<9
 		var GetAbsoluteXY = function(element) {
 			var pnode = element;
 			var x = pnode.offsetLeft;

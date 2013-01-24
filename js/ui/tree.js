@@ -383,18 +383,7 @@ $.fn.findertree = function(fm, opts) {
 			 * @type JQuery
 			 */
 			tree = $(this).addClass(treeclass)
-				// make dirs draggable and toggle hover class
-				/*
-				.delegate('.'+navdir, 'hover', function(e) {
-					var link  = $(this),
-						enter = e.type == 'mouseenter';
-
-					if (!link.is('.'+dropover+' ,.'+disabled)) {
-						enter && !link.is('.'+root+',.'+draggable+',.finder-na,.finder-wo') && link.draggable(fm.draggable);
-						link.toggleClass(hover, enter);
-					}
-				})
-				*/
+				// make dirs draggable
 				// add/remove dropover css class
 				.delegate('.'+navdir, 'dropover dropout drop', function(e) {
 					$(this)[e.type == 'dropover' ? 'addClass' : 'removeClass'](dropover+' '+hover);

@@ -211,10 +211,9 @@ Finder.prototype._options = {
 	 * Here set not required plugins as folders tree/toolbar/statusbar etc.
 	 *
 	 * @type Array
-	 * @default ['toolbar', 'tree', 'path', 'stat']
 	 * @full ['toolbar', 'places', 'tree', 'path', 'stat']
 	 */
-	ui : ['toolbar', 'tree', 'path', 'stat'],
+	ui : ['toolbar', 'places', 'tree', 'path', 'stat' ],
 
 	/**
 	 * Some UI plugins options.

@@ -172,7 +172,7 @@ $.fn.finderplaces = function(fm, opts) {
 				.hide()
 				.append(wrapper)
 				.appendTo(fm.getUI('navbar'))
-				.delegate('.'+navdir, 'click', function(e) {
+				.on('click','.'+navdir, function(e) {
 					fm.exec('open', $(this).attr('id').substr(6));
 				})
 				.delegate('.'+navdir+':not(.'+clroot+')', 'contextmenu', function(e) {

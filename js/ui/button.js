@@ -45,7 +45,6 @@ $.fn.finderbutton = function(cmd) {
 				.hide()
 				.appendTo(button)
 				.zIndex(12+button.zIndex())
-				.delegate('.'+item, 'hover', function() { $(this).toggleClass(hover) })
 				.delegate('.'+item, 'click', function(e) {
 					e.preventDefault();
 					e.stopPropagation();
@@ -58,7 +57,11 @@ $.fn.finderbutton = function(cmd) {
 			cmd.change(function() {
 				menu.html('');
 				$.each(cmd.variants, function(i, variant) {
-					menu.append($('<div class="'+item+'">'+variant[1]+'</div>').data('value', variant[0]).addClass(variant[0] == cmd.value ? selected : ''));
+					$('<div class="'+item+'">'+variant[1]+'</div>')
+						.data('value', variant[0]).addClass(variant[0] == cmd.value ? selected : '')
+						.hover(function(){
+							$(this).toggleClass(hover)
+						}).appendTo(menu);
 				});
 			});
 		}

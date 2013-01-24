@@ -50,14 +50,6 @@ $.fn.findersearchbutton = function(cmd) {
 		setTimeout(function() {
 			button.parent().detach();
 			cmd.fm.getUI('toolbar').prepend(button.show());
-			// position icons for ie7
-			if ($.browser.msie) {
-				var icon = button.children(cmd.fm.direction == 'ltr' ? '.ui-icon-close' : '.ui-icon-search');
-				icon.css({
-					right : '',
-					left  : parseInt(button.width())-icon.outerWidth(true)
-				});
-			}
 		}, 200);
 
 		cmd.fm

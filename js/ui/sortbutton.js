@@ -19,7 +19,7 @@ $.fn.findersortbutton = function(cmd) {
 			button   = $(this).addClass('ui-state-default finder-button finder-menubutton elfiner-button-'+name)
 				.attr('title', cmd.title)
 				.append('<span class="finder-button-icon finder-button-icon-'+name+'"/>')
-				.hover(function(e) { !button.is('.'+disabled) && button.toggleClass(hover); })
+				.hover(function() { !button.is('.'+disabled) && button.toggleClass(hover); })
 				.click(function(e) {
 					if (!button.is('.'+disabled)) {
 						e.stopPropagation();
@@ -31,7 +31,6 @@ $.fn.findersortbutton = function(cmd) {
 				.hide()
 				.appendTo(button)
 				.zIndex(12+button.zIndex())
-				.delegate('.'+item, 'hover', function() { $(this).toggleClass(hover) })
 				.delegate('.'+item, 'click', function(e) {
 					e.preventDefault();
 					e.stopPropagation();
@@ -48,7 +47,12 @@ $.fn.findersortbutton = function(cmd) {
 
 
 		$.each(fm.sortRules, function(name, value) {
-			menu.append($('<div class="'+item+'" rel="'+name+'"><span class="ui-icon ui-icon-arrowthick-1-n"/><span class="ui-icon ui-icon-arrowthick-1-s"/>'+fm.i18n('sort'+name)+'</div>').data('type', name));
+			$('<div class="'+item+'" rel="'+name+'"><span class="ui-icon ui-icon-arrowthick-1-n"/><span class="ui-icon ui-icon-arrowthick-1-s"/>'+fm.i18n('sort'+name)+'</div>')
+				.data('type', name)
+				.appendTo(menu)
+				.hover(function(){
+					$(this).toggleClass(hover)
+				});
 		});
 
 		menu.children().click(function(e) {
@@ -63,8 +67,10 @@ $.fn.findersortbutton = function(cmd) {
 
 		$('<div class="'+item+' '+item+'-separated"><span class="ui-icon ui-icon-check"/>'+fm.i18n('sortFoldersFirst')+'</div>')
 			.appendTo(menu)
-			.click(function() {
+			.click(function(){
 				cmd.exec([], {type : fm.sortType, order : fm.sortOrder, stick : !fm.sortStickFolders});
+			}).hover(function(){
+				$(this).toggleClass(hover)
 			});
 
 		fm.bind('disable select', hide).getUI().click(hide);

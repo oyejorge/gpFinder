@@ -302,6 +302,27 @@ window.Finder = function(node, opts) {
 	 **/
 	this.OS = navigator.userAgent.indexOf('Mac') !== -1 ? 'mac' : navigator.userAgent.indexOf('Win') !== -1  ? 'win' : 'other';
 
+
+	/**
+	* User browser UA.
+	* jQuery.browser: version deprecated: 1.3, removed: 1.9
+	*
+	* @type Object
+	**/
+	this.UA = (function(){
+		return {
+			ltIE6:		typeof window.addEventListener == "undefined" && typeof document.documentElement.style.maxHeight == "undefined",
+			ltIE7:		typeof window.addEventListener == "undefined" && typeof document.querySelectorAll == "undefined",
+			ltIE8:		typeof window.addEventListener == "undefined" && typeof document.getElementsByClassName == "undefined",
+			IE:			!!document.uniqueID,
+			Firefox:	!!window.sidebar,
+			Opera:		!!window.opera,
+			Webkit:		!document.uniqueID && !window.opera && !window.sidebar && window.localStorage && typeof window.orientation == "undefined",
+			Mobile:		typeof window.orientation != "undefined"
+		}
+	})();
+
+
 	/**
 	 * Configuration options
 	 *

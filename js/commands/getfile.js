@@ -49,9 +49,10 @@ Finder.prototype.commands.getfile = function() {
 					}
 				}),
 			result = function(file) {
-				return opts.onlyURL
-					? opts.multiple ? $.map(files, function(f) { return f.url; }) : files[0].url
-					: opts.multiple ? files : files[0];
+				if( opts.multiple ){
+					return files;
+				}
+				return files[0];
 			},
 			req = [],
 			i, file, dim;

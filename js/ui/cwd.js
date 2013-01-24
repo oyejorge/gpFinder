@@ -770,9 +770,6 @@ $.fn.findercwd = function(fm, options) {
 				.delegate(fileSelector, 'scrolltoview', function() {
 					scrollToView($(this));
 				})
-				.on('hover', fileSelector, function(e) {
-					fm.trigger('hover', {hash : $(this).attr('id'), type : e.type});
-				})
 				.bind('contextmenu.'+fm.namespace, function(e) {
 					var file = $(e.target).closest('.'+clFile);
 

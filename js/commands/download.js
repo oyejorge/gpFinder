@@ -54,11 +54,14 @@ Finder.prototype.commands.download = function() {
 		$(iframes)
 			.appendTo('body')
 			.ready(function() {
+
+				// remove iframes after some time has passed
+				// 20 sec + 10 sec for each file
 				setTimeout(function() {
 					$(iframes).each(function() {
 						$('#' + $(this).attr('id')).remove();
 					});
-				}, $.browser.mozilla? (20000 + (10000 * i)) : 1000); // give mozilla 20 sec + 10 sec for each file to be saved
+				}, (20000 + (10000 * i)) );
 			});
 		fm.trigger('download', {files : files});
 		return dfrd.resolve(hashes);

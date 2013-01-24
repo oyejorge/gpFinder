@@ -44,11 +44,16 @@ $.fn.finderplaces = function(fm, opts) {
 			 * @return jQuery
 			 **/
 			create    = function(dir) {
-				return $(tpl.replace(/\{id\}/, hash2id(dir.hash))
-						.replace(/\{name\}/, fm.escape(dir.name))
-						.replace(/\{cssclass\}/, fm.perms2class(dir))
-						.replace(/\{permissions\}/, !dir.read || !dir.write ? ptpl : '')
-						.replace(/\{symlink\}/, ''));
+				var node = $(tpl.replace(/\{id\}/, hash2id(dir.hash))
+							.replace(/\{name\}/, fm.escape(dir.name))
+							.replace(/\{cssclass\}/, fm.perms2class(dir))
+							.replace(/\{permissions\}/, !dir.read || !dir.write ? ptpl : '')
+							.replace(/\{symlink\}/, ''));
+
+				node.find('.'+navdir).hover(function() {
+					$(this).toggleClass('ui-state-hover');
+				});
+				return node;
 			},
 			/**
 			 * Add new node into places
@@ -167,9 +172,6 @@ $.fn.finderplaces = function(fm, opts) {
 				.hide()
 				.append(wrapper)
 				.appendTo(fm.getUI('navbar'))
-				.delegate('.'+navdir, 'hover', function() {
-					$(this).toggleClass('ui-state-hover');
-				})
 				.delegate('.'+navdir, 'click', function(e) {
 					fm.exec('open', $(this).attr('id').substr(6));
 				})

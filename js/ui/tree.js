@@ -384,24 +384,42 @@ $.fn.findertree = function(fm, opts) {
 			 */
 			tree = $(this).addClass(treeclass)
 				// make dirs draggable
-				// add/remove dropover css class
-				.delegate('.'+navdir, 'dropover dropout drop', function(e) {
-					$(this)[e.type == 'dropover' ? 'addClass' : 'removeClass'](dropover+' '+hover);
-				})
-				// open dir or open subfolders in tree
-				.delegate('.'+navdir, 'click', function(e) {
-					var link = $(this),
-						hash = fm.navId2Hash(link.attr('id')),
-						file = fm.file(hash);
 
-					fm.trigger('searchend');
+				.delegate('.'+navdir,{
 
-					if (hash != fm.cwd().hash && !link.is('.'+disabled)) {
-						fm.exec('open', file.thash || hash);
-					} else if (link.is('.'+collapsed)) {
-						link.children('.'+arrow).click();
+					// add/remove dropover css class
+					'dropover dropout drop':function(e) {
+						$(this)[e.type == 'dropover' ? 'addClass' : 'removeClass'](dropover+' '+hover);
+					},
+
+					// open dir or open subfolders in tree
+					'click':function(e){
+						var link = $(this),
+							hash = fm.navId2Hash(link.attr('id')),
+							file = fm.file(hash);
+
+						fm.trigger('searchend');
+
+						if (hash != fm.cwd().hash && !link.is('.'+disabled)) {
+							fm.exec('open', file.thash || hash);
+						} else if (link.is('.'+collapsed)) {
+							link.children('.'+arrow).click();
+						}
+					},
+
+					//context menu
+					'contextmenu': function(e) {
+						e.preventDefault();
+
+						fm.trigger('contextmenu', {
+							'type'    : 'navbar',
+							'targets' : [fm.navId2Hash($(this).attr('id'))],
+							'x'       : e.clientX,
+							'y'       : e.clientY
+						});
 					}
 				})
+
 				// toggle subfolders in tree
 				.delegate('.'+navdir+'.'+collapsed+' .'+arrow, 'click', function(e) {
 					var arrow = $(this),
@@ -432,20 +450,10 @@ $.fn.findertree = function(fm, opts) {
 								link.addClass(loaded);
 							});
 					}
-				})
-				.delegate('.'+navdir, 'contextmenu', function(e) {
-					e.preventDefault();
-
-					fm.trigger('contextmenu', {
-						'type'    : 'navbar',
-						'targets' : [fm.navId2Hash($(this).attr('id'))],
-						'x'       : e.clientX,
-						'y'       : e.clientY
-					});
 				}),
+
 			// move tree into navbar
 			navbar = fm.getUI('navbar').append(tree).show()
-
 			;
 
 		fm.open(function(e) {

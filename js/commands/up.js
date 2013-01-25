@@ -1,4 +1,4 @@
-
+"use strict";
 /**
  * @class  Finder command "up"
  * Go into parent directory

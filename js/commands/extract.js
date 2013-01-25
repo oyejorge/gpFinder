@@ -1,4 +1,4 @@
-
+"use strict"
 /**
  * @class  Finder command "extract"
  * Extract files from archive

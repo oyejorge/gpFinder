@@ -1,4 +1,4 @@
-
+"use strict";
 /**
  * @class Finder places/favorites ui
  *

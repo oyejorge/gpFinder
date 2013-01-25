@@ -1,4 +1,4 @@
-
+"use strict";
 /**
  * @class  Finder toolbar's button tor upload file
  *

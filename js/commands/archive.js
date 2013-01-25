@@ -1,4 +1,4 @@
-
+"use strict"
 /**
  * @class  Finder command "archive"
  * Archive selected files

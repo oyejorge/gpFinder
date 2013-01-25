@@ -1,4 +1,4 @@
-
+"use strict"
 /**
  * @class  Finder command "open"
  * Enter folder or open files in new windows

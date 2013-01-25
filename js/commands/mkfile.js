@@ -1,4 +1,4 @@
-
+"use strict";
 /**
  * @class  Finder command "mkfile"
  * Create new empty file

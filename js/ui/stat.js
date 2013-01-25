@@ -1,4 +1,4 @@
-
+"use strict";
 /**
  * @class Finder ui
  * Display number of files/selected files and its size in statusbar

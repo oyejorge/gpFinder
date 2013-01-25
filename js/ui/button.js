@@ -1,4 +1,4 @@
-
+"use strict"
 /**
  * @class  Finder toolbar button widget.
  * If command has variants - create menu

@@ -1,4 +1,4 @@
-
+"use strict";
 /**
  * Finder current working directory ui.
  *
@@ -627,7 +627,6 @@ $.fn.findercwd = function(fm, options) {
 				size : fm.i18n('size'),
 				kind : fm.i18n('kind')
 			},
-
 			/**
 			 * Update directory content
 			 *
@@ -850,7 +849,6 @@ $.fn.findercwd = function(fm, options) {
 
 				wrapper.height(wz.height() - h);
 			},
-
 			// finder node
 			parent = $(this).parent().resize(resize),
 			// workzone node

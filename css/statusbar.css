@@ -16,7 +16,7 @@
 
 .finder-statusbar a { text-decoration:none; }
 
-
+.finder-statusbar div { font-size:.7em; }
 
 /* path in statusbar */
 .finder-path {

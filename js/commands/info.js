@@ -1,4 +1,4 @@
-
+"use strict";
 /**
  * @class Finder command "info".
  * Display dialog with file properties.

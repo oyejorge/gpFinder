@@ -1,4 +1,4 @@
-
+"use strict";
 /**
  * @class Finder command "copy".
  * Put files in filemanager clipboard.

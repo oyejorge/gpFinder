@@ -1,4 +1,4 @@
-
+"use strict";
 /**
  * @class Finder command "duplicate"
  * Create file/folder copy with suffix "copy Number"

@@ -1,4 +1,4 @@
-
+"use strict"
 /**
  * @class  Finder toolbar button to switch current directory view.
  *

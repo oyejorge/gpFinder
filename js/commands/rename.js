@@ -1,4 +1,4 @@
-
+"use strict";
 /**
  * @class Finder command "rename".
  * Rename selected file.

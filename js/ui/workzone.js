@@ -1,4 +1,4 @@
-
+"use strict";
 /**
  * @class finderworkzone - Finder container for nav and current directory
  * @author Dmitry (dio) Levashov

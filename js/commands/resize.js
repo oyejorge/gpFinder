@@ -1,4 +1,4 @@
-
+"use strict";
 /**
  * @class  Finder command "resize"
  * Open dialog to resize image

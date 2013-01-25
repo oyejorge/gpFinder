@@ -1,4 +1,4 @@
-
+"use strict";
 /**
  * @class  Finder command "paste"
  * Paste filesfrom clipboard into directory.
@@ -33,7 +33,8 @@ Finder.prototype.commands.paste = function() {
 			dst = this.fm.cwd();
 		}
 
-		return this.fm.clipboard().length && dst.mime == 'directory' && dst.write ? 0 : -1;
+		//return this.fm.clipboard().length && dst.mime == 'directory' && dst.write ? 0 : -1;
+		return dst.mime == 'directory' && dst.write ? 0 : -1;
 	}
 
 	this.exec = function(dst) {

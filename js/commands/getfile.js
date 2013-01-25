@@ -1,4 +1,4 @@
-
+"use strict";
 /**
  * @class Finder command "getfile".
  * Return selected files info into outer callback.

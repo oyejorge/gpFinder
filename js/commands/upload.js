@@ -1,4 +1,4 @@
-
+"use strict";
 /**
  * @class Finder command "upload"
  * Upload files using iframe or XMLHttpRequest & FormData.
@@ -25,7 +25,7 @@ Finder.prototype.commands.upload = function() {
 	 **/
 	this.getstate = function() {
 		return !this._disabled && this.fm.cwd().write ? 0 : -1;
-	}
+	};
 
 
 	this.exec = function(data) {
@@ -62,7 +62,7 @@ Finder.prototype.commands.upload = function() {
 			.append($('<form/>').append(input))
 			.hover(function() {
 				button.toggleClass(hover)
-			})
+			});
 
 		dialog = $('<div class="finder-upload-dialog-wrapper"/>')
 			.append(button);
@@ -106,6 +106,6 @@ Finder.prototype.commands.upload = function() {
 		});
 
 		return dfrd;
-	}
+	};
 
-}
+};

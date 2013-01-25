@@ -25,7 +25,7 @@
 	cursor:default;
 }
 /* text in item */
-.finder-contextmenu .finder-contextmenu-item span { display:block; }
+.finder-contextmenu .finder-contextmenu-item span { font-size:.76em; display:block; }
 
 
 

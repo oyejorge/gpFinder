@@ -1,4 +1,4 @@
-
+"use strict";
 /**
  * @class Finder ui
  * Display current folder path in statusbar.

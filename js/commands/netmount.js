@@ -1,4 +1,4 @@
-
+"use strict"
 /**
  * @class  Finder command "netmount"
  * Mount network volume with user credentials.

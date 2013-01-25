@@ -1,4 +1,4 @@
-
+"use strict";
 /**
  * @class  Finder contextmenu
  *
@@ -106,6 +106,20 @@ $.fn.findercontextmenu = function(fm) {
 						sep = true;
 					}
 				})
+			},
+
+			createFromRaw = function(raw) {
+				$.each(raw, function(i, data) {
+					var node;
+
+					if (data.label && typeof data.callback == 'function') {
+						node = item(data.label, data.icon, function() {
+							close();
+							data.callback();
+						});
+						menu.append(node);
+					}
+				})
 			};
 
 		fm.one('load', function() {
@@ -116,6 +130,8 @@ $.fn.findercontextmenu = function(fm) {
 
 				if (data.type && data.targets) {
 					create(data.type, data.targets);
+				} else if (data.raw) {
+					createFromRaw(data.raw);
 				}
 
 				menu.children().length && open(data.x, data.y);

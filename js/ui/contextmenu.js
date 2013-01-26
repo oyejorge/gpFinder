@@ -8,8 +8,11 @@ $.fn.findercontextmenu = function(fm) {
 
 	return this.each(function() {
 		var menu = $(this).addClass('ui-helper-reset ui-widget ui-state-default ui-corner-all finder-contextmenu finder-contextmenu-'+fm.direction)
+				.hide()
 				.appendTo('body')
-				.hide(),
+				.delegate('.finder-contextmenu-item', 'mouseenter mouseleave', function() {
+					$(this).toggleClass('ui-state-hover')
+				}),
 			subpos  = fm.direction == 'ltr' ? 'left' : 'right',
 			types = $.extend({}, fm.options.contextmenu),
 			tpl     = '<div class="finder-contextmenu-item"><span class="finder-button-icon {icon} finder-contextmenu-icon"/><span>{label}</span></div>',
@@ -19,8 +22,6 @@ $.fn.findercontextmenu = function(fm) {
 						e.stopPropagation();
 						e.stopPropagation();
 						callback();
-					}).hover(function(){
-						$(this).toggleClass('ui-state-hover');
 					});
 			},
 
@@ -88,8 +89,6 @@ $.fn.findercontextmenu = function(fm) {
 											e.stopPropagation();
 											close();
 											cmd.exec(targets, variant[0]);
-										}).hover(function(){
-											$(this).toggleClass('ui-state-hover');
 										})
 								);
 							});

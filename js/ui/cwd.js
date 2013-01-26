@@ -179,15 +179,10 @@ $.fn.findercwd = function(fm, options) {
 			 **/
 			itemhtml = function(f) {
 				f.name = fm.escape(f.name);
-				var html = templates[list ? 'row' : 'icon']
+				return templates[list ? 'row' : 'icon']
 							.replace(/\{([a-z]+)\}/g, function(s, e) {
 								return replacement[e] ? replacement[e](f) : (f[e] ? f[e] : '');
 							});
-
-				return $(html).hover(function(e) {
-					fm.trigger('hover', {hash : $(this).attr('id'), type : e.type});
-				});
-
 			},
 
 			/**
@@ -391,7 +386,7 @@ $.fn.findercwd = function(fm, options) {
 				while ((!last.length || last.position().top <= wrapper.height() + wrapper.scrollTop() + fm.options.showThreshold)
 					&& (files = buffer.splice(0, fm.options.showFiles)).length) {
 
-					$.map(files, function(f) {
+					html = $.map(files, function(f) {
 						if (f.hash && f.name) {
 							if (f.mime == 'directory') {
 								dirs = true;
@@ -399,10 +394,12 @@ $.fn.findercwd = function(fm, options) {
 							if (f.tmb) {
 								f.tmb === 1 ? ltmb.push(f.hash) : (atmb[f.hash] = f.tmb)
 							}
-							place.append(itemhtml(f));
+							return itemhtml(f);
 						}
+						return null;
 					});
 
+					place.append(html.join(''));
 					last = cwd.find('[id]:last');
 					// scroll top on dir load to avoid scroll after page reload
 					top && cwd.scrollTop(0);
@@ -648,7 +645,7 @@ $.fn.findercwd = function(fm, options) {
 
 				if (options.oldSchool && phash && !query) {
 					var parent = $.extend(true, {}, fm.file(phash), {name : '..', mime : 'directory'});
-					parent = itemhtml(parent)
+					parent = $(itemhtml(parent))
 						.addClass('finder-cwd-parent')
 						.bind('mousedown click mouseup dblclick mouseenter', function(e) {
 							e.preventDefault();
@@ -740,6 +737,9 @@ $.fn.findercwd = function(fm, options) {
 				.delegate(fileSelector, 'scrolltoview', function() {
 					scrollToView($(this));
 				})
+				.delegate(fileSelector, 'mouseenter mouseleave', function(e) {
+					fm.trigger('hover', {hash : $(this).attr('id'), type : e.type});
+				})
 				.bind('contextmenu.'+fm.namespace, function(e) {
 					var file = $(e.target).closest('.'+clFile);
 
@@ -781,7 +781,7 @@ $.fn.findercwd = function(fm, options) {
 				.bind('create.'+fm.namespace, function(e, file) {
 					var parent = list ? cwd.find('tbody') : cwd,
 						p = parent.find('.finder-cwd-parent'),
-						file = itemhtml(file).addClass(clTmp);
+						file = $(itemhtml(file)).addClass(clTmp);
 
 					unselectAll();
 

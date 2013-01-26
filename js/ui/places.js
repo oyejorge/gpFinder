@@ -44,16 +44,11 @@ $.fn.finderplaces = function(fm, opts) {
 			 * @return jQuery
 			 **/
 			create    = function(dir) {
-				var node = $(tpl.replace(/\{id\}/, hash2id(dir.hash))
+				return $(tpl.replace(/\{id\}/, hash2id(dir.hash))
 							.replace(/\{name\}/, fm.escape(dir.name))
 							.replace(/\{cssclass\}/, fm.perms2class(dir))
 							.replace(/\{permissions\}/, !dir.read || !dir.write ? ptpl : '')
 							.replace(/\{symlink\}/, ''));
-
-				node.find('.'+navdir).hover(function() {
-					$(this).toggleClass('ui-state-hover');
-				});
-				return node;
 			},
 			/**
 			 * Add new node into places
@@ -172,8 +167,16 @@ $.fn.finderplaces = function(fm, opts) {
 				.hide()
 				.append(wrapper)
 				.appendTo(fm.getUI('navbar'))
-				.on('click','.'+navdir, function() {
-					fm.exec('open', $(this).attr('id').substr(6));
+				.delegate('.'+navdir,{
+					'click': function() {
+						fm.exec('open', $(this).attr('id').substr(6));
+					},
+					'mouseenter': function(){
+						$(this).addClass('ui-state-hover');
+					},
+					'mouseleave': function(){
+						$(this).removeClass('ui-state-hover');
+					}
 				})
 				.delegate('.'+navdir+':not(.'+clroot+')', 'contextmenu', function(e) {
 					var hash = $(this).attr('id').substr(6);

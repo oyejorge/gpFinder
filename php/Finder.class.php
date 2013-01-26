@@ -19,7 +19,7 @@ class Finder {
 	 *
 	 * @var string
 	 **/
-	protected $version = '2.1';
+	protected $version = '2.2';
 
 	/**
 	 * Storages (root dirs)

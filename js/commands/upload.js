@@ -40,7 +40,7 @@ Finder.prototype.commands.upload = function() {
 						dfrd.resolve(data);
 					});
 			},
-			dfrd, dialog, input, button, dropbox;
+			dfrd, dialog, input, button, dropbox, pastebox;
 
 		if (this.disabled()) {
 			return $.Deferred().reject();
@@ -67,9 +67,35 @@ Finder.prototype.commands.upload = function() {
 		dialog = $('<div class="finder-upload-dialog-wrapper"/>')
 			.append(button);
 
+		pastebox = $('<div class="ui-corner-all finder-upload-dropbox" contenteditable=true></div>')
+			.focus(function() {
+				if (this.innerHTML) {
+					var type = this.innerHTML.match(/<[^>]+>/)? 'html' : 'text';
+					var src = this.innerHTML;
+					this.innerHTML = '';
+					upload({files : [ src ], type : type});
+				}
+			})
+			.bind('dragenter mouseover', function(){
+				this.focus();
+				$(pastebox).addClass(hover);
+			})
+			.bind('dragleave mouseout', function(){
+				this.blur();
+				$(pastebox).removeClass(hover);
+			})
+			.bind('mouseup keyup', function() {
+				setTimeout(function(){
+					$(pastebox).focus();
+				}, 100);
+			});
+
 		if (fm.dragUpload) {
 			dropbox = $('<div class="ui-corner-all finder-upload-dropbox">'+fm.i18n('dropFiles')+'</div>')
 				.prependTo(dialog)
+				.after('<div class="finder-upload-dialog-or">'+fm.i18n('or')+'</div>')
+				.after(pastebox)
+				.after('<div>'+fm.i18n('dropFilesBrowser')+'</div>')
 				.after('<div class="finder-upload-dialog-or">'+fm.i18n('or')+'</div>')[0];
 
 			dropbox.addEventListener('dragenter', function(e) {
@@ -87,14 +113,34 @@ Finder.prototype.commands.upload = function() {
 			dropbox.addEventListener('dragover', function(e) {
 				e.stopPropagation();
 			  	e.preventDefault();
+			  	$(dropbox).addClass(hover);
 			}, false);
 
 			dropbox.addEventListener('drop', function(e) {
 				e.stopPropagation();
 			  	e.preventDefault();
-
-				upload({files : e.dataTransfer.files});
+				var file = false;
+				var type = '';
+				if (e.dataTransfer && e.dataTransfer.files &&  e.dataTransfer.files.length) {
+					file = e.dataTransfer.files;
+					type = 'files';
+				} else if (e.dataTransfer.getData('text/html')) {
+					file = [ e.dataTransfer.getData('text/html') ];
+					type = 'html';
+				} else if (e.dataTransfer.getData('text')) {
+					file = [ e.dataTransfer.getData('text') ];
+					type = 'text';
+				}
+				if (file) {
+					upload({files : file, type : type});
+				}
 			}, false);
+
+		} else {
+			$('<div>'+fm.i18n('dropFilesBrowser')+'</div>')
+				.append(pastebox)
+				.prependTo(dialog)
+				.after('<div class="finder-upload-dialog-or">'+fm.i18n('or')+'</div>')[0];
 
 		}
 

@@ -283,18 +283,8 @@ $.fn.findercwd = function(fm, options) {
 				}
 			},
 
-			selectedFiles = [],
-
 			selectFile = function(hash) {
 				cwd.find('#'+hash).trigger(evtSelect);
-			},
-
-			selectAll = function() {
-				var phash = fm.cwd().hash;
-
-				cwd.find('[id]:not(.'+clSelected+'):not(.finder-cwd-parent)').trigger(evtSelect);
-				selectedFiles = $.map(fm.files(), function(f) { return f.phash == phash ? f.hash : null });
-				trigger();
 			},
 
 			/**
@@ -303,7 +293,6 @@ $.fn.findercwd = function(fm, options) {
 			 * @return void
 			 */
 			unselectAll = function() {
-				selectedFiles = [];
 				cwd.find('[id].'+clSelected).trigger(evtUnselect);
 				trigger();
 			},
@@ -314,7 +303,10 @@ $.fn.findercwd = function(fm, options) {
 			 * @return Array
 			 */
 			selected = function() {
-				return selectedFiles;
+				return $.map(cwd.find('[id].'+clSelected), function(n) {
+					n = $(n);
+					return n.is('.'+clDisabled) ? null : $(n).attr('id');
+				});
 			},
 
 			/**
@@ -323,7 +315,7 @@ $.fn.findercwd = function(fm, options) {
 			 * @return void
 			 */
 			trigger = function() {
-				fm.trigger('select', {selected : selectedFiles});
+				fm.trigger('select', {selected : selected()});
 			},
 
 			/**
@@ -414,6 +406,7 @@ $.fn.findercwd = function(fm, options) {
 					last = cwd.find('[id]:last');
 					// scroll top on dir load to avoid scroll after page reload
 					top && cwd.scrollTop(0);
+
 				}
 
 				// load/attach thumbnails
@@ -422,14 +415,6 @@ $.fn.findercwd = function(fm, options) {
 
 				// make directory droppable
 				dirs && makeDroppable();
-
-				if (selectedFiles.length) {
-					place.find('[id]:not(.'+clSelected+'):not(.finder-cwd-parent)').each(function() {
-						var id = this.id;
-
-						$.inArray(id, selectedFiles) !== -1 && $(this).trigger(evtSelect);
-					});
-				}
 
 			},
 
@@ -724,30 +709,16 @@ $.fn.findercwd = function(fm, options) {
 				})
 				// add hover class to selected file
 				.delegate(fileSelector, evtSelect, function(e) {
-					var $this = $(this),
-						id    = $this.attr('id');
-
-					if (!selectLock && !$this.is('.'+clDisabled)) {
+					var $this = $(this);
+					if( !selectLock && !$this.is('.'+clDisabled) ){
 						$this.addClass(clSelected).children().addClass(clHover);
-						if ($.inArray(id, selectedFiles) === -1) {
-							selectedFiles.push(id);
-						}
 					}
 				})
 				// remove hover class from unselected file
 				.delegate(fileSelector, evtUnselect, function(e) {
-					var $this = $(this),
-						id    = $this.attr('id'),
-						ndx;
-
 					if (!selectLock) {
 						$(this).removeClass(clSelected).children().removeClass(clHover);
-						ndx = $.inArray(id, selectedFiles);
-						if (ndx !== -1) {
-							selectedFiles.splice(ndx, 1);
-						}
 					}
-
 				})
 				// disable files wich removing or moving
 				.delegate(fileSelector, evtDisable, function() {
@@ -1006,10 +977,24 @@ $.fn.findercwd = function(fm, options) {
 				});
 				trigger();
 			})
+
+			// select all
 			.shortcut({
 				pattern     :'ctrl+a',
 				description : 'selectall',
-				callback    : selectAll
+				callback    : function() {
+					var phash;
+
+					cwd.find('[id]:not(.'+clSelected+'):not(.finder-cwd-parent)').trigger(evtSelect);
+
+					// only select if there are files in the current directory
+					if (buffer.length) {
+						phash = fm.cwd().hash;
+						fm.select({selected : $.map(fm.files(), function(f) { return f.phash == phash ? f.hash : null; })})
+					} else {
+						trigger();
+					}
+				}
 			})
 			.shortcut({
 				pattern     : 'left right up down shift+left shift+right shift+up shift+down',

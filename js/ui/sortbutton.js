@@ -31,10 +31,15 @@ $.fn.findersortbutton = function(cmd) {
 				.hide()
 				.appendTo(button)
 				.zIndex(12+button.zIndex())
-				.delegate('.'+item, 'click', function(e) {
-					e.preventDefault();
-					e.stopPropagation();
-					hide();
+				.delegate('.'+item,{
+					'mouseenter mouseleave': function() {
+						$(this).toggleClass(hover);
+					},
+					'click': function(e) {
+						e.preventDefault();
+						e.stopPropagation();
+						hide();
+					}
 				}),
 			update = function() {
 				menu.children(':not(:last)').removeClass(selected+' '+asc+' '+desc)
@@ -47,12 +52,7 @@ $.fn.findersortbutton = function(cmd) {
 
 
 		$.each(fm.sortRules, function(name, value) {
-			$('<div class="'+item+'" rel="'+name+'"><span class="ui-icon ui-icon-arrowthick-1-n"/><span class="ui-icon ui-icon-arrowthick-1-s"/>'+fm.i18n('sort'+name)+'</div>')
-				.data('type', name)
-				.appendTo(menu)
-				.hover(function(){
-					$(this).toggleClass(hover)
-				});
+			menu.append($('<div class="'+item+'" rel="'+name+'"><span class="ui-icon ui-icon-arrowthick-1-n"/><span class="ui-icon ui-icon-arrowthick-1-s"/>'+fm.i18n('sort'+name)+'</div>').data('type', name));
 		});
 
 		menu.children().click(function(e) {
@@ -69,8 +69,6 @@ $.fn.findersortbutton = function(cmd) {
 			.appendTo(menu)
 			.click(function(){
 				cmd.exec([], {type : fm.sortType, order : fm.sortOrder, stick : !fm.sortStickFolders});
-			}).hover(function(){
-				$(this).toggleClass(hover)
 			});
 
 		fm.bind('disable select', hide).getUI().click(hide);

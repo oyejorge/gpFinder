@@ -188,22 +188,10 @@ $.fn.findertree = function(fm, opts) {
 			 */
 			itemhtml = function(dir) {
 				dir.name = fm.escape(dir.name);
-				var html = $( tpl.replace(/(?:\{([a-z]+)\})/ig, function(m, key) {
+
+				return tpl.replace(/(?:\{([a-z]+)\})/ig, function(m, key) {
 					return dir[key] || (replace[key] ? replace[key](dir) : '');
-				}));
-
-				html.find('.'+navdir).hover(function(e){
-					var link  = $(this),
-						enter = e.type == 'mouseenter';
-					e.stopPropagation();
-
-					if (!link.is('.'+dropover+' ,.'+disabled)) {
-						enter && !link.is('.'+root+',.'+draggable+',.finder-na,.finder-wo') && link.draggable(fm.draggable);
-						link.toggleClass(hover, enter);
-					}
 				});
-
-				return html;
 			},
 
 			/**
@@ -270,17 +258,13 @@ $.fn.findertree = function(fm, opts) {
 					}
 
 					parent = findSubtree(dir.phash);
-					if( parent.length ){
+					if (parent.length) {
 						html = itemhtml(dir);
 						if (dir.phash && (sibling = findSibling(parent, dir)).length) {
 							sibling.before(html);
-						}else if( dir.phash ){
-							parent.append(html);
-						}else{
-							parent.prepend(html);
+						} else {
+							parent[dir.phash ? 'append' : 'prepend'](html);
 						}
-
-
 					} else {
 						orphans.push(dir);
 					}
@@ -386,6 +370,17 @@ $.fn.findertree = function(fm, opts) {
 				// make dirs draggable
 
 				.delegate('.'+navdir,{
+
+					// make dirs draggable and toggle hover class
+					'mouseenter mouseleave': function(e) {
+						var link  = $(this),
+							enter = e.type == 'mouseenter';
+
+						if (!link.is('.'+dropover+' ,.'+disabled)) {
+							enter && !link.is('.'+root+',.'+draggable+',.finder-na,.finder-wo') && link.draggable(fm.draggable);
+							link.toggleClass(hover, enter);
+						}
+					},
 
 					// add/remove dropover css class
 					'dropover dropout drop':function(e) {
@@ -502,7 +497,7 @@ $.fn.findertree = function(fm, opts) {
 					}
 					isExpanded = node.is('.'+expanded);
 					isLoaded   = node.is('.'+loaded);
-					tmp        = itemhtml(dir);
+					tmp        = $(itemhtml(dir));
 					node.replaceWith(tmp.children('.'+navdir));
 
 					if (dir.dirs

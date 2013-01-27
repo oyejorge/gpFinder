@@ -41,7 +41,7 @@ $.fn.finderdialog = function(opts) {
 				.append(self)
 				.appendTo(parent)
 				.draggable({ handle : '.ui-dialog-titlebar',
-					     containment : $('body') })
+					     containment : $(document) })
 				.css({
 					width  : opts.width,
 					height : opts.height

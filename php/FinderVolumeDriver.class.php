@@ -1985,6 +1985,9 @@ abstract class FinderVolumeDriver {
 	 * @author Dmitry (dio) Levashov
 	 **/
 	protected function stat($path) {
+		if( $path === false ){
+			return false;
+		}
 
 		$path = $this->_separator( $path );
 

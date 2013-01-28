@@ -9,10 +9,16 @@ $.fn.findersearchbutton = function(cmd) {
 		var result = false,
 			button = $(this).hide().addClass('ui-widget-content finder-button '+cmd.fm.res('class', 'searchbtn')+''),
 			search = function() {
-				cmd.exec($.trim(input.val())).done(function() {
-					result = true;
-					input.focus();
-				});
+				var val = $.trim(input.val());
+				if (val) {
+					cmd.exec(val).done(function() {
+						result = true;
+						input.focus();
+					});
+
+				} else {
+					cmd.fm.trigger('searchend')
+				}
 			},
 			abort = function() {
 				input.val('');

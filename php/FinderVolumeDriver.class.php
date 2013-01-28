@@ -2298,11 +2298,10 @@ abstract class FinderVolumeDriver {
 		$list = $this->getScandir($path);
 		foreach( $list as $p => $stat ){
 			if( $stat['mime'] == 'directory' && $stat['read'] ){
-				$size = $this->countSize($p);
-			}else{
-				$size = $stat['size'];
+				$result += $this->countSize($p);
+			}elseif( isset($stat['size']) ){
+				$result += $stat['size'];
 			}
-			$result += $size;
 		}
 		$this->options['checkSubfolders'] = $subdirs;
 		return $result;

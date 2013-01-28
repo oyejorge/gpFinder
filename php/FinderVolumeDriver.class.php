@@ -2300,7 +2300,7 @@ abstract class FinderVolumeDriver {
 			if( $stat['mime'] == 'directory' && $stat['read'] ){
 				$result += $this->countSize($p);
 			}elseif( isset($stat['size']) ){
-				$result += $stat['size'];
+				$result += intval($stat['size']);
 			}
 		}
 		$this->options['checkSubfolders'] = $subdirs;

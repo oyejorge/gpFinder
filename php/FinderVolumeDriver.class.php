@@ -1367,13 +1367,18 @@ abstract class FinderVolumeDriver {
 			}
 		}
 
-		$w = $h = 0;
+		$stat = array(
+				'mime' => $mime,
+				'width' => 0,
+				'height' => 0,
+				'size' => filesize($tmpname));
+
 		if (strpos($mime, 'image') === 0 && ($s = getimagesize($tmpname))) {
-			$w = $s[0];
-			$h = $s[1];
+			$stat['width'] = $s[0];
+			$stat['height'] = $s[1];
 		}
 		// $this->clearcache();
-		if (($path = $this->_save($fp, $dstpath, $name, $mime, $w, $h)) == false) {
+		if (($path = $this->_save($fp, $dstpath, $name, $stat)) == false) {
 			return false;
 		}
 
@@ -2577,13 +2582,12 @@ abstract class FinderVolumeDriver {
 
 		//directory
 		if ($source['mime'] == 'directory') {
-			$stat = $this->stat($this->_joinPath($destination, $name));
+			$path = $this->_joinPath($destination, $name);
+			$stat = $this->stat($path);
 			$this->clearcache();
 			if ((!$stat || $stat['mime'] != 'directory') && !$this->_mkdir($destination, $name)) {
 				return $this->setError('errCopy', $errpath);
 			}
-
-			$path = $this->_joinPath($destination, $name);
 
 			foreach ($volume->scandir($src) as $entr) {
 				if (!$this->copyFrom($volume, $entr['hash'], $path, $entr['name'])) {
@@ -2595,12 +2599,10 @@ abstract class FinderVolumeDriver {
 		}
 
 		//file
-		$mime = $source['mime'];
-		$w = $h = 0;
-		if (strpos($mime, 'image') === 0 && ($dim = $volume->dimensions($src))) {
+		if (strpos($source['mime'], 'image') === 0 && ($dim = $volume->dimensions($src))) {
 			$s = explode('x', $dim);
-			$w = $s[0];
-			$h = $s[1];
+			$stat['width'] = $s[0];
+			$stat['height'] = $s[1];
 		}
 
 		$fp = $volume->open($src);
@@ -2608,7 +2610,7 @@ abstract class FinderVolumeDriver {
 			return $this->setError('errCopy', $errpath);
 		}
 
-		$path = $this->_save($fp, $destination, $name, $mime, $w, $h, $source);
+		$path = $this->_save($fp, $destination, $name, $source);
 		if( !$path ){
 			$volume->close($fp, $src);
 			return $this->setError('errCopy', $errpath);
@@ -3579,14 +3581,11 @@ abstract class FinderVolumeDriver {
 	 * @param  resource  $fp   file pointer
 	 * @param  string    $dir  target dir path
 	 * @param  string    $name file name
-	 * @param  string    $mime file mime type
-	 * @param  integer   $w    image width
-	 * @param  integer   $h    image height
-	 * @param  array     $stat file stat (optional)
+	 * @param  array     $stat file stat (required by some virtual fs)
 	 * @return bool|string
 	 * @author Dmitry (dio) Levashov
 	 **/
-	abstract protected function _save($fp, $dir, $name, $mime, $w, $h);
+	abstract protected function _save($fp, $dir, $name, $stat);
 
 	/**
 	 * Get file contents

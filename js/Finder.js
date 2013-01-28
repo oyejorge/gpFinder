@@ -1105,7 +1105,7 @@ window.Finder = function(node, opts) {
 				preventDefault : true
 			},
 			opts2 = {
-				data           : {cmd : 'parents', target : cwd},
+				data           : {cmd : 'tree', target : (cwd == this.root())? cwd : this.file(cwd).phash},
 				preventDefault : true
 			};
 
@@ -1124,6 +1124,7 @@ window.Finder = function(node, opts) {
 
 			var diff = self.diff( odata.files.concat(pdata && pdata.tree ? pdata.tree : []) );
 
+			diff.added.push(odata.cwd)
 			diff.removed.length && self.remove(diff);
 			diff.added.length   && self.add(diff);
 			diff.changed.length && self.change(diff);

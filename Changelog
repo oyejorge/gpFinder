@@ -2,6 +2,7 @@
 	* Added UploadExternal()
 	* Fix for jquery 1.9
 	* Removed onlyurl option
+	* Bugfixes
 
 2012-01-07  gpFinder 2.1
 	* Fix return key bug

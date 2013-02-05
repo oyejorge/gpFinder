@@ -46,7 +46,8 @@ $.fn.finderdialog = function(opts) {
 				})
 				.css({
 					width  : opts.width,
-					height : opts.height
+					height : opts.height,
+					position: 'absolute'
 				})
 				.mousedown(function(e) {
 					e.stopPropagation();

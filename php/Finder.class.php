@@ -1143,7 +1143,7 @@ class Finder {
 	 **/
 	protected function upload($args) {
 
-		if( empty($files) ){
+		if( empty($args['FILES']['upload']) ){
 			return $this->UploadExternal($args);
 		}
 
@@ -1158,7 +1158,7 @@ class Finder {
 		}
 
 		if( !is_array($files) || empty($files) ){
-			return array('error' => $this->error('errUpload', 'errUploadNoFiles'));
+			return array('error' => $this->error('errUpload', 'errUploadNoFiles','1'));
 		}
 
 		// check and upload content in $files array
@@ -1212,7 +1212,7 @@ class Finder {
 		$result = array('added' => array(), 'header' => empty($args['html']) ? false : 'Content-Type: text/html; charset=utf-8');
 
 		if( !isset($args['upload']) || !is_array($args['upload'])) {
-			return array('error' => $this->error('errUpload', 'errUploadNoFiles'));
+			return array('error' => $this->error('errUpload', 'errUploadNoFiles','2'));
 		}
 
 		// values may be "http://file_path" or "<img src='http://file_path' ...>"
@@ -1225,7 +1225,7 @@ class Finder {
 		}
 
 		if( empty($urls) ){
-			return array('error' => $this->error('errUpload', 'errUploadNoFiles'));
+			return array('error' => $this->error('errUpload', 'errUploadNoFiles','3'));
 		}
 
 		$urls = array_unique($urls);

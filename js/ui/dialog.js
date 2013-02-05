@@ -75,8 +75,8 @@ $.fn.finderdialog = function(opts) {
 
 							if (d[0] != dialog[0] && (top == _top || left == _left)) {
 								dialog.css({
-									top  : (top+10)+'px',
-									left : (left+10)+'px'
+									top  : (top+10),
+									left : (left+10
 								});
 							}
 						});
@@ -133,8 +133,8 @@ $.fn.finderdialog = function(opts) {
 		if (!opts.position) {
 			top = parseInt((parent.height() - dialog.outerHeight())/2 - 42);
 			opts.position = {
-				top  : (top > 0 ? top : 0)+'px',
-				left : parseInt((parent.width() - dialog.outerWidth())/2)+'px'
+				top  : (top > 0 ? top : 0),
+				left : parseInt((parent.width() - dialog.outerWidth())/2)
 			}
 		}
 

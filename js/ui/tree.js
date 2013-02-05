@@ -306,7 +306,7 @@ $.fn.findertree = function(fm, opts) {
 				if (opts.syncTree) {
 					if (current.length) {
 						current.parentsUntil('.'+root).filter('.'+subtree).show().prev('.'+navdir).addClass(expanded);
-					} else if (fm.newAPI && !stopRec) {
+					} else if ( !stopRec ) {
 						// check if cwd is not in files
 						if ((dir = fm.file(cwd)).phash && tree.find('#'+fm.navHash2Id(dir.phash)).length) {
 							updateTree([dir]);

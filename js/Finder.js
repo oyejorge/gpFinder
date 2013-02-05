@@ -282,13 +282,6 @@ window.Finder = function(node, opts) {
 	this.api = null;
 
 	/**
-	 * Finder use new api
-	 *
-	 * @type Boolean
-	 **/
-	this.newAPI = false;
-
-	/**
 	 * User os. Required to bind native shortcuts for open/rename
 	 *
 	 * @type String
@@ -934,7 +927,6 @@ window.Finder = function(node, opts) {
 
 				if (!self.api) {
 					self.api    = response.api || 1;
-					self.newAPI = self.api >= 2;
 				}
 
 				if (response.options) {

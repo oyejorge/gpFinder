@@ -76,7 +76,7 @@ $.fn.finderdialog = function(opts) {
 							if (d[0] != dialog[0] && (top == _top || left == _left)) {
 								dialog.css({
 									top  : (top+10),
-									left : (left+10
+									left : (left+10)
 								});
 							}
 						});

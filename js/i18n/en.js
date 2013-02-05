@@ -205,7 +205,7 @@ if (Finder && Finder.prototype && typeof(Finder.prototype.i18) == 'object') {
 			'help'            : 'Help',
 			'webfm'           : 'Web file manager',
 			'ver'             : 'Version',
-			'protocolver'     : 'protocol version',
+			//'protocolver'     : 'protocol version',
 			'homepage'        : 'Project home',
 			'docs'            : 'Documentation',
 			'github'          : 'Fork us on Github',

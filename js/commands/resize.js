@@ -426,8 +426,8 @@ Finder.prototype.commands.resize = function() {
 								imgr.show()
 									.width(rwidth)
 									.height(rheight)
-									.css('margin-top', (pheight-rheight)/2 + 'px')
-									.css('margin-left', (pwidth-rwidth)/2 + 'px');
+									.css('margin-top', (pheight-rheight)/2)
+									.css('margin-left', (pwidth-rwidth)/2);
 
 							}
 						}

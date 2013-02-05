@@ -70,8 +70,8 @@ Finder.prototype.commands.quicklook = function() {
 				opacity : 0,
 				width   : 20,//node.width(),
 				height  : fm.view == 'list' ? 1 : 20,
-				top     : node.offset().top+'px',
-				left    : node.offset().left+'px'
+				top     : node.offset().top,
+				left    : node.offset().left
 			}
 		},
 		/**
@@ -157,8 +157,8 @@ Finder.prototype.commands.quicklook = function() {
 
 					$(window).bind(scroll, function() {
 						win.css({
-							left   : parseInt($(window).scrollLeft())+'px',
-							top    : parseInt($(window).scrollTop()) +'px'
+							left   : parseInt($(window).scrollLeft()),
+							top    : parseInt($(window).scrollTop())
 						})
 					})
 					.bind(self.resize, function(e) {

@@ -36,12 +36,14 @@ $.fn.finderdialog = function(opts) {
 			buttonpane = $('<div class=" ui-helper-clearfix ui-dialog-buttonpane ui-widget-content"/>')
 				.append(buttonset),
 
-			dialog = $('<div class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-draggable std42-dialog  '+cldialog+' '+opts.cssClass+'"/>')
+
+			dialog = $('<div class="test ui-dialog ui-widget ui-widget-content ui-corner-all ui-draggable std42-dialog  '+cldialog+' '+opts.cssClass+'"/>')
 				.hide()
 				.append(self)
 				.appendTo(parent)
-				.draggable({ handle : '.ui-dialog-titlebar',
-					     containment : $(document) })
+				.draggable({
+					handle : '.ui-dialog-titlebar'
+				})
 				.css({
 					width  : opts.width,
 					height : opts.height

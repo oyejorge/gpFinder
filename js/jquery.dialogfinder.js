@@ -33,8 +33,9 @@ $.fn.dialogfinder = function(opts) {
 				.css('position', 'absolute')
 				.hide()
 				.appendTo('body')
-				.draggable({ handle : '.dialogfinder-drag',
-					     containment : 'window' })
+				.draggable({
+					handle : '.dialogfinder-drag'
+				})
 				.finder(opts)
 				.prepend(toolbar),
 			finder = node.finder('instance');

@@ -2,6 +2,7 @@
 	* Bugfixes
 	** Check for proc_open
 	** Fix uploading
+	** Remove containment argument for dialog()
 
 2013-01-27  gpFinder 2.2
 	* Added UploadExternal()

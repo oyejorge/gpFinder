@@ -32,6 +32,7 @@
 	overflow:hidden;
 	position:relative;
 	border:0 solid;
+	cursor:pointer;
 }
 
 .finder .ui-icon-search { cursor:pointer;}

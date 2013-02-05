@@ -827,7 +827,6 @@ class Finder {
 		);
 
 		if (!empty($args['init'])) {
-			$result['api'] = $this->version;
 			$result['uplMaxSize'] = ini_get('upload_max_filesize');
 			$result['netDrivers'] = array_keys(self::$netDrivers);
 		}

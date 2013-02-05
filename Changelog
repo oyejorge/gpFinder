@@ -1,10 +1,15 @@
-2012-01-27  gpFinder 2.2
+2013-02-04  gpFinder 2.2.1
+	* Bugfixes
+	** Check for proc_open
+	** Fix uploading
+
+2013-01-27  gpFinder 2.2
 	* Added UploadExternal()
 	* Fix for jquery 1.9
 	* Removed onlyurl option
 	* Bugfixes
 
-2012-01-07  gpFinder 2.1
+2013-01-07  gpFinder 2.1
 	* Fix return key bug
 	* Simplified mimetype detection
 	* Clear buffers before fpassthru

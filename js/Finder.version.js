@@ -3,5 +3,5 @@
  *
  * @type String
  **/
-Finder.prototype.version = '2.2';
+Finder.prototype.version = '2.2.1';
 

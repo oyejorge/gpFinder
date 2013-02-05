@@ -106,7 +106,7 @@ $.fn.findercwd = function(fm, options) {
 			clTmp = clFile+'-tmp',
 
 			/**
-			 * Number of thumbnails to load in one request (new api only)
+			 * Number of thumbnails to load in one request
 			 *
 			 * @type Number
 			 **/
@@ -480,7 +480,7 @@ $.fn.findercwd = function(fm, options) {
 			/**
 			 * Load thumbnails from backend.
 			 *
-			 * @param  Array|Boolean  files hashes list for new api | true for old api
+			 * @param  Array|Boolean  files hashes list
 			 * @return void
 			 */
 			loadThumbnails = function(files) {

@@ -275,13 +275,6 @@ window.Finder = function(node, opts) {
 
 
 	/**
-	 * Protocol version
-	 *
-	 * @type String
-	 **/
-	this.api = null;
-
-	/**
 	 * User os. Required to bind native shortcuts for open/rename
 	 *
 	 * @type String
@@ -924,10 +917,6 @@ window.Finder = function(node, opts) {
 				}
 
 				//response = self.normalize(response);
-
-				if (!self.api) {
-					self.api    = response.api || 1;
-				}
 
 				if (response.options) {
 					cwdOptions = $.extend({}, cwdOptions, response.options);

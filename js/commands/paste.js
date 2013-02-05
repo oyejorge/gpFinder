@@ -150,25 +150,20 @@ Finder.prototype.commands.paste = function() {
 				}
 
 
-				if (fm.oldAPI) {
+				if (!fm.option('copyOverwrite')) {
 					paste(files);
 				} else {
 
-					if (!fm.option('copyOverwrite')) {
-						paste(files);
-					} else {
-
-						dst.hash == fm.cwd().hash
-							? valid($.map(fm.files(), function(file) { return file.phash == dst.hash ? file.name : null }))
-							: fm.request({
-								data : {cmd : 'ls', target : dst.hash},
-								notify : {type : 'prepare', cnt : 1, hideCnt : true},
-								preventFail : true
-							})
-							.always(function(data) {
-								valid(data.list || [])
-							});
-					}
+					dst.hash == fm.cwd().hash
+						? valid($.map(fm.files(), function(file) { return file.phash == dst.hash ? file.name : null }))
+						: fm.request({
+							data : {cmd : 'ls', target : dst.hash},
+							notify : {type : 'prepare', cnt : 1, hideCnt : true},
+							preventFail : true
+						})
+						.always(function(data) {
+							valid(data.list || [])
+						});
 				}
 
 				return dfrd;

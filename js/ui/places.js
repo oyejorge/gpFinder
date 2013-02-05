@@ -218,9 +218,6 @@ $.fn.finderplaces = function(fm, opts) {
 
 		// on fm load - show places and load files from backend
 		fm.one('load', function() {
-			if (fm.oldAPI) {
-				return;
-			}
 
 			places.show().parent().show();
 

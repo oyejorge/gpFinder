@@ -486,19 +486,6 @@ $.fn.findercwd = function(fm, options) {
 			loadThumbnails = function(files) {
 				var tmbs = [];
 
-				if (fm.oldAPI) {
-					fm.request({
-						data : {cmd : 'tmb', current : fm.cwd().hash},
-						preventFail : true
-						})
-						.done(function(data) {
-							if (attachThumbnails(data.images||[]) && data.tmb) {
-								loadThumbnails();
-							}
-						})
-					return;
-				}
-
 				tmbs = tmbs = files.splice(0, tmbNum);
 				if (tmbs.length) {
 					fm.request({

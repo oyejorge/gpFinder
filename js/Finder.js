@@ -289,13 +289,6 @@ window.Finder = function(node, opts) {
 	this.newAPI = false;
 
 	/**
-	 * Finder use old api
-	 *
-	 * @type Boolean
-	 **/
-	this.oldAPI = false;
-
-	/**
 	 * User os. Required to bind native shortcuts for open/rename
 	 *
 	 * @type String
@@ -744,10 +737,7 @@ window.Finder = function(node, opts) {
 			cmd: 'file',
 			target: file.hash
 		});
-		if (this.oldAPI) {
-			params.cmd = 'open';
-			params.current = file.phash;
-		}
+
 		return this.options.url + (this.options.url.indexOf('?') === -1 ? '?' : '&') + $.param(params, true);
 	}
 
@@ -945,7 +935,6 @@ window.Finder = function(node, opts) {
 				if (!self.api) {
 					self.api    = response.api || 1;
 					self.newAPI = self.api >= 2;
-					self.oldAPI = !self.newAPI;
 				}
 
 				if (response.options) {
@@ -1732,7 +1721,7 @@ window.Finder = function(node, opts) {
 			self.trigger = function() { };
 		})
 		.done(function(data) {
-			self.load(); //.debug('api', self.api);
+			self.load();
 			data = $.extend(true, {}, data);
 			open(data);
 			self.trigger('open', data);
@@ -1913,7 +1902,7 @@ Finder.prototype = {
 
 			cnt = input.files ? input.files.length : 1;
 
-			form.append('<input type="hidden" name="'+(self.newAPI ? 'target' : 'current')+'" value="'+self.cwd().hash+'"/>')
+			form.append('<input type="hidden" name="target" value="'+self.cwd().hash+'"/>')
 				.append('<input type="hidden" name="html" value="1"/>')
 				.append($(input).attr('name', 'upload[]'));
 
@@ -2022,7 +2011,7 @@ Finder.prototype = {
 
 			xhr.open('POST', self.uploadURL, true);
 			formData.append('cmd', 'upload');
-			formData.append(self.newAPI ? 'target' : 'current', self.cwd().hash);
+			formData.append('target', self.cwd().hash);
 			$.each(self.options.customData, function(key, val) {
 				formData.append(key, val);
 			});

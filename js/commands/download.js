@@ -37,11 +37,6 @@ Finder.prototype.commands.download = function() {
 			return dfrd.reject();
 		}
 
-		if (fm.oldAPI) {
-			fm.error('errCmdNoSupport');
-			return dfrd.reject();
-		}
-
 		$.each(fm.options.customData || {}, function(k, v) {
 			cdata += '&'+k+'='+v;
 		});

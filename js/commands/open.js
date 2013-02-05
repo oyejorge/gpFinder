@@ -67,8 +67,7 @@ Finder.prototype.commands.open = function() {
 			if (!(url = fm.url(/*file.thash || */file.hash))) {
 				url = fm.options.url;
 				url = url + (url.indexOf('?') === -1 ? '?' : '&')
-					+ (fm.oldAPI ? 'cmd=open&current='+file.phash : 'cmd=file')
-					+ '&target=' + file.hash;
+					+ 'cmd=file&target=' + file.hash;
 			}
 
 			w = '';

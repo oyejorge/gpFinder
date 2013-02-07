@@ -28,6 +28,8 @@ include_once( dirname(__FILE__).'/Finder.class.php' );
  * @author Troex Nevelin
  **/
 function logger($cmd, $result, $args, $finder) {
+	debug($result);
+	return;
 
 	$log = sprintf("[%s] %s: %s \n", date('r'), strtoupper($cmd), var_export($result, true));
 	$logfile = '../files/temp/log.txt';

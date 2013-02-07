@@ -1008,15 +1008,17 @@ abstract class FinderVolumeDriver {
 	 * @return array
 	 * @author Dmitry (dio) Levashov
 	 **/
-	public function ls($hash) {
-		if (($dir = $this->dir($hash)) == false || !$dir['read']) {
+	public function ls( $hash ){
+		$dir = $this->dir($hash);
+		if( $dir || !$dir['read'] ){
 			return false;
 		}
 
 		$list = array();
 		$path = $this->decode($hash);
 
-		foreach ($this->getScandir($path) as $stat) {
+		$dirs = $this->getScandir($path);
+		foreach( $dirs as $stat ){
 			if (empty($stat['hidden']) && $this->mimeAccepted($stat['mime'])) {
 				$list[] = $stat['name'];
 			}
@@ -1467,8 +1469,13 @@ abstract class FinderVolumeDriver {
 			if ($this->_inpath($destination, $source)) {
 				return $this->setError('errCopyInItself', $errpath);
 			}
-			$method = $rmSrc ? 'move' : 'copy';
-			return ($path = $this->$method($source, $destination, $name)) ? $this->stat($path) : false;
+			if( $rmSrc ){
+				$path = $this->move($source, $destination, $name);
+			}else{
+				$path = $this->copy($source, $destination, $name);
+			}
+
+			return $this->stat($path);
 		}
 
 		// copy/move from another volume
@@ -2543,13 +2550,16 @@ abstract class FinderVolumeDriver {
 		$this->rmTmb($stat); // can not do rmTmb() after _move()
 		$this->clearcache();
 
-		if ($this->_move($src, $dst, $name)) {
-			$this->removed[] = $stat;
-
-			return $this->_joinPath($dst, $name);
+		if( !$this->_move($src, $dst, $name) ){
+			return $this->setError('errMove', $this->_path($src));
 		}
 
-		return $this->setError('errMove', $this->_path($src));
+		if( $stat['mime'] == 'directory' ){
+
+		}
+
+		$this->removed[] = $stat;
+		return $this->_joinPath($dst, $name);
 	}
 
 	/**

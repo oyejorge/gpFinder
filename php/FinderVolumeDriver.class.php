@@ -1991,18 +1991,19 @@ abstract class FinderVolumeDriver {
 	/**
 	 * Return fileinfo
 	 *
-	 * @param  string  $path  file cache
+	 * @param	string  $path  file cache
+	 * @param	bool	$refresh Skip the cache and refresh the cache for the file
 	 * @return array
 	 * @author Dmitry (dio) Levashov
 	 **/
-	protected function stat($path) {
+	protected function stat( $path, $refresh = false ) {
 		if( $path === false ){
 			return false;
 		}
 
 		$path = $this->_separator( $path );
 
-		if( isset($this->cache[$path]) ){
+		if( !$refresh && isset($this->cache[$path]) ){
 			return $this->cache[$path];
 		}
 
@@ -2506,40 +2507,58 @@ abstract class FinderVolumeDriver {
 		$srcStat = $this->stat($src);
 		$this->clearcache();
 
+		$dst_full = $this->_joinPath($dst, $name);
+
 		if (!empty($srcStat['thash'])) {
 			$target = $this->decode($srcStat['thash']);
 			$stat   = $this->stat($target);
 			$this->clearcache();
 			return $stat && $this->_symlink($target, $dst, $name)
-				? $this->_joinPath($dst, $name)
+				? $dst_full
 				: $this->setError('errCopy', $this->_path($src));
 		}
 
-		if ($srcStat['mime'] == 'directory') {
-			$test = $this->stat($this->_joinPath($dst, $name));
 
-			if (($test && $test['mime'] != 'directory') || !$this->_mkdir($dst, $name)) {
+		//single file
+		if( $srcStat['mime'] != 'directory' ){
+
+			if( !$this->_copy($src, $dst, $name) ){
 				return $this->setError('errCopy', $this->_path($src));
 			}
 
-			$dst = $this->_joinPath($dst, $name);
-
-			foreach ($this->getScandir($src) as $stat) {
-				if (empty($stat['hidden'])) {
-					$name = $stat['name'];
-					if (!$this->copy($this->_joinPath($src, $name), $dst, $name)) {
-						$this->remove($dst, true); // fall back
-						return false;
-					}
-				}
-			}
-			$this->clearcache();
-			return $dst;
+			$this->result['added'][$dst_full] = $this->stat($dst_full);
+			return $dst_full;
 		}
 
-		return $this->_copy($src, $dst, $name)
-			? $this->_joinPath($dst, $name)
-			: $this->setError('errCopy', $this->_path($src));
+
+		//directory
+		$test = $this->stat($dst_full,true);
+
+		if( ($test && $test['mime'] != 'directory') || !$this->_mkdir($dst, $name) ){
+			return $this->setError('errCopy', $this->_path($src));
+		}
+
+		if( !$test ){
+			$this->result['added'][$dst_full] = $this->stat($dst_full, true);
+		}
+
+		$list = $this->getScandir($src);
+		foreach($list as $stat) {
+			if( !empty($stat['hidden']) ){
+				continue;
+			}
+
+			$name = $stat['name'];
+			$src_full = $this->_joinPath($src, $name);
+			if( !$this->copy($src_full, $dst_full, $name) ){
+				$this->remove($dst_full, true); // fall back
+				$this->result['added'] = array();
+				return false;
+			}
+		}
+
+		$this->clearcache();
+		return $dst_full;
 	}
 
 	/**

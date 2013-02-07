@@ -422,26 +422,12 @@ abstract class FinderVolumeDriver {
 	 **/
 	protected $onlyMimes = array();
 
-
 	/**
 	 * Store result information
 	 *
+	 * @var array
 	 */
 	protected $result = array( 'added'=>array(), 'removed' => array(), 'changed' => array() );
-
-	/**
-	 * Store files moved or overwrited files info
-	 *
-	 * @var array
-	 **/
-	protected $removed = array();
-
-	/**
-	 * Store info about added files
-	 *
-	 * @var array
-	 */
-	protected $added = array();
 
 	/**
 	 * Cache storage

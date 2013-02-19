@@ -228,8 +228,6 @@
 	box-shadow:  5px 5px 9px #111;
 	background: -moz-radial-gradient(80px 80px, circle farthest-corner,  #d90004 35%, #960004 100%);
 	background: -webkit-gradient(radial, 80 80, 60, 80 80, 120, from(#d90004), to(#960004));
-	-moz-border-radius: 100px;
-	-webkit-border-radius: 100px;
 	border-radius: 100px;
 	outline:none;
 }

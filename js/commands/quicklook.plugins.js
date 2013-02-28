@@ -151,7 +151,7 @@ Finder.prototype.commands.quicklook.plugins = [
 			preview = ql.preview,
 			active  = false;
 
-		if ((fm.UA.Webkit && fm.OS == 'mac') || fm.UA.IE) {
+		if ((fm.UA.Safari && fm.OS == 'mac') || fm.UA.IE) {
 			active = true;
 		} else {
 			$.each(navigator.plugins, function(i, plugins) {

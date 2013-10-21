@@ -1675,7 +1675,7 @@ window.Finder = function(node, opts) {
 	}
 
 	if (this.options.height) {
-		height = parseInt(this.options.height);
+		height = this.options.height;
 	}
 
 	// update size

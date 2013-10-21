@@ -7,14 +7,9 @@ $.fn.findernavbar = function(fm, opts) {
 
 	this.not('.finder-navbar').each(function() {
 		var nav    = $(this).addClass('ui-state-default finder-navbar'),
-			parent = nav.parent()
-				.resize(function() {
-					nav.height(wz.height() - delta);
-				}),
-			wz     = parent.children('.finder-workzone').append(nav),
-			delta  = nav.outerHeight() - nav.height(),
 			handle;
 
+		nav.siblings('.finder-workzone').append(nav);
 
 		if ($.fn.resizable) {
 			handle = nav.resizable({

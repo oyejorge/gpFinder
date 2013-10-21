@@ -174,7 +174,7 @@ $.fn.finderdialog = function(opts) {
 						$(this).click();
 					}  else if (e.keyCode == $.ui.keyCode.TAB) {
 						next = $(this).next('.ui-button');
-						next.length ? next.focus() : $(this).parent().children('.ui-button:first').focus()
+						next.length ? next.focus() : $(this).siblings('.ui-button:first').focus()
 					}
 				})
 			buttonset.append(button);

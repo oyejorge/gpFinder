@@ -336,7 +336,7 @@ window.Finder = function(node, opts) {
 	 * @type String
 	 * @default "get"
 	 **/
-	this.requestType = /^(get|post)$/i.test(this.options.requestType) ? this.options.requestType.toLowerCase() : 'get',
+	this.requestType = /^(get|post)$/i.test(this.options.requestType) ? this.options.requestType.toLowerCase() : 'post',
 
 	/**
 	 * Any data to send across every ajax request

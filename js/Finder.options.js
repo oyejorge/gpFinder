@@ -18,7 +18,7 @@ Finder.prototype._options = {
 	 * @type String
 	 * @default "get"
 	 */
-	requestType : 'get',
+	requestType : 'post', //'get',
 
 	/**
 	 * Transport to send request to backend.

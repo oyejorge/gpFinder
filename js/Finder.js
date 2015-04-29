@@ -202,6 +202,7 @@ window.Finder = function(node, opts) {
 			} else {
 				// remove only files from prev cwd
 				for (var i in files) {
+
 					if (files.hasOwnProperty(i)
 					&& files[i].mime != 'directory'
 					&& files[i].phash == cwd
@@ -210,6 +211,7 @@ window.Finder = function(node, opts) {
 					}
 				}
 			}
+
 
 			cwd = data.cwd.hash;
 			cache(data.files);
@@ -2059,7 +2061,6 @@ Finder.prototype = {
 		key = 'finder-'+key+this.id;
 
 		if (val === null) {
-			console.log('remove', key)
 			return s.removeItem(key);
 		}
 

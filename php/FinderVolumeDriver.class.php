@@ -591,10 +591,10 @@ abstract class FinderVolumeDriver {
 			return $this->setError('Path undefined.');;
 		}
 
-		$this->options = array_merge($this->options, $opts);
-		$this->separator = isset($this->options['separator']) ? $this->options['separator'] : DIRECTORY_SEPARATOR;
-		$this->id = $this->driverId.(!empty($this->options['id']) ? $this->options['id'] : Finder::$volumesCnt++).'_';
-		$this->root = $this->_normpath($this->options['path']);
+		$this->options		= array_merge($this->options, $opts);
+		$this->separator	= isset($this->options['separator']) ? $this->options['separator'] : DIRECTORY_SEPARATOR;
+		$this->id			= $this->driverId.(!empty($this->options['id']) ? $this->options['id'] : Finder::$volumesCnt++).'_';
+		$this->root			= $this->_normpath($this->options['path']);
 
 		// default file attribute
 		$this->defaults = array(
@@ -3400,6 +3400,9 @@ abstract class FinderVolumeDriver {
 	protected function _joinPath($dir, $name){
 		$dir	= $this->_separator($dir);
 		$name	= $this->_separator($name);
+		if( empty($name) ){
+			return $dir;
+		}
 		return $dir . $this->separator . ltrim($name,$this->separator);
 	}
 
@@ -3478,7 +3481,12 @@ abstract class FinderVolumeDriver {
 	 **/
 	protected function _abspath($path) {
 		$path = $this->_separator( $path );
-		return $path == $this->separator ? $this->root : $this->_joinPath($this->root,$path);
+
+		if( $path == $this->separator ){
+			return $this->root;
+		}
+
+		return $this->_joinPath($this->root,$path);
 	}
 
 
